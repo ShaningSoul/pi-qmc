@@ -9,6 +9,7 @@ overview
 <li>Funding/Sponsors</li>
 <li>FAQ</li>
 </ul>
+
 <b><i>pi</i></b> application
 <ul>
 <li>Download</li>
@@ -20,6 +21,7 @@ overview
 <li>Benchmarks</li>
 <li>[http://code.google.com/p/qdot-tools Quantum Dot Tools]</li>
 </ul>
+
 community
 <ul>
 <li>[http://www.qmcwiki.org QMC Wiki]</li>
