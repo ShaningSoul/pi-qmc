@@ -1,0 +1,23 @@
+  * overview
+    * Main Page
+    * What is pi / PIMC?
+    * Latest News
+    * Applications
+    * Tutorials/Demos
+    * Publications
+    * Funding/Sponsors
+    * FAQ
+  * *_pi_* application
+    * Download
+    * Build/Install
+    * Reference Guide
+    * Doxygen Pages
+    * Tutorials/Demos
+    * Python Scripts
+    * Benchmarks
+    * Quantum Dot Tools
+  * community
+    * QMC Wiki
+   * Shumway Group
+  * navigation
+    * Main Page
