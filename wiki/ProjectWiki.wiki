@@ -1,1 +1,68 @@
-Google's wiki does not support math markup; please see the *_pi_* project wiki at http://pimc.wiki.asu.edu.
+<img src="pi-logo.png"/>
+*_pi_* — open-source path integral Monte Carlo program
+
+This is a quantum simulation program from the 
+[http://physics.asu.edu/shumway Shumway Research Group], which focuses on applications to nanoscience and technology.
+A live version of the code is available as the application [http://www.nanohub.org/tools/pimc/ “pimc” on the NCN Purdue nanoHUB].
+The current source code is available from  
+[http://code.google.com/p/pi-qmc  project pi-qmc on Google code].
+The program is object-oriented with [http://physics.asu.edu/shumway/codes/doc/pi/index.html Doxygen markup] and features flexible XML input format, as described in the [[pimc.xml Reference Guide]].
+<br style="clear:both" />
+<img src="promo-qpc-v040.png" alt="Charge density of 100 interacting electrons around a quantum point contact at 750 mK."/>
+
+*UNDER CONSTRUCTION: We are currently porting this wiki over from http://pimc.wiki.asu.edu (19-May-2009)*
+
+==Introduction to the PIMC method==
+A good starting place is David Ceperley's review article on path integrals for superfluid helium,
+  * D. M. Ceperley, [http://prola.aps.org/abstract/RMP/v67/i2/p279_1 “Path integrals in the theory of condensed helium,” Rev. Mod. Phys. '''67''', 279–355 (1995)].
+The path integral approach to quantum statistical physics is described in many books, including
+<ul>
+<li><a href="http://books.google.com/books?id=4YDfQAYrkjkC">Feynman's Statistical Physics</a> and</li>
+<li><a href="http://books.google.com/books?id=VwG0AAAACAAJ"> A. Zee's Quantum Field Theory in a Nutshell</a>.</li>
+</ul>
+==*_pi_* on the nanoHUB==
+
+===Spin Coupled Quantum Dots===
+[[Image:nanoHUBspin.png]]
+http://www.nanohub.org/tools/spincoupleddots
+
+===Expert mode PIMC tool===
+[[Image:nanoHUBpimc.png]]
+http://www.nanohub.org/tools/pimc
+
+==Tutorials==
+
+===Built in demos===
+You can run demos in the <code>pi</code> with automatically generated scripts. To get started, run <code>pi --demo</code>. This shows you a list of available demos.
+To generate an input file for a simple harmonic oscillator, type <code>pi --demo=SHO</code>. This generates an input file <code>sho.xml</code> which you can run with <code>pi sho.xml</code>.
+
+Currently available demos include:
+;     SHO            :      A simple harmonic oscillator
+;     H_atom       :        A hydrogen atom
+;     [[Helium Atom Demo| He_atom]]      :        A helium atom
+;     spin              :   A single spin in a magnetic field
+;     [[Quantum Wire Demo| wire]]               :  10 electrons in a quasi-1D GaAs (2D) wire
+
+===PIMC on nanoHUB===
+We are currently porting our <code>pi</code> path integral code to run interactively on the [http://www.nanohub.org/tools/pimc/ Purdue nanoHUB (app-pimc)]. More information coming soon.
+* General purpose PIMC interface ([http://www.nanohub.org/tools/pimc/ app-pimc]).
+* Demo on correlated electrons and excitons in quantum dots.
+
+===Scientific Tutorials===
+
+* [[InGaAs Dot Tutorial |InGaAs quantum dot]].
+* [[Trapped Bose Condensate Tutorial |<sup>87</sup>Rb condensate]].
+* [[Debye screening]]
+* [[Atomic polarizability]]
+* [[Thermodynamics of phonons]]
+
+==Research projects by topic==
+
+* [[Quantum dots]]
+* [[Quantum wires]]
+* [[Molecular polarizability]]
+* [[Graphene]]
+* [[H/He plasmas]]
+* [[Lattice vibrations]]
+
+==[[Tests and benchmarks]]==
