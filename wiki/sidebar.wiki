@@ -1,21 +1,21 @@
-  * overview
-  *  —[ProjectWiki Main Page]
-  *  —What is pi / PIMC?
-  *  —Latest News
-  *  —Applications
-  *  —Tutorials/Demos
-  *  —Publications
-  *  —Funding/Sponsors
-  *  —FAQ
-  * *_pi_* application
-  * —Download
-  * —Build/Install
-  * —Reference Guide
-  * —Doxygen Pages
-  * —Tutorials/Demos
-  * —Python Scripts
-  * —Benchmarks
-  * —[http://code.google.com/p/qdot-tools Quantum Dot Tools]
-  * community
-  * —QMC Wiki
-  * —[http://physics.asu.edu/shumway Shumway Group]
+overview
+  * [ProjectWiki Main Page]
+  * What is pi / PIMC?
+  * Latest News
+  * Applications
+  * Tutorials/Demos
+  * Publications
+  * Funding/Sponsors
+  * FAQ
+*_pi_* application
+  * Download
+  * Build/Install
+  * Reference Guide
+  * Doxygen Pages
+  * Tutorials/Demos
+  * Python Scripts
+  * Benchmarks
+  * [http://code.google.com/p/qdot-tools Quantum Dot Tools]
+community
+  * [http://www.qmcwiki.org QMC Wiki]
+  * [http://physics.asu.edu/shumway Shumway Group]
