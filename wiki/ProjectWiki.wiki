@@ -10,15 +10,19 @@ The program is object-oriented with [http://physics.asu.edu/shumway/codes/doc/pi
 <br style="clear:both" />
 <img src="promo-qpc-v040.png" alt="Charge density of 100 interacting electrons around a quantum point contact at 750 mK."/>
 
+<font color="red">
 *UNDER CONSTRUCTION: We are currently porting this wiki over from http://pimc.wiki.asu.edu (19-May-2009)*
+</font>
 
 ==Introduction to the PIMC method==
 A good starting place is David Ceperley's review article on path integrals for superfluid helium,
-  * D. M. Ceperley, [http://prola.aps.org/abstract/RMP/v67/i2/p279_1 “Path integrals in the theory of condensed helium,” Rev. Mod. Phys. '''67''', 279–355 (1995)].
+<ul>
+<li>D. M. Ceperley, <a href="http://prola.aps.org/abstract/RMP/v67/i2/p279_1"><i>“Path integrals in the theory of condensed helium,”</i> Rev. Mod. Phys. <b>67</b>, 279–355 (1995)</a>.</li>
+</ul>
 The path integral approach to quantum statistical physics is described in many books, including
 <ul>
-<li><a href="http://books.google.com/books?id=4YDfQAYrkjkC">Feynman's Statistical Physics</a> and</li>
-<li><a href="http://books.google.com/books?id=VwG0AAAACAAJ"> A. Zee's Quantum Field Theory in a Nutshell</a>.</li>
+<li><a href="http://books.google.com/books?id=4YDfQAYrkjkC">Feynman's <i>Statistical Physics</i></a> and</li>
+<li><a href="http://books.google.com/books?id=VwG0AAAACAAJ"> A. Zee's <i>Quantum Field Theory in a Nutshell</i></a>.</li>
 </ul>
 ==*_pi_* on the nanoHUB==
 
