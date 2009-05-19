@@ -1,5 +1,5 @@
   * overview
-  *  —Main Page
+  *  —[ProjectWiki Main Page]
   *  —What is pi / PIMC?
   *  —Latest News
   *  —Applications
@@ -15,9 +15,7 @@
   * —Tutorials/Demos
   * —Python Scripts
   * —Benchmarks
-  * —Quantum Dot Tools
+  * —[http://code.google.com/p/qdot-tools Quantum Dot Tools]
   * community
   * —QMC Wiki
-  * —Shumway Group
-  * navigation
-  * —Main Page
+  * —[http://physics.asu.edu/shumway Shumway Group]
