@@ -7,7 +7,7 @@ overview
 <li>Tutorials/Demos</li>
 <li>Publications</li>
 <li>Funding/Sponsors</li>
-<li>FAQ</li>
+<li>[FAQ]</li>
 </ul>
 
 <b><i>pi</i></b> application
