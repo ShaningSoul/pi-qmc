@@ -7,7 +7,7 @@ overview
   * Publications
   * Funding/Sponsors
   * FAQ
-*_pi_* application
+<b><i>pi</i></b> application
   * Download
   * Build/Install
   * Reference Guide
