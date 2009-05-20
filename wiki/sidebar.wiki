@@ -1,29 +1,28 @@
 overview
-<ul>
-<li>[ProjectWiki Main Page]</li>
-<li>What is pi / PIMC?</li>
-<li>Latest News</li>
-<li>Applications</li>
-<li>Tutorials/Demos</li>
-<li>Publications</li>
-<li>Funding/Sponsors</li>
-<li>[FAQ]</li>
-</ul>
+
+nbsp;[ProjectWiki Main Page]<br/>
+nbsp;What is pi / PIMC?<br/>
+nbsp;Latest News<br/>
+nbsp;Applications<br/>
+nbsp;Tutorials/Demos<br/>
+nbsp;Publications<br/>
+nbsp;Funding/Sponsors<br/>
+nbsp;[FAQ]<br/>
+<br/>
 
 <b><i>pi</i></b> application
-<ul>
-<li>Download</li>
-<li>Build/Install</li>
-<li>Reference Guide</li>
-<li>Doxygen Pages</li>
-<li>Tutorials/Demos</li>
-<li>Python Scripts</li>
-<li>Benchmarks</li>
-<li>[http://code.google.com/p/qdot-tools Quantum Dot Tools]</li>
-</ul>
+
+nbsp;Download<br/>
+nbsp;Build/Install<br/>
+nbsp;Reference Guide<br/>
+nbsp;Doxygen Pages<br/>
+nbsp;Tutorials/Demos<br/>
+nbsp;Python Scripts<br/>
+nbsp;Benchmarks<br/>
+nbsp;[http://code.google.com/p/qdot-tools Quantum Dot Tools]<br/>
 
 community
-<ul>
-<li>[http://www.qmcwiki.org QMC Wiki]</li>
-<li>[http://physics.asu.edu/shumway Shumway Group]</li>
-</ul>
+
+nbsp;[http://www.qmcwiki.org QMC Wiki]<br/>
+nbsp;[http://physics.asu.edu/shumway Shumway Group]<br/>
+
