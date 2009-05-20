@@ -1,0 +1,12 @@
+#summary Publications using pi-qmc and quantum Monte Carlo
+
+  * Jesper Pedersen, Lei Zhang, Matthew J. Gilbert, and J. Shumway, _“Path integral study of the role of correlation in exchange coupling of spins in double quantum dots,”_ submitted to Appl. Phys. Lett. (arXiv:0809.0038)
+  * Daejin Shin, Ming-Chak Ho, and J. Shumway, _“Ab inito path integral techniques for molecules,”_ submitted to J. Chem. Phys. (quant-ph/0611105)
+  * M. Wimmer, S. V. Nair, and J. Shumway, _"Biexciton recombination rates in self-assembled quantum dots,"_ Phys. Rev. B *73*, 165305 (2006).
+  * J. Shumway and Matthew J. Gilbert, _"Path Integral Monte Carlo Simulations of Nanowires and Quantum Point Contacts,"_ J. Phys.: Conf. Series *35*, 190-196 (2006).
+  * J. Shumway, _"Quantum Monte Carlo Simulation of Exciton-Exciton Scattering in a !GaAs/!AlGaAs Quantum Well,"_ Physica E *32*, 273-276 (2006).
+  * J. Shumway, _"All-Electron Path Integral Monte Carlo Simulations of Small Atoms and Molecules,"_ pp. 181-195 in Computer Simulations Studies in Condensed Matter Physics XVII, edited by D. P. Landau, S. P. Lewis, and H. B. Schütter, (Springer Verlag, Heidelberg, Berlin, 2006).
+  * J. Shumway and D. M. Ceperley, _"Quantum Monte Carlo Methods in the Study of Nanostructures,"_ in Handbook of Theoretical and Computational Nanotechnology, edited by Michael Rieth and Wolfram Schommers, Volume 3: pp. 605–641, ISBN: 1-58883-045-4 (American Scientific Publishers, 2006).
+  * M. Harowitz, Daejin Shin, and J. Shumway, _"Path-Integral Quantum Monte Carlo Techniques for Self-Assembled Quantum Dots,"_ J. of Low Temp. Phys. *140*, 211-226 (2005).
+  * J. Shumway, _"A Quantum Monte Carlo Method for Non-Parabolic Electron Bands in Semiconductor Heterostructures,"_ J. Phys.: Condens. Matter *17*, 2563-2570 (2005).
+  * M. Harowitz and J. Shumway, _"Path Integral Simulations of Charged Multiexcitons in !InGaAs/!GaAs Quantum Dots,"_ pp. 697-698 in Physics of Semiconductors: 27th International Conference on the Physics of Semiconductors, edited by José Menéndez and Chris G. Van de Walle (AIP, 2005).
