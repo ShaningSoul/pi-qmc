@@ -1,0 +1,16 @@
+#summary News about pi, science applications, and publications
+
+===pi code now hosted on Google===
+_January 16th, 2009_ <br/>
+The current source code is available from  
+[http://code.google.com/p/pi-qmc  project pi-qmc on Google code].
+
+===Spin Coupled Quantum Dots===
+_September 9th, 2008_<br/>
+We have new PIMC results on the role of correlation in exchange coupling of spins in quantum dots and optical lattices. 
+([http://arxiv.org/abs/0809.0038 arXiv:0809.0038] and 
+[http://www.nanohub.org/tools/spincoupleddots an interactive tool on nanoHUB]).
+
+===PIMC on NCN Purdue nanoHUB===
+_January 15th, 2008_<br/>
+A live version of the code is available as the application [http://www.nanohub.org/tools/pimc/ “pimc” on the NCN Purdue nanoHUB].
