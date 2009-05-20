@@ -1,0 +1,15 @@
+#summary Built in demos, benchmarks and tutorials
+
+==Built in Demos==
+You can run demos in the <tt>pi</tt> with automatically generated scripts. To get started, run <tt>pi --demo</tt>. This shows you a list of available demos.
+To generate an input file for a simple harmonic oscillator, type <code>pi --demo=SHO</code>. This generates an input file <tt>sho.xml</tt> which you can run with <code>pi sho.xml</code>.
+
+Currently available demos include:
+;     SHO            :      A simple harmonic oscillator
+;     H_atom       :        A hydrogen atom
+;     [[Helium Atom Demo| He_atom]]      :        A helium atom
+;     spin              :   A single spin in a magnetic field
+;     [[Quantum Wire Demo| wire]]               :  10 electrons in a quasi-1D GaAs (2D) wire
+
+==Extended Tutorials==
+;     [[test Lithium-7| test Lithium-7]]               :
