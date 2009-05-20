@@ -2,8 +2,12 @@
 
 =Featured Application=
 
+=Applications by area=
+
 ==Quantum Dots==
 
 ==Nanoelectronics==
 
-==Chemistry/Ab inito==
+==Chemistry/ab inito==
+
+==Ultracold trapped gases==
