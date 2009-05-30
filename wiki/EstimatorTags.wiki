@@ -1,0 +1,77 @@
+#summary XML tags describing physical quantities to measure (estimate) from pi-qmc.
+
+= Introduction =
+
+==Scalar estimators==
+
+===Thermodynamic energy estimator===
+
+<code>
+<ThermalEnergyEstimator unit="Ha" shift="0 Ha" perN="1"/>
+</code>
+  * unit allows different energy units, such as eV.
+  * shift is useful in semiconductors, for example, to get energy relative to CBM.
+  * perN can be used to get the energy per atom, rather than total energy.
+
+==Imaginary time correlation functions==
+
+A general imaginary time correlation function is
+
+\chi_{AB}(\tau) = -\frac{1}{\hbar}\left\langle A^\dagger(\tau) B(0)\right\rangle
+
+PIMC reports these functions in imaginary frequency space,
+
+
+\chi_{AB}(i\omega_n) = \int_0^{\beta\hbar} e^{i\omega_n\tau}\chi_{AB}(\tau)\, d\tau.
+
+where the Matsubura frequencies are i\omega_n=2\pi i n k_B T/\hbar.
+
+===ConductanceEstimator===
+
+<code>
+<ConductanceEstimator nfreq="50" component="all" useCharge="false" useSpeciesTensor="false" species="eup" order="1"/>
+</code>
+
+Current-current correlation estimator for a homogeneous system. (For current density correlations, see ConductivityEstimator.)
+Calculates the current-current correlation function,
+
+ \chi_{J_\alpha^A  J_\beta^B} = -\frac{1}{\hbar}
+ \langle J_\alpha^A J_\beta^B \rangle,
+
+where the J_\alpha^A are the particle (or charge) current
+in direction  \alpha for species A.
+
+Results are stored in a rank 6 array,
+
+\chi_{JJ}(i_{\mathrm{order}},\alpha,\beta,A,B,i\omega_n).
+
+Flags control the behavior:
+  *   bool useCharge uses charge currents, otherwise use particle number current.
+  *  Component is “x,” “y,” “z,” or ”all”. If “all” it computes a tensor.
+  *   species selects a species
+  *   bool speciesTensor computes a tensor of cross-species correlations
+  *   int nfreq number of frequencies to store.
+  *   int order specifies the order (1 for polarizability, 2 or 3 for hyperpolarizability).
+
+
+===ConductivityEstimator===
+
+<code>
+<ConductivityEstimator nbin="100" ndbin="25" nfreq="50" nstride="10" calcInduced="false"/>
+</code>
+
+==Pair Correlation functions==
+
+<code>
+ <PairCFEstimator name="g(r)" species1="eup" species2="H">
+   <Radial min="0" max="10 nm" nbin="100"/>
+ </PairCFEstimator>
+</code>
+
+Any number of distances can be combined to make multidimensional correlation functions. Options are
+  * Cartesian, Cartesian1, Cartesian2 (relative separation or absolute position of species one or two).
+  ** dir = x,y,z
+  ** min, max, nbin
+  * Radial
+  ** dir=x,y,z, or none (for cylidrical or spherical metric)
+  ** min, max, nbin
