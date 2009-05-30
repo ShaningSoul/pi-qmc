@@ -1,0 +1,36 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+<code>
+<EFieldAction v0="1.0" e0="1.0" component="z" a="0.25"/>
+</code>
+
+Either provide <tt>v0</tt> or <tt>e0</tt>. If <tt>v0</tt> is not provided, then <tt>v0=-e0*Lz</tt>.
+
+==FixedNodeAction==
+<code>
+<FixedNodeAction species="eup" model="SHONodes" temperature="1 Ha"/>
+</code>
+
+Attributes:
+  * <tt>model</tt>
+  ** "FreeNodes" (default)
+  ** "SHONodes"
+  ** "WireNodes"
+  ** "GSSNode" or "GroundStateSNode"
+  * <tt>species</tt>
+  * double <tt>temperature</tt>
+  * bool <tt>noNodalAction</tt>
+  * bool <tt>useUpdates</tt>
+
+==SHODotAction==
+<code>
+<SHODotAction thickness="10 nm" v0="100 meV" k="0"/>
+</code>
+
+
+==TwoQDAction==
+<code>
+<TwoQDAction omega="12 meV" d="50 nm" alpha="1.0"/>
+</code>
