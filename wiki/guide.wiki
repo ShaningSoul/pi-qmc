@@ -52,9 +52,11 @@ The Temperature tag is parsed in <tt>SimInfoParser.cc</tt>.
 
 In path integrals, the action plays the same role as the Hamiltonian plays in Schrödinger's equation. 
 The action section of a pimc.xml file is denoted
-  <Action>
-  ...
-  </Action> 
+{{{
+<Action>
+...
+</Action>
+}}}
 and contains any number of [ActionTags]. Most simulations contain at least SpringAction for free-particle kinetic action, but in some cases even that may be replaced.
 Action tags are parsed in <tt>ActionParser.cc</tt>.
 
@@ -62,18 +64,22 @@ Action tags are parsed in <tt>ActionParser.cc</tt>.
 
 Estimators are the mathematical and algorithmic tools to extract physical information from the path integral.
 The estimator section is denoted
-  <Estimators>
-  ...
-  </Estimators>
+{{{
+<Estimators>
+...
+</Estimators>
+}}}
 and may contain any number of [EstimatorTags].
 Estimator tags are parsed in <tt>EstimatorParser.cc</tt>.
 
 ==PIMC Commands==
 
 The PIMC commands are denoted
-  <PIMC>
-  ...
-  </PIMC>
+{{{
+<PIMC>
+...
+</PIMC>
+}}}
 and may contain any number of sequential or nested [PIMCTags]. PIMC commands describe the how the paths are sampled, when measurements are performed, and when data is written to disk.
 PIMC tags are parsed in <tt>PIMCParser.cc</tt>.
 
