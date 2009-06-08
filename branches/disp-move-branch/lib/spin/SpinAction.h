@@ -51,12 +51,11 @@ public:
   /// Calculate the difference in action.
   virtual double getActionDifference(const MultiLevelSampler&,
                                      const int level);
-  /// Calculate the total action.
-  virtual double getTotalAction(const Paths&, const int level) const;
   virtual double getActionDifference(const DisplaceMoveSampler&,
-				    const int nMoving){ return 0;};
-
- /// Calculate the action and derivatives at a bead.
+                                     const int nMoving);
+   /// Calculate the total action.
+  virtual double getTotalAction(const Paths&, const int level) const;
+  /// Calculate the action and derivatives at a bead.
   virtual void getBeadAction(const Paths&, const int ipart, const int islice,
        double& u, double& utau, double& ulambda, Vec &fm, Vec &fp) const;
   /// Accept last move.
