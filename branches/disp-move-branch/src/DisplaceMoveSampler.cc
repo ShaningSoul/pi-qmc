@@ -40,9 +40,9 @@
 DisplaceMoveSampler::DisplaceMoveSampler(int nmoving, Paths& paths, double dist, 
   ParticleChooser& particleChooser, Mover& mover, Action* action,
   const int nrepeat, const BeadFactory& beadFactory)
-  : nslice(paths.getNSlice()), nmoving(nmoving), pathsBeads(beadFactory.getNewBeads(paths.getNPart(), nslice)),
+  : nslice(paths.getNSlice()), nmoving(nmoving), pathsBeads(beadFactory.getNewBeads(paths.getNPart(), paths.getNSlice())),
     dist(dist), pathsPermutation(paths.getPermutation()),
-    movingBeads(beadFactory.getNewBeads(paths.getNPart(),nslice)),
+    movingBeads(beadFactory.getNewBeads(paths.getNPart(),paths.getNSlice())),
     mover(mover), cell(paths.getSuperCell()), action(action),
     movingIndex(new IArray(nmoving)),
     identityIndex(nmoving), pMovingIndex(nmoving),
@@ -63,7 +63,7 @@ DisplaceMoveSampler::~DisplaceMoveSampler() {
 void DisplaceMoveSampler::run() {
   // Select particles that are not permuting to move
   
-    //  std :: cout << "******* Printing  permutations"<<std :: endl;
+  //  std :: cout << "******* Printing  permutations"<<std :: endl;
   //std :: cout <<pathsPermutation<<std :: endl;
   for (int irepeat=0; irepeat<nrepeat; ++irepeat) {
     particleChooser.chooseParticles();

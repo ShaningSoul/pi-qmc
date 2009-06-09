@@ -71,7 +71,7 @@ protected:
   ParticleChooser& particleChooser; 
   //PermutationChooser& permutationChooser; // <<<< should not make new permutations. WARNING.
   // PathsChooser& pathsChooser; This will need a class mimicing sectionChooser
-  const Paths& paths;
+  Paths& paths;
   AccRejEstimator* accRejEst;
   const int nrepeat;
   const int nslice;
