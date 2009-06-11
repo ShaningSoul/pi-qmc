@@ -62,7 +62,7 @@ DisplaceMoveSampler::~DisplaceMoveSampler() {
 
 void DisplaceMoveSampler::run() {
   // Select particles that are not permuting to move
-  
+  paths.getBeads(0,*pathsBeads);
   //  std :: cout << "******* Printing  permutations"<<std :: endl;
   //std :: cout <<pathsPermutation<<std :: endl;
   for (int irepeat=0; irepeat<nrepeat; ++irepeat) {
@@ -79,11 +79,10 @@ void DisplaceMoveSampler::run() {
 	imovingNonPerm++;
       }
     }
-     std :: cout <<"After loop "<<imovingNonPerm <<std :: endl;
-
-     std :: cout <<"After loop "<<(*movingIndex).size() <<std :: endl;
+ 
     // Copy old coordinate to the moving coordinate
-     for (int islice=0; islice<nslice; ++islice) {
+     for (int islice=0; islice<nslice; ++islice) { 
+       std::cout << "islice "<<islice<<" index";
        pathsBeads->copySlice(*movingIndex,islice,*movingBeads,identityIndex,islice);
      }
     if (tryMove(imovingNonPerm+1)) continue;
@@ -91,7 +90,7 @@ void DisplaceMoveSampler::run() {
 }
 
 bool DisplaceMoveSampler::tryMove(int imovingNonPerm) {
-  accRejEst->tryingMove(imovingNonPerm);
+  accRejEst->tryingMove(0);
  
   double l = mover.makeMove(*this);
   // Evaluate the change in action.
