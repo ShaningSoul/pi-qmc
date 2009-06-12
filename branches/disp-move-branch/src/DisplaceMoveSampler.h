@@ -66,11 +66,10 @@ protected:
   const SuperCell& cell;
   Action *action;
   IArray *movingIndex;
-  /// More indices for moving particles. <<<<<<<<<<<<<
-  IArray identityIndex, pMovingIndex;
+  
+  IArray identityIndex;
   ParticleChooser& particleChooser; 
-  //PermutationChooser& permutationChooser; // <<<< should not make new permutations. WARNING.
-  // PathsChooser& pathsChooser; This will need a class mimicing sectionChooser
+ 
   Paths& paths;
   AccRejEstimator* accRejEst;
   const int nrepeat;
