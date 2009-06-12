@@ -82,24 +82,25 @@ void DisplaceMoveSampler::run() {
  
     // Copy old coordinate to the moving coordinate
      for (int islice=0; islice<nslice; ++islice) { 
-       std::cout << "islice "<<islice<<" index";
        pathsBeads->copySlice(*movingIndex,islice,*movingBeads,identityIndex,islice);
      }
-    if (tryMove(imovingNonPerm+1)) continue;
+    if (tryMove(imovingNonPerm)) continue;
   }
 }
 
 bool DisplaceMoveSampler::tryMove(int imovingNonPerm) {
+      std :: cout <<"trying move "<<std :: endl;
   accRejEst->tryingMove(0);
- 
+  std::cout <<"Before "<<(*pathsBeads)(50,0) <<std::endl; 
   double l = mover.makeMove(*this);
+  std::cout <<"After move"<<(*movingBeads)(0,0) <<std::endl; 
   // Evaluate the change in action.
   double deltaAction=(action==0)?0:action->getActionDifference(*this, imovingNonPerm);
   double acceptProb=exp(-deltaAction);
   //std::cout << acceptProb << ", " << deltaAction << ",  " << imovingNonPerm << ", "
   //          << action  << ", " << std::endl;
   if (RandomNumGenerator::getRand()>acceptProb) return false;
-  accRejEst->moveAccepted(imovingNonPerm);
+  accRejEst->moveAccepted(0);
   
   // Move accepted.
   action->acceptLastMove();
@@ -107,8 +108,10 @@ bool DisplaceMoveSampler::tryMove(int imovingNonPerm) {
   for (int islice=0; islice<nslice; ++islice) {
     movingBeads->copySlice(identityIndex,islice,
 			   *pathsBeads,*movingIndex,islice);
+    
   }
-  paths.putBeads(0,*movingBeads,pathsPermutation);// seems repetitive of last step but may needed for parallism
+  paths.putBeads(0,*pathsBeads,pathsPermutation);
+  std::cout <<"After "<<paths(50,0) <<std::endl; 
   return true;
 }
 

@@ -44,7 +44,7 @@ public:
   virtual ~DisplaceMoveSampler();
   virtual void run();
   Beads<NDIM>& getMovingBeads() {return *movingBeads;}
-  const Beads<NDIM>& getMovingBeads() const {return *movingBeads;}
+  Beads<NDIM>& getMovingBeads() const {return *movingBeads;}
   Beads<NDIM>& getPathsBeads() {return *pathsBeads;}
   const Beads<NDIM>& getPathsBeads() const {return *pathsBeads;}
   IArray&  getMovingIndex() {return *movingIndex;}
