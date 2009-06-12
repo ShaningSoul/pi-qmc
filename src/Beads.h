@@ -198,7 +198,6 @@ protected:
       BeadsBase* beadsOut, const IArray& indexOut, int isliceOut)const {
     Beads& beads = *dynamic_cast<Beads*>(beadsOut);
     for (int i=0; i<indexIn.size(); ++i) {
-      //      std::cout << i<<"  "<<coord(indexIn(i),isliceIn) <<std::endl;
       beads.coord(indexOut(i),isliceOut)=coord(indexIn(i),isliceIn);
     }
   }

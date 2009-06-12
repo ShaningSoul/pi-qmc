@@ -40,21 +40,26 @@ double UniformMover::makeMove(DisplaceMoveSampler& sampler) {
   const Beads<NDIM>& pathsBeads=sampler.getPathsBeads();
   Beads<NDIM>& movingBeads=sampler.getMovingBeads();
   const SuperCell& cell=sampler.getSuperCell();
-  const dist = sampler.getDist();
+  const double dist = sampler.getDist();
   const int nSlice=pathsBeads.getNSlice();
   const int ifirstSlice = 0; //pathsBeads.getifirstSlice();
    IArray& index=sampler.getMovingIndex(); 
   const int nMoving=index.size();
-  blitz::Array<double,1> uniRand(nMoving); uniRand=0.0;
+  blitz::Array<double,1> uniRand(nMoving*NDIM); uniRand=0.0;
 
   for (int islice=ifirstSlice; islice<nSlice; islice++) {
     RandomNumGenerator::makeRand(uniRand);
     for (int iMoving=0; iMoving<nMoving; ++iMoving) {
-      const int i=index(iMoving);
-      
+      const int i=index(iMoving);//not needed.
+      //        std :: cout <<"B :: in uniform mover islice="<< islice <<";  i= "<<i <<";  "<<movingBeads(iMoving,islice)<< std :: endl;
       // Calculate the new position.
-      movingBeads(iMoving,islice) += dist*(uniRand(iMoving)-0.5);
+            movingBeads(iMoving,islice)[0] += dist*(uniRand(NDIM*iMoving)-0.5);
+            movingBeads(iMoving,islice)[1] += dist*(uniRand(NDIM*iMoving+1)-0.5);
+            movingBeads(iMoving,islice)[2] += dist*(uniRand(NDIM*iMoving+2)-0.5);
+      // movingBeads(iMoving,islice) += dist*(10);
       cell.pbc(movingBeads(iMoving,islice));
+      
+      //std :: cout <<"A :: in uniform mover islice="<< islice <<";  i= "<<i <<";  iMoving="<<iMoving <<movingBeads(iMoving,islice)<< std :: endl;
     }
   }
  
