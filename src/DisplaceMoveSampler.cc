@@ -45,11 +45,11 @@ DisplaceMoveSampler::DisplaceMoveSampler(int nmoving, Paths& paths, double dist,
     movingBeads(beadFactory.getNewBeads(paths.getNPart(),paths.getNSlice())),
     mover(mover), cell(paths.getSuperCell()), action(action),
     movingIndex(new IArray(nmoving)),
-    identityIndex(nmoving), pMovingIndex(nmoving),
-    particleChooser(particleChooser), //permutationChooser(permutationChooser),
+    identityIndex(nmoving), 
+    particleChooser(particleChooser),
     paths(paths), accRejEst(0),
     nrepeat(nrepeat) {
-  std :: cout << "******* "<<nslice<<std :: endl;
+ 
   for (int i=0; i<nmoving; ++i) (*movingIndex)(i)=identityIndex(i)=i;
 }
 
@@ -62,18 +62,16 @@ DisplaceMoveSampler::~DisplaceMoveSampler() {
 
 void DisplaceMoveSampler::run() {
   // Select particles that are not permuting to move
+ 
   paths.getBeads(0,*pathsBeads);
-  //  std :: cout << "******* Printing  permutations"<<std :: endl;
-  //std :: cout <<pathsPermutation<<std :: endl;
+ 
   for (int irepeat=0; irepeat<nrepeat; ++irepeat) {
     particleChooser.chooseParticles();
     
     int imovingNonPerm = 0;         
     for (int i=0; i<nmoving; ++i) {
-      std :: cout <<"loop "<<i <<std :: endl;
       int j = particleChooser[i];
       int jperm = pathsPermutation[j];
-      std :: cout <<"check perm "<<j <<" ?  "<<jperm<<std :: endl;
       if (j==jperm){
 	(*movingIndex)(imovingNonPerm)=j;
 	imovingNonPerm++;
@@ -89,11 +87,10 @@ void DisplaceMoveSampler::run() {
 }
 
 bool DisplaceMoveSampler::tryMove(int imovingNonPerm) {
-      std :: cout <<"trying move "<<std :: endl;
+ 
   accRejEst->tryingMove(0);
-  std::cout <<"Before "<<(*pathsBeads)(50,0) <<std::endl; 
+ 
   double l = mover.makeMove(*this);
-  std::cout <<"After move"<<(*movingBeads)(0,0) <<std::endl; 
   // Evaluate the change in action.
   double deltaAction=(action==0)?0:action->getActionDifference(*this, imovingNonPerm);
   double acceptProb=exp(-deltaAction);

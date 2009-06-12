@@ -161,7 +161,7 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
     int nrepeat=getIntAttribute(ctxt->node,"nrepeat");
     if (nrepeat==0) nrepeat=1;
     
-    if (doubleAction==0) {
+    //    if (doubleAction==0) {
       // pathsChooser = new PathsChooser(*paths, *action, beadFactory);
       /*  algorithm=new DisplaceMoveSampler(nmoving, *paths, dist,
 					 *particleChooser,  *permutationChooser,
@@ -169,14 +169,17 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
       algorithm=new DisplaceMoveSampler(nmoving, *paths, dist,
 					*particleChooser, 
 					*mover, action, nrepeat, beadFactory);
-    }/*else{ needs fixinf
+     
+    std::string accRejName="DisplaceMoveSampler";
+        estimators->add(((DisplaceMoveSampler*)algorithm)->
+    		    getAccRejEstimator(accRejName));
+	// }
+/*else{ needs fixinf
       algorithm=new DoubleDisplcaceMoveSampler(nmoving, *paths, dist,
 					       *particleChooser, *permutationChooser, *mover, action,
 					       doubleAction, both, nrepeat, beadFactory);
 					       }*/
-    std::string accRejName="DisplaceMoveSampler";
-        estimators->add(((DisplaceMoveSampler*)algorithm)->
-    		    getAccRejEstimator(accRejName));
+
 
   } else if (name=="ShiftWorkers") {
     int maxShift=getIntAttribute(ctxt->node,"maxShift");
