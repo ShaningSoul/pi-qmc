@@ -2,24 +2,24 @@
 overview
 
 [ProjectWiki Main Page]<br/>
-[whatispi What is pi / PIMC?]<br/>
+[WhatIsPIMC What is pi / PIMC?]<br/>
 [news Latest News]<br/>
 [apps Applications]<br/>
 [tutorials Tutorials/Demos]<br/>
-[pubs Publications]<br/>
+[Publications]<br/>
 [funding Funding/Sponsors]<br/>
 [FAQ]<br/>
 <br/>
 
 <b><i>pi</i></b> application
 
-[download Download]<br/>
-[build Build/Install]<br/>
-[guide Reference Guide]<br/>
+[Download]<br/>
+[BuildInstall Build/Install]<br/>
+[ReferenceGuide Reference Guide]<br/>
 [http://physics.asu.edu/shumway/codes/doc/pi/index.html Doxygen Pages]<br/>
-[demo Tutorials/Demos]<br/>
-[python Python Scripts]<br/>
-[benchmark Benchmarks]<br/>
+[tutorials Tutorials/Demos]<br/>
+[Python Python Scripts]<br/>
+[Benchmark Benchmarks]<br/>
 [http://code.google.com/p/qdot-tools Quantum Dot Tools]<br/>
 
 community
