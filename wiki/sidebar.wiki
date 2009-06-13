@@ -18,12 +18,11 @@ overview
 [ReferenceGuide Reference Guide]<br/>
 [http://physics.asu.edu/shumway/codes/doc/pi/index.html Doxygen Pages]<br/>
 [tutorials Tutorials/Demos]<br/>
-[Python Python Scripts]<br/>
-[Benchmark Benchmarks]<br/>
+[PythonScripts Python Scripts]<br/>
+[Benchmarks Benchmarks]<br/>
 [http://code.google.com/p/qdot-tools Quantum Dot Tools]<br/>
 
 community
 
 [http://www.qmcwiki.org QMC Wiki]<br/>
 [http://physics.asu.edu/shumway Shumway Group]<br/>
-
