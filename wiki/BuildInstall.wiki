@@ -1,4 +1,4 @@
-#summary How to build and install the _*pi*_ program.
+#summary How to build and install the pi program
 
 = Introduction =
 
