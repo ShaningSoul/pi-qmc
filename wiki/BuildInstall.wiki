@@ -1,0 +1,63 @@
+#summary How to build and install the _*pi*_ program.
+
+= Introduction =
+
+
+The easiest way to build is to use:
+{{{
+./configure
+make
+}}}
+
+For a parallel build
+{{{
+./configure --enable-mpi MPICXX=mpic++ MPICC=mpicc MPIF77=mpif77
+}}}
+where you should use the names of your MPI enabled compilers.
+
+You can also build for different numbers of physical dimensions (default is NDIM=3)
+{{{
+./configure --with-ndim=2
+}}}
+
+= Required libraries =
+  * libxml2
+  * blitz++
+  * hdf5
+  * fftw
+  * BLAS/LAPACK
+  * gsl
+
+= Advanced build using multiple directories=
+
+{{{
+codes/
+  pi-qmc/
+    configure
+    src/
+    lib/
+  pibuilds/
+    ndim1/
+    ndim2/
+    ndim3/
+    ndim1mpi/
+    ndim2mpi/
+    ndim3mpi/
+    debug/
+}}}
+
+= Platform specific instructions =
+
+==Mac OS X==
+
+==Linux==
+
+==HPC Centers==
+
+===ASU Fulton: saguaro===
+
+===LONI-LSU: queenbee ===
+
+===NCSA: abe===
+
+===TACC: Ranger===
