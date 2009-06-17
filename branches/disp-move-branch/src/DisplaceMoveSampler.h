@@ -52,28 +52,30 @@ public:
   void setAction(Action*, const int level=0); /// not needed
   const SuperCell& getSuperCell() const {return cell;}
   const Paths& getPaths() const {return paths;}
-  const double getDist() const {return dist;}
+  const double getDist()  {return dist;}
   /// Get a pointer to the accept/reject statistic estimator.
   /// (You are responsible for deleting this new object.) 
   virtual AccRejEstimator* getAccRejEstimator(const std::string& name);
+
 protected:
   bool tryMove(int imovingNonPerm);
   const int nmoving;
   Beads<NDIM> *pathsBeads;
-  const Permutation &pathsPermutation;
   Beads<NDIM> *movingBeads;
+  const Permutation & pathsPermutation;
+  ParticleChooser& particleChooser; 
+  IArray *movingIndex;
+  IArray identityIndex;
+ 
+ 
   Mover& mover;
   const SuperCell& cell;
   Action *action;
-  IArray *movingIndex;
-  
-  IArray identityIndex;
-  ParticleChooser& particleChooser; 
- 
   Paths& paths;
   AccRejEstimator* accRejEst;
   const int nrepeat;
-  const int nslice;
+  int nslice;
   const double dist;
+  int iFirstSlice;
 };
 #endif

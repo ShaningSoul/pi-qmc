@@ -149,37 +149,32 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
     int nmoving=getIntAttribute(ctxt->node,"npart");
     std::string speciesName=getStringAttribute(ctxt->node,"species");
     
-    ParticleChooser* particleChooser;      
+    ParticleChooser* particleChooser=0;      
     if (speciesName=="" || speciesName=="all") {
       particleChooser = new SimpleParticleChooser(simInfo.getNPart(),nmoving);
     }else{ 
       particleChooser = new SpeciesParticleChooser(simInfo.getSpecies(speciesName),nmoving);
     }
-    //PermutationChooser *permutationChooser=0;
-    //permutationChooser = new PermutationChooser(nmoving);
 
     int nrepeat=getIntAttribute(ctxt->node,"nrepeat");
     if (nrepeat==0) nrepeat=1;
     
-    //    if (doubleAction==0) {
-      // pathsChooser = new PathsChooser(*paths, *action, beadFactory);
-      /*  algorithm=new DisplaceMoveSampler(nmoving, *paths, dist,
-					 *particleChooser,  *permutationChooser,
-					 *mover, action, nrepeat, beadFactory);*/
-      algorithm=new DisplaceMoveSampler(nmoving, *paths, dist,
-					*particleChooser, 
-					*mover, action, nrepeat, beadFactory);
-     
+    //    if (doubleAction==0) {     
+    algorithm=new DisplaceMoveSampler(nmoving, *paths, dist,
+				      *particleChooser, 
+				      *mover, action, nrepeat, beadFactory);
+    
     std::string accRejName="DisplaceMoveSampler";
         estimators->add(((DisplaceMoveSampler*)algorithm)->
-    		    getAccRejEstimator(accRejName));
+			getAccRejEstimator(accRejName));
 	// }
-/*else{ needs fixinf
+	/*else{ Do I need that stuff
+	  
       algorithm=new DoubleDisplcaceMoveSampler(nmoving, *paths, dist,
-					       *particleChooser, *permutationChooser, *mover, action,
-					       doubleAction, both, nrepeat, beadFactory);
-					       }*/
-
+      *particleChooser, *permutationChooser, *mover, action,
+      doubleAction, both, nrepeat, beadFactory);
+      }*/
+	
 
   } else if (name=="ShiftWorkers") {
     int maxShift=getIntAttribute(ctxt->node,"maxShift");

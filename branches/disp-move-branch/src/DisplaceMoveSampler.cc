@@ -41,15 +41,14 @@ DisplaceMoveSampler::DisplaceMoveSampler(int nmoving, Paths& paths, double dist,
   ParticleChooser& particleChooser, Mover& mover, Action* action,
   const int nrepeat, const BeadFactory& beadFactory)
   : nslice(paths.getNSlice()), nmoving(nmoving), pathsBeads(beadFactory.getNewBeads(paths.getNPart(), paths.getNSlice())),
-    dist(dist), pathsPermutation(paths.getPermutation()),
-    movingBeads(beadFactory.getNewBeads(paths.getNPart(),paths.getNSlice())),
+    dist(dist),  movingBeads(beadFactory.getNewBeads(paths.getNPart(),paths.getNSlice())),
     mover(mover), cell(paths.getSuperCell()), action(action),
     movingIndex(new IArray(nmoving)),
-    identityIndex(nmoving), 
+    identityIndex(nmoving), pathsPermutation(paths.getPermutation()),
     particleChooser(particleChooser),
     paths(paths), accRejEst(0),
     nrepeat(nrepeat) {
- 
+
   for (int i=0; i<nmoving; ++i) (*movingIndex)(i)=identityIndex(i)=i;
 }
 
@@ -57,58 +56,62 @@ DisplaceMoveSampler::~DisplaceMoveSampler() {
   delete movingBeads;
   delete movingIndex;
   delete &particleChooser;
-  //delete &permutationChooser;
+  
+  delete &pathsPermutation;
 }
 
 void DisplaceMoveSampler::run() {
   // Select particles that are not permuting to move
- 
+  iFirstSlice = paths.getLowestSampleSlice(0,false);
+  
   paths.getBeads(0,*pathsBeads);
- 
+  // nslice  = paths.getHighestSampleSlice(1,false);
+
   for (int irepeat=0; irepeat<nrepeat; ++irepeat) {
     particleChooser.chooseParticles();
-    
     int imovingNonPerm = 0;         
     for (int i=0; i<nmoving; ++i) {
       int j = particleChooser[i];
       int jperm = pathsPermutation[j];
+      
       if (j==jperm){
 	(*movingIndex)(imovingNonPerm)=j;
 	imovingNonPerm++;
       }
     }
- 
+    
+    // for (int i=0; i<nmoving; ++i) std :: cout <<  (*movingIndex)(i)<<"  "<<std :: endl;
     // Copy old coordinate to the moving coordinate
-     for (int islice=0; islice<nslice; ++islice) { 
-       pathsBeads->copySlice(*movingIndex,islice,*movingBeads,identityIndex,islice);
-     }
+    for (int islice=0; islice<nslice; ++islice) { 
+      pathsBeads->copySlice(*movingIndex,islice,*movingBeads,identityIndex,islice);
+    }
     if (tryMove(imovingNonPerm)) continue;
   }
+  
 }
 
 bool DisplaceMoveSampler::tryMove(int imovingNonPerm) {
- 
   accRejEst->tryingMove(0);
- 
   double l = mover.makeMove(*this);
+
   // Evaluate the change in action.
   double deltaAction=(action==0)?0:action->getActionDifference(*this, imovingNonPerm);
   double acceptProb=exp(-deltaAction);
-  //std::cout << acceptProb << ", " << deltaAction << ",  " << imovingNonPerm << ", "
-  //          << action  << ", " << std::endl;
+
   if (RandomNumGenerator::getRand()>acceptProb) return false;
   accRejEst->moveAccepted(0);
   
   // Move accepted.
   action->acceptLastMove();
+  
   // Put moved beads in paths beads.
   for (int islice=0; islice<nslice; ++islice) {
     movingBeads->copySlice(identityIndex,islice,
 			   *pathsBeads,*movingIndex,islice);
     
   }
+  
   paths.putBeads(0,*pathsBeads,pathsPermutation);
-  std::cout <<"After "<<paths(50,0) <<std::endl; 
   return true;
 }
 
