@@ -20,6 +20,7 @@
 #ifdef ENABLE_MPI
 #include <mpi.h>
 #endif
+#include "stats/MPIManager.h"
 #include "UniformMover.h"
 #include "Beads.h"
 #include "DisplaceMoveSampler.h"
@@ -29,7 +30,8 @@
 #include "SimulationInfo.h"
 #include <cmath>
 
-UniformMover::UniformMover() {
+UniformMover::UniformMover(const MPIManager* mpi)
+  : mpi(mpi) {
 }
 
 UniformMover::~UniformMover() {
@@ -46,12 +48,26 @@ double UniformMover::makeMove(DisplaceMoveSampler& sampler) {
    IArray& index=sampler.getMovingIndex(); 
   const int nMoving=index.size();
   blitz::Array<double,1> uniRand(nMoving*NDIM); uniRand=0.0;
-
+  
+#ifdef ENABLE_MPI
+  int workerID=(mpi)?mpi->getWorkerID():0;
+  if (workerID ==0) RandomNumGenerator::makeRand(uniRand);  
+  if (mpi && (mpi->getNWorker())>1) {
+    mpi->getWorkerComm().Bcast(&uniRand(0),nMoving*NDIM,MPI::DOUBLE,0);
+  }
+#else
+  RandomNumGenerator::makeRand(uniRand);  
+#endif
+  
   for (int iMoving=0; iMoving<nMoving; ++iMoving) {
-    RandomNumGenerator::makeRand(uniRand);   
+#ifdef ENABLE_MPI
+    std :: cout <<"The random numbers on cloneID"<<mpi->getCloneID()<< ", WorkerID "<<mpi->getWorkerID()<<" "<<    uniRand(NDIM*iMoving)<<std :: endl;
+    std :: cout <<"The random numbers on cloneID"<<mpi->getCloneID()<< ", WorkerID "<<mpi->getWorkerID()<<" "<<    uniRand(NDIM*iMoving+1)<<std :: endl;
+    std :: cout <<"The random numbers on cloneID"<<mpi->getCloneID()<< ", WorkerID "<<mpi->getWorkerID()<<" "<<    uniRand(NDIM*iMoving+2)<<std :: endl;
+#endif
     const int i=index(iMoving);// not needed
     for (int islice=ifirstSlice; islice<nSlice; islice++) {
-
+      
       // Calculate the new position.
       movingBeads(iMoving,islice)[0] += dist*(uniRand(NDIM*iMoving)-0.5);
       movingBeads(iMoving,islice)[1] += dist*(uniRand(NDIM*iMoving+1)-0.5);
@@ -60,6 +76,6 @@ double UniformMover::makeMove(DisplaceMoveSampler& sampler) {
       cell.pbc(movingBeads(iMoving,islice));
     }
   }
- 
+  
   return 0; 
 }
