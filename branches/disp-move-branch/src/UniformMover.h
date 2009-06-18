@@ -20,6 +20,8 @@
 #include <vector>
 #include "Mover.h"
 
+class MPIManager;
+
 class UniformMover : public Mover {
 public:
   /// Typedefs.
@@ -27,9 +29,10 @@ public:
   typedef blitz::Array<double,1> Array;
   typedef blitz::TinyVector<double,NDIM> Vec;
 
-  UniformMover();
+  UniformMover( const MPIManager *mpi=0);
   virtual ~UniformMover();
   virtual double makeMove(DisplaceMoveSampler&);
-
+ private:
+  const MPIManager* mpi;
 };
 #endif

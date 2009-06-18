@@ -143,7 +143,7 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
     Mover* mover(0);
     std::string moverName=getStringAttribute(ctxt->node,"mover");
     //if (moverName=="Gauss") mover = new GaussMover(simInfo);
-    if (moverName=="Uniform") mover = new UniformMover();
+    if (moverName=="Uniform") mover = new UniformMover(mpi);
 
     double dist = getDoubleAttribute(ctxt->node,"dist");
     int nmoving=getIntAttribute(ctxt->node,"npart");
@@ -162,7 +162,7 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
     //    if (doubleAction==0) {     
     algorithm=new DisplaceMoveSampler(nmoving, *paths, dist,
 				      *particleChooser, 
-				      *mover, action, nrepeat, beadFactory);
+				      *mover, action, nrepeat, beadFactory, mpi);
     
     std::string accRejName="DisplaceMoveSampler";
         estimators->add(((DisplaceMoveSampler*)algorithm)->

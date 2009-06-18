@@ -27,6 +27,8 @@ class PermutationChooser;
 class Permutation;
 class AccRejEstimator;
 class BeadFactory;
+class MPIManager;
+
 #include "Algorithm.h"
 #include <vector>
 #include <blitz/array.h>
@@ -40,7 +42,7 @@ public:
 		      ParticleChooser&,  
 		      Mover&, 
 		      Action*, const int nrepeat,
-		      const BeadFactory&);
+		      const BeadFactory&, const MPIManager* mpi);
   virtual ~DisplaceMoveSampler();
   virtual void run();
   Beads<NDIM>& getMovingBeads() {return *movingBeads;}
@@ -77,5 +79,7 @@ protected:
   int nslice;
   const double dist;
   int iFirstSlice;
+
+  const MPIManager* mpi;
 };
 #endif
