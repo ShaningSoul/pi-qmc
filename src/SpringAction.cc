@@ -115,13 +115,14 @@ double SpringAction::getActionDifference(const DisplaceMoveSampler& sampler,
   const Beads<NDIM>& movingBeads=sampler.getMovingBeads();
   const SuperCell& cell=sampler.getSuperCell();
   const int nStride= 1; // (int)pow(2,level);
-  const int nSlice=pathsBeads.getNSlice();
+  const int nSlice=sampler.getNSlice();
   const IArray& index=sampler.getMovingIndex(); 
   const int level = 0;
   double deltaAction=0;
-  for (int islice=1; islice<nSlice; islice+=nStride) {// you count from islice= 0 or 1?
-    for (int iMoving=0; iMoving<nMoving; ++iMoving) {
-      const int i=index(iMoving);
+  for (int iMoving=0; iMoving<nMoving; ++iMoving) {
+    const int i=index(iMoving);
+    for (int islice=1; islice<nSlice; islice+=nStride) {
+      
       if (isStatic(i)) continue;
       const int ispec=specIndex(i);
       const double inv2Sigma2 = 0.25/(lambda(i)*tau*nStride);

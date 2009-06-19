@@ -30,6 +30,9 @@
 #include "SimulationInfo.h"
 #include <cmath>
 
+
+#include <sstream>
+#include <string>
 UniformMover::UniformMover(const MPIManager* mpi)
   : mpi(mpi) {
 }
@@ -39,43 +42,39 @@ UniformMover::~UniformMover() {
 
 double UniformMover::makeMove(DisplaceMoveSampler& sampler) {
   typedef blitz::TinyVector<double,NDIM> Vec;
-  const Beads<NDIM>& pathsBeads=sampler.getPathsBeads();
+  //  const Beads<NDIM>& pathsBeads=sampler.getPathsBeads();
   Beads<NDIM>& movingBeads=sampler.getMovingBeads();
   const SuperCell& cell=sampler.getSuperCell();
   const double dist = sampler.getDist();
-  const int nSlice=pathsBeads.getNSlice();
+  const int nSlice = sampler.getNSlice();//pathsBeads.getNSlice();
   const int ifirstSlice = 0; 
    IArray& index=sampler.getMovingIndex(); 
   const int nMoving=index.size();
-  blitz::Array<double,1> uniRand(nMoving*NDIM); uniRand=0.0;
-  
+  blitz::Array<double,1> uniRand(nMoving*NDIM);
+  RandomNumGenerator::makeRand(uniRand); 
 #ifdef ENABLE_MPI
-  int workerID=(mpi)?mpi->getWorkerID():0;
-  if (workerID ==0) RandomNumGenerator::makeRand(uniRand);  
+  // int workerID=(mpi)?mpi->getWorkerID():0;
   if (mpi && (mpi->getNWorker())>1) {
     mpi->getWorkerComm().Bcast(&uniRand(0),nMoving*NDIM,MPI::DOUBLE,0);
   }
-#else
-  RandomNumGenerator::makeRand(uniRand);  
 #endif
   
+  // Calculate the new position.
   for (int iMoving=0; iMoving<nMoving; ++iMoving) {
-#ifdef ENABLE_MPI
-    std :: cout <<"The random numbers on cloneID"<<mpi->getCloneID()<< ", WorkerID "<<mpi->getWorkerID()<<" "<<    uniRand(NDIM*iMoving)<<std :: endl;
-    std :: cout <<"The random numbers on cloneID"<<mpi->getCloneID()<< ", WorkerID "<<mpi->getWorkerID()<<" "<<    uniRand(NDIM*iMoving+1)<<std :: endl;
-    std :: cout <<"The random numbers on cloneID"<<mpi->getCloneID()<< ", WorkerID "<<mpi->getWorkerID()<<" "<<    uniRand(NDIM*iMoving+2)<<std :: endl;
-#endif
-    const int i=index(iMoving);// not needed
+    int iworker = mpi->getWorkerID();
+    //std::cout<<iworker<<" : "<<uniRand(NDIM*iMoving)<<"  "<<uniRand(NDIM*iMoving+1)<<"  "<<uniRand(NDIM*iMoving+2)<<std ::endl;
     for (int islice=ifirstSlice; islice<nSlice; islice++) {
-      
-      // Calculate the new position.
+      //  std::cout<<iworker<<": BEFORE  iMoving "<< iMoving<<" islice "<<islice<<"  "<<movingBeads(iMoving,islice)[0]<<" "<<movingBeads(iMoving,islice)[1]<<" "<<movingBeads(iMoving,islice)[2]<<std :: endl;
+     
       movingBeads(iMoving,islice)[0] += dist*(uniRand(NDIM*iMoving)-0.5);
       movingBeads(iMoving,islice)[1] += dist*(uniRand(NDIM*iMoving+1)-0.5);
       movingBeads(iMoving,islice)[2] += dist*(uniRand(NDIM*iMoving+2)-0.5);
       
       cell.pbc(movingBeads(iMoving,islice));
+
+      //      std::cout<<iworker<<": AFTER  iMoving "<< iMoving<<" islice "<<islice<<"  "<<movingBeads(iMoving,islice)[0]<<" "<<movingBeads(iMoving,islice)[1]<<" "<<movingBeads(iMoving,islice)[2]<<std :: endl;
     }
   }
-  
+
   return 0; 
 }

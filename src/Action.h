@@ -47,6 +47,7 @@ public:
           double& u, double& utau, double& ulambda, Vec& fm, Vec& fp) const=0;
   /// Initialize for a sampling section.
   virtual void initialize(const SectionChooser&) {};
+
   /// Accept last move.
   virtual void acceptLastMove() {};
   /// Returns pointer to Action of type t, otherwise returns null pointer.
