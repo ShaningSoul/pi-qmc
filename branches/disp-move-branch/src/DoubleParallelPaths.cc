@@ -51,6 +51,7 @@ DoubleParallelPaths::DoubleParallelPaths(int npart, int nslice, double tau,
   std::cout <<  "cloneID=" << mpi.getCloneID() << std::endl;
   for (int i=0; i<nworker; ++i)
     npSlice=nslice/2/nworker+1+((i+1==nworker)?(nslice/2)%nworker:0);
+  std :: cout <<"In DoubleParallelPaths.cc ::  WorkerID "<< mpi.getWorkerID()<<" has nprocSlice "<<nprocSlice<<std ::endl;
 }
 
 DoubleParallelPaths::~DoubleParallelPaths() {

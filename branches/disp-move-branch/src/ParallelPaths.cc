@@ -45,8 +45,8 @@ ParallelPaths::ParallelPaths(int npart, int nslice, double tau,
   if (mpi.isMain()) std::cout << "Creating parallel paths" << std::endl;
   std::cout <<  "workerID=" << mpi.getWorkerID() << std::endl;
   std::cout <<  "cloneID=" << mpi.getCloneID() << std::endl;
-  for (int i=0; i<nworker; ++i)
-    npSlice=nslice/nworker+1+((i+1==nworker)?nslice%nworker:0);
+  for (int i=0; i<nworker; ++i)   npSlice=nslice/nworker+1+((i+1==nworker)?nslice%nworker:0);
+  std :: cout <<"In parallelPaths.cc ::  WorkerID "<< mpi.getWorkerID()<<" has nprocSlice "<<nprocSlice<<std ::endl;
 }
 
 ParallelPaths::~ParallelPaths() {

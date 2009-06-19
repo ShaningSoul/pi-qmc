@@ -33,52 +33,60 @@
 #include "PermutationChooser.h"
 #include "ParticleChooser.h"
 #include "SimpleParticleChooser.h"
-#include "RandomPermutationChooser.h"
+//#include "RandomPermutationChooser.h"
 #include <sstream>
 #include <string>
+//Fix. nslice  to be multiple of nworker. Fix
+
 
 DisplaceMoveSampler::DisplaceMoveSampler(int nmoving, Paths& paths, double dist, 
   ParticleChooser& particleChooser, Mover& mover, Action* action,
 					 const int nrepeat, const BeadFactory& beadFactory,const MPIManager* mpi)
   : nmoving(nmoving), dist(dist), mover(mover), cell(paths.getSuperCell()), action(action),
     movingIndex(new IArray(nmoving)), identityIndex(nmoving), pathsPermutation(paths.getPermutation()),
-    particleChooser(particleChooser), paths(paths), accRejEst(0), nrepeat(nrepeat), mpi(mpi) {
+    particleChooser(particleChooser), paths(paths), accRejEst(0), nrepeat(nrepeat), mpi(mpi), beadFactory(beadFactory){
+ 
 #ifdef ENABLE_MPI
-  int iworker = (mpi)?mpi->getWorkerID():0;
-  int nworker =(mpi)? mpi->getNWorker():1;
-  int nsl=paths.getNSlice();
-  nslice=nsl/nworker;
+  //int iworker = (mpi)?mpi->getWorkerID():0;
+  int nworker = (mpi)?mpi->getNWorker():1;
+  int nsl = paths.getNSlice();
+  int iworker = mpi->getWorkerID();
+  if (nworker>1){
+    nslice = nsl/nworker+2+((iworker+1==nworker)?nsl%nworker:0);
+  }else{
+    nslice = paths.getNSlice();
+  }
 #else
-  nslice=paths.getNSlice();
+  nslice = paths.getNSlice();
 #endif
-  pathsBeads=beadFactory.getNewBeads(paths.getNPart(), nslice);
-  movingBeads=beadFactory.getNewBeads(paths.getNPart(),nslice);
-for (int i=0; i<nmoving; ++i) (*movingIndex)(i)=identityIndex(i)=i;
+  pathsBeads = beadFactory.getNewBeads(paths.getNPart(), nslice);
+  for (int i=0; i<nmoving; ++i) identityIndex(i)=i;
 }
+
+
 
 DisplaceMoveSampler::~DisplaceMoveSampler() {
   delete movingBeads;
   delete movingIndex;
   delete &particleChooser;
-  
   delete &pathsPermutation;
 }
+
+
 
 void DisplaceMoveSampler::run() {
   // Select particles that are not permuting to move
   iFirstSlice = paths.getLowestSampleSlice(0,false);
   paths.getBeads(iFirstSlice,*pathsBeads);
- 
-#ifdef ENABLE_MPI
-      int nworker =  mpi->getNWorker();
-      particleChooser.chooseParticles();
-      if (mpi && nworker > 1) mpi->getWorkerComm().Bcast(&particleChooser, nmoving, MPI::INT, 0); 
-#endif
+  //  action->initialize(*this);
 
   for (int irepeat=0; irepeat<nrepeat; ++irepeat) {
-    //particleChooser.chooseParticles();
-   int imovingNonPerm = 0;         
-    for (int i=0; i<nmoving; ++i) {
+    movingIndex->resize(nmoving);  
+    identityIndex.resize(nmoving);  
+    
+    particleChooser.chooseParticles();
+    int imovingNonPerm = 0;         
+    for (int i=0; i<1; ++i) {
       int j = particleChooser[i];
       int jperm = pathsPermutation[j];
      
@@ -87,14 +95,28 @@ void DisplaceMoveSampler::run() {
 	imovingNonPerm++;
       }
     } 
-
+ 
+#ifdef ENABLE_MPI
+    if ( (mpi->getNWorker()) > 1) {
+      mpi->getWorkerComm().Bcast(&(*movingIndex)(0), nmoving, MPI::INT, 0); 
+      mpi->getWorkerComm().Bcast(&imovingNonPerm, 1, MPI::INT, 0); 
+    }
+#endif
+    movingIndex->resizeAndPreserve(imovingNonPerm);
+    identityIndex.resize(imovingNonPerm);
+    
     // Copy old coordinate to the moving coordinate
+    movingBeads = beadFactory.getNewBeads(imovingNonPerm, nslice);
+    for (int i=0; i<imovingNonPerm; ++i) identityIndex(i)=i;
     for (int islice=0; islice<nslice; ++islice) { 
       pathsBeads->copySlice(*movingIndex,islice,*movingBeads,identityIndex,islice);
     }
     if (tryMove(imovingNonPerm)) continue;
   }
 }
+
+
+
 
 bool DisplaceMoveSampler::tryMove(int imovingNonPerm) {
   accRejEst->tryingMove(0);
@@ -107,13 +129,21 @@ bool DisplaceMoveSampler::tryMove(int imovingNonPerm) {
   if (mpi && (mpi->getNWorker())>1) {
     double netDeltaAction=0;
     mpi->getWorkerComm().Reduce(&deltaAction,&netDeltaAction,1,MPI::DOUBLE,MPI::SUM,0);
-    double acceptProb=exp(-deltaAction);
+
+    /*deb
+    if (mpi->getWorkerID() == 0) {
+      std :: cout << "action diff = " << deltaAction<<". net= "<<netDeltaAction<<std::endl;
+    }
+    */
+
+
+    double acceptProb = exp(-netDeltaAction);
     bool acceptReject = RandomNumGenerator::getRand()>acceptProb;
     mpi->getWorkerComm().Bcast(&acceptReject,1,MPI::LOGICAL,0); 
     if (acceptReject) return false;
   }else
     {
-      double acceptProb=exp(-deltaAction);
+      double acceptProb=exp(-deltaAction); 
       if (RandomNumGenerator::getRand()>acceptProb) return false;
     }
 #else
@@ -125,17 +155,28 @@ bool DisplaceMoveSampler::tryMove(int imovingNonPerm) {
   
   // Move accepted.
   action->acceptLastMove();
-  
+
   // Put moved beads in paths beads.
   for (int islice=0; islice<nslice; ++islice) {
     movingBeads->copySlice(identityIndex,islice,
 			   *pathsBeads,*movingIndex,islice);
   }
   paths.putBeads(iFirstSlice,*pathsBeads,pathsPermutation);
+  
+  /* int iworker = mpi->getWorkerID();
+  if (iworker == 0 )
+    {
+      std :: cout << *pathsBeads;
+    }
+  */
   return true;
 }
 
+
+
 void DisplaceMoveSampler::setAction(Action* act, const int level) {action=act;}
+
+
 
 AccRejEstimator* 
 DisplaceMoveSampler::getAccRejEstimator(const std::string& name) {
