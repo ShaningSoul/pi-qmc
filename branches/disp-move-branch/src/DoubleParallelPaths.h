@@ -50,8 +50,10 @@ public:
   virtual Vec delta(const int ipart, const int islice, const int istep) const;
   /// Get beads.
   virtual void getBeads(int ifirstSlice, Beads<NDIM>& ) const;
+
   /// Get a slice.
   virtual void getSlice(int islice, VArray& ) const;
+  virtual int getnprocSlice(){return nprocSlice;}
   /// Get auxialiary bead.
   virtual const void* getAuxBead(const int ipart, const int islice, 
                                  const int iaux) const;
@@ -61,6 +63,9 @@ public:
   /// Put beads.
   virtual void putBeads(int ifirstSlice,
                         const Beads<NDIM>&, const Permutation&) const;
+  ////db
+
+  ////db
   virtual void putDoubleBeads(
                  int ifirstSlice1,Beads<NDIM>&, Permutation&,
                  int ifirstSlice2,Beads<NDIM>&, Permutation&) const;

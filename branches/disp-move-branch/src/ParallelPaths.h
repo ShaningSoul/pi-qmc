@@ -52,6 +52,7 @@ public:
   virtual void getBeads(int ifirstSlice, Beads<NDIM>& ) const;
   /// Get a slice.
   virtual void getSlice(int islice, VArray& ) const;
+  virtual int getnprocSlice(){return nprocSlice;}
   /// Get auxialiary bead.
   virtual const void* getAuxBead(const int ipart, const int islice, 
                                  const int iaux) const;

@@ -1,4 +1,4 @@
-// $Id: DisplaceMoveSampler.h 22  2009-05-18 Saad Khairallah $
+// $Id: DoubleDisplaceMoveSampler.h 22  2009-05-18 Saad Khairallah $
 /*  Copyright (C) 2004-2006 John B. Shumway, Jr.
 
     This program is free software; you can redistribute it and/or modify
@@ -14,8 +14,8 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
-#ifndef __DisplaceMoveSampler_h_
-#define __DisplaceMoveSampler_h_
+#ifndef __DoubleDisplaceMoveSampler_h_
+#define __DoubleDisplaceMoveSampler_h_
 template <int TDIM> class Beads;
 class SuperCell;
 class Action;
@@ -34,20 +34,23 @@ class MPIManager;
 #include <vector>
 #include <blitz/array.h>
 #include <iostream>
+#include "DisplaceMoveSampler.h"
 
-
-class DisplaceMoveSampler : public Algorithm {
+class DoubleDisplaceMoveSampler : public DisplaceMoveSampler {
 public:
   typedef blitz::Array<int,1> IArray;
-  DisplaceMoveSampler(const int nmoving, Paths&,  const double dist, const double freq,
-		      ParticleChooser&, Mover&, Action*, const int nrepeat,
-		      const BeadFactory&, const MPIManager* mpi, DoubleAction* doubleAction);
-  virtual ~DisplaceMoveSampler();
+  DoubleDisplaceMoveSampler(const int nmoving, Paths&,  const double dist, 
+			    const double freq, ParticleChooser&, Mover&, Action*, 
+			    const int nrepeat, const BeadFactory&, const MPIManager* mpi, 
+			    DoubleAction* doubleAction);
+  virtual ~DoubleDisplaceMoveSampler();
   virtual void run();
-  Beads<NDIM>& getMovingBeads() {return *movingBeads;}
-  Beads<NDIM>& getMovingBeads() const {return *movingBeads;}
+  Beads<NDIM>& getMovingBeads1() {return *movingBeads1;}
+  Beads<NDIM>& getMovingBeads1() const {return *movingBeads1;}
+  Beads<NDIM>& getMovingBeads2() {return *movingBeads2;}
+  Beads<NDIM>& getMovingBeads2() const {return *movingBeads2;}
   Beads<NDIM>& getPathsBeads() {return *pathsBeads;}
-  const Beads<NDIM>& getPathsBeads() const {return *pathsBeads;}
+  // const Beads<NDIM>& getPathsBeads() const {return *pathsBeads;}
   IArray&  getMovingIndex() {return *movingIndex;}
   const IArray&  getMovingIndex() const {return *movingIndex;}
   void setAction(Action*, const int level=0); /// not needed
@@ -56,35 +59,39 @@ public:
   double getDist() {return dist;}
   int getNSlice() {return nslice;}
   int getNSlice() const {return nslice;}
-
+  void activateSection(const int i);
+ 
+  // int getFistSlice2() const {return iFirstSlice2;}
   /// Get a pointer to the accept/reject statistic estimator.
   /// (You are responsible for deleting this new object.) 
   virtual AccRejEstimator* getAccRejEstimator(const std::string& name);
 
 protected:
   bool tryMove(int imovingNonPerm);
-
-  Beads<NDIM> *pathsBeads;
-  Beads<NDIM> *movingBeads;
+  
+  Beads<NDIM> *pathsBeads1;
+  Beads<NDIM> *pathsBeads2;
+  Beads<NDIM> *movingBeads1;
+  Beads<NDIM>  *movingBeads2;
   //const Permutation & pathsPermutation;
-  ParticleChooser& particleChooser; 
-  Mover& mover;
-  Action *action;  DoubleAction *doubleAction;
-  Paths& paths;
+  //ParticleChooser& particleChooser; 
+  //Mover& mover;
+  // Action *action;  DoubleAction *doubleAction;
+  // Paths& paths;
   AccRejEstimator* accRejEst;
 
-  IArray *movingIndex;
-  IArray identityIndex; 
-  const BeadFactory& beadFactory;
+  //IArray *movingIndex;
+  //IArray identityIndex; 
+  /*  const BeadFactory& beadFactory;
   const SuperCell& cell; 
   const MPIManager* mpi;
   const int nrepeat;
   const double dist;
-  const double freq;
   const int nmoving;
- 
-  int nslice;
-  int iFirstSlice;
+  const double freq;
+  */
+  //int nslice;
+  int iFirstSlice, iFirstSlice2;
 
 
 };

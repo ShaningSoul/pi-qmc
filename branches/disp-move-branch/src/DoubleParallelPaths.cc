@@ -47,11 +47,9 @@ DoubleParallelPaths::DoubleParallelPaths(int npart, int nslice, double tau,
     inversePermutation2(*new Permutation(npart)),
     mpi(mpi), npSlice(nworker) {
   if (mpi.isMain()) std::cout << "Creating double parallel paths" << std::endl;
-  std::cout <<  "workerID=" << mpi.getWorkerID() << std::endl;
-  std::cout <<  "cloneID=" << mpi.getCloneID() << std::endl;
   for (int i=0; i<nworker; ++i)
     npSlice=nslice/2/nworker+1+((i+1==nworker)?(nslice/2)%nworker:0);
-  std :: cout <<"In DoubleParallelPaths.cc ::  WorkerID "<< mpi.getWorkerID()<<" has nprocSlice "<<nprocSlice<<std ::endl;
+  std :: cout <<"CloneID :: "<< mpi.getCloneID()  <<" :: Creating DoubleParallelPaths on  WorkerID "<< mpi.getWorkerID()<<" with nprocSlice "<<nprocSlice<<std ::endl;
 }
 
 DoubleParallelPaths::~DoubleParallelPaths() {
