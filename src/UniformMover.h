@@ -32,6 +32,7 @@ public:
   UniformMover( const MPIManager *mpi=0);
   virtual ~UniformMover();
   virtual double makeMove(DisplaceMoveSampler&);
+  virtual double makeMove(DoubleDisplaceMoveSampler&);
  private:
   const MPIManager* mpi;
 };

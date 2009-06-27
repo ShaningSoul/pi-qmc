@@ -29,6 +29,7 @@
 #include "FreeMover.h"
 #include "UniformMover.h"
 #include "DisplaceMoveSampler.h"
+#include "DoubleDisplaceMoveSampler.h"
 #include "spin/SpinMover.h"
 #include "spin/FreeSpinMover.h"
 #include "DampedFreeTensorMover.h"
@@ -145,6 +146,7 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
     //if (moverName=="Gauss") mover = new GaussMover(simInfo);
     if (moverName=="Uniform") mover = new UniformMover(mpi);
 
+    double freq = getDoubleAttribute(ctxt->node,"freq");
     double dist = getDoubleAttribute(ctxt->node,"dist");
     int nmoving=getIntAttribute(ctxt->node,"npart");
     std::string speciesName=getStringAttribute(ctxt->node,"species");
@@ -159,22 +161,20 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
     int nrepeat=getIntAttribute(ctxt->node,"nrepeat");
     if (nrepeat==0) nrepeat=1;
     
-    //    if (doubleAction==0) {     
-    algorithm=new DisplaceMoveSampler(nmoving, *paths, dist,
-				      *particleChooser, 
-				      *mover, action, nrepeat, beadFactory, mpi);
-    
+    if (mpi && mpi->getNWorker()>1 && doubleAction) {
+      algorithm = new DoubleDisplaceMoveSampler(nmoving, *paths, dist, freq,
+					      *particleChooser, *mover, action,
+					      nrepeat, beadFactory, mpi, doubleAction);
+      std :: cout <<" Requesting DoubleDisplaceMoveSampler"<<std :: endl;
+    } else {    
+      algorithm = new DisplaceMoveSampler(nmoving, *paths, dist, freq,
+					  *particleChooser, *mover, action,
+					  nrepeat, beadFactory, mpi, doubleAction);
+      std :: cout <<" Requesting DisplaceMoveSampler"<<std :: endl;
+    } 
     std::string accRejName="DisplaceMoveSampler";
-        estimators->add(((DisplaceMoveSampler*)algorithm)->
-			getAccRejEstimator(accRejName));
-	// }
-	/*else{ Do I need that stuff
-	  
-      algorithm=new DoubleDisplcaceMoveSampler(nmoving, *paths, dist,
-      *particleChooser, *permutationChooser, *mover, action,
-      doubleAction, both, nrepeat, beadFactory);
-      }*/
-	
+    estimators->add(((DisplaceMoveSampler*)algorithm)->
+		    getAccRejEstimator(accRejName));
 
   } else if (name=="ShiftWorkers") {
     int maxShift=getIntAttribute(ctxt->node,"maxShift");

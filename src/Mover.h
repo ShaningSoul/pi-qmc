@@ -18,6 +18,7 @@
 #define __Mover_h_
 class MultiLevelSampler;
 class DisplaceMoveSampler;
+class DoubleDisplaceMoveSampler;
 /** Virtual base class for routines to select trial moves for beads.
   * @version $Revision$
   * @author John Shumway. */
@@ -31,5 +32,6 @@ public:
     //  virtual double makeMove(MultiLevelSampler&, const int level)=0;
   virtual double makeMove(MultiLevelSampler&, const int level){return 0;}
   virtual double makeMove(DisplaceMoveSampler&) {return 0;}
+  virtual double makeMove(DoubleDisplaceMoveSampler&) {return 0;}
 };
 #endif

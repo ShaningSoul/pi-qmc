@@ -1,4 +1,4 @@
-// $Id: MultiLevelSampler.cc 22 2009-5-18 Saad khairallah$
+// $Id: DoubleDisplaceSampler.cc 22 2009-5-18 Saad khairallah$
 /*  Copyright (C) 2004-2006 John B. Shumway, Jr.
 
     This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 #include <mpi.h>
 #endif
 #include "stats/MPIManager.h"
-#include "DisplaceMoveSampler.h"
+#include "DoubleDisplaceMoveSampler.h"
 #include "stats/AccRejEstimator.h"
 #include "Beads.h"
 #include "BeadFactory.h"
@@ -30,7 +30,6 @@
 #include "Mover.h"
 #include "RandomNumGenerator.h"
 #include "Paths.h"
-#include "ParallelPaths.h"
 #include "Permutation.h"
 #include "PermutationChooser.h"
 #include "ParticleChooser.h"
@@ -39,52 +38,53 @@
 #include <string>
 
 
-DisplaceMoveSampler::DisplaceMoveSampler(const int nmoving, Paths& paths, const double dist, const double freq,
-					 ParticleChooser& particleChooser, Mover& mover, Action* action, 
-					 const int nrepeat, const BeadFactory& beadFactory,
-					 const MPIManager* mpi, DoubleAction* doubleAction)
-  : nmoving(nmoving), dist(dist), mover(mover), cell(paths.getSuperCell()), action(action), freq(freq),
-    movingIndex(new IArray(nmoving)), identityIndex(nmoving),
-    particleChooser(particleChooser), paths(paths), accRejEst(0), nrepeat(nrepeat), mpi(mpi), 
-    doubleAction(doubleAction), beadFactory(beadFactory){
- 
+DoubleDisplaceMoveSampler::DoubleDisplaceMoveSampler(const int nmoving, Paths& paths, const double dist, 
+						     const double freq, ParticleChooser& particleChooser, 
+						     Mover& mover, Action* action, const int nrepeat, 
+						     const BeadFactory& beadFactory, const MPIManager* mpi, 
+						     DoubleAction* doubleAction)
+  : DisplaceMoveSampler(nmoving, paths, dist, freq, particleChooser, mover, action, nrepeat, beadFactory, mpi, doubleAction){
+  
   nslice = paths.getnprocSlice();
-  pathsBeads = beadFactory.getNewBeads(paths.getNPart(), nslice);
-  for (int i=0; i<nmoving; ++i) identityIndex(i)=i;
+  pathsBeads2 = beadFactory.getNewBeads(paths.getNPart(), nslice); 
+  pathsBeads1 = beadFactory.getNewBeads(paths.getNPart(), nslice);
 }
 
-DisplaceMoveSampler::~DisplaceMoveSampler() {
-  delete movingBeads;
+DoubleDisplaceMoveSampler::~DoubleDisplaceMoveSampler() {
+  delete movingBeads;  delete movingBeads2; delete movingBeads1;
   delete movingIndex;
   delete &particleChooser;
 }
 
 
 
-void DisplaceMoveSampler::run() {
+void DoubleDisplaceMoveSampler::run() {
 
   // run with a probability equal to freq 
 #ifdef ENABLE_MPI
-    if ( mpi && (mpi->getNWorker()) > 1) {
-      double rd = RandomNumGenerator::getRand() ;
-      mpi->getWorkerComm().Bcast(&rd, 1, MPI::DOUBLE, 0); 
-      if (rd > freq) return;
-    } else {
-      if (RandomNumGenerator::getRand()>freq) return ;
-    }
-#else
+  if ( mpi && (mpi->getNWorker()) > 1) {
+    double rd = RandomNumGenerator::getRand() ;
+    mpi->getWorkerComm().Bcast(&rd, 1, MPI::DOUBLE, 0); 
+    if (rd > freq) return;
+  } else {
     if (RandomNumGenerator::getRand()>freq) return ;
+  }
+#else
+  if (RandomNumGenerator::getRand()>freq) return ;
 #endif
-
- const Permutation &pathsPermutation(paths.getPermutation());
- 
+  const Permutation &pathsPermutation(paths.getPermutation());
+  // if (mpi->getWorkerID()==0)   std :: cout << "*************  ********************"<<pathsPermutation;
+  
+    iFirstSlice = paths.getLowestSampleSlice(0,false);
+    paths.getBeads(iFirstSlice,*pathsBeads1);
+    iFirstSlice2 = (iFirstSlice + paths.getNSlice()/2)%paths.getNSlice();// check if there is overlap
+    paths.getBeads(iFirstSlice2,*pathsBeads2);
+    
+    //   action->initialize(*this);
+    //doubleAction->initialize(*this);
 
   // Select particles that are not permuting to move
-  iFirstSlice = paths.getLowestSampleSlice(0,false);
-  paths.getBeads(iFirstSlice,*pathsBeads);
-  
-  // action->initialize(*this);
-  if (doubleAction ) doubleAction->initialize(*this);
+  // and make nrepeat displacemoves
   for (int irepeat=0; irepeat<nrepeat; ++irepeat) {
     movingIndex->resize(nmoving);  
     identityIndex.resize(nmoving);  
@@ -92,32 +92,35 @@ void DisplaceMoveSampler::run() {
     particleChooser.chooseParticles();
     int imovingNonPerm = 0;         
     for (int i=0; i<nmoving; ++i) {
-     int j = particleChooser[i];
+      int j = particleChooser[i];
       int jperm = pathsPermutation[j];
-      // if (mpi->getWorkerID()==0)     std :: cout << "i/nmoving "<<i<<"/"<<nmoving<< ". j ="<<j<<" ->" <<jperm<<std :: endl;
+     
       if (j==jperm){
 	(*movingIndex)(imovingNonPerm)=j;
 	imovingNonPerm++;
       }
     } 
-  
    
+
 #ifdef ENABLE_MPI
     if ( mpi && (mpi->getNWorker()) > 1) {
       mpi->getWorkerComm().Bcast(&(*movingIndex)(0), nmoving, MPI::INT, 0); 
       mpi->getWorkerComm().Bcast(&imovingNonPerm, 1, MPI::INT, 0); 
     }
 #endif
-  
     movingIndex->resizeAndPreserve(imovingNonPerm);
     identityIndex.resize(imovingNonPerm);
     
     // Copy old coordinate to the moving coordinate
-    movingBeads = beadFactory.getNewBeads(imovingNonPerm, nslice);
     for (int i=0; i<imovingNonPerm; ++i) identityIndex(i)=i;
+   
+    movingBeads1 = beadFactory.getNewBeads(imovingNonPerm, nslice);
+    movingBeads2 = beadFactory.getNewBeads(imovingNonPerm, nslice);
     for (int islice=0; islice<nslice; ++islice) { 
-      pathsBeads->copySlice(*movingIndex,islice,*movingBeads,identityIndex,islice);
+         pathsBeads1->copySlice(*movingIndex, islice, *movingBeads1, identityIndex, islice);
+      pathsBeads2->copySlice(*movingIndex, islice, *movingBeads2, identityIndex, islice);
     }
+    
     if (tryMove(imovingNonPerm)) continue;
   }
 }
@@ -125,25 +128,21 @@ void DisplaceMoveSampler::run() {
 
 
 
-bool DisplaceMoveSampler::tryMove(int imovingNonPerm) {
+bool DoubleDisplaceMoveSampler::tryMove(int imovingNonPerm) {
   accRejEst->tryingMove(0);
   double l = mover.makeMove(*this);
 
-  // Evaluate the change in action.
+  // Evaluate the change in action. 
+  activateSection(1);
   double deltaAction=(action==0)?0:action->getActionDifference(*this, imovingNonPerm);
+  activateSection(2);
+  deltaAction+=(action==0)?0:action->getActionDifference(*this, imovingNonPerm);
+  //deltaAction+=(action==0)?0:doubleAction->getActionDifference(*this, imovingNonPerm);
 
 #ifdef ENABLE_MPI
   if (mpi && (mpi->getNWorker())>1) {
     double netDeltaAction=0;
     mpi->getWorkerComm().Reduce(&deltaAction,&netDeltaAction,1,MPI::DOUBLE,MPI::SUM,0);
-
-    /*deb
-    if (mpi->getWorkerID() == 0) {
-      std :: cout << "action diff = " << deltaAction<<". net= "<<netDeltaAction<<std::endl;
-    }
-    */
-
-
     double acceptProb = exp(-netDeltaAction);
     bool acceptReject = RandomNumGenerator::getRand()>acceptProb;
     mpi->getWorkerComm().Bcast(&acceptReject,1,MPI::LOGICAL,0); 
@@ -165,29 +164,36 @@ bool DisplaceMoveSampler::tryMove(int imovingNonPerm) {
 
   // Put moved beads in paths beads.
   for (int islice=0; islice<nslice; ++islice) {
-    movingBeads->copySlice(identityIndex,islice,
-			   *pathsBeads,*movingIndex,islice);
-  }
+    
+    movingBeads1->copySlice(identityIndex,islice,*pathsBeads1,*movingIndex,islice);
+    movingBeads2->copySlice(identityIndex,islice,
+			    *pathsBeads2,*movingIndex,islice);
+  } 
  const Permutation &pathsPermutation(paths.getPermutation());
-  paths.putBeads(iFirstSlice,*pathsBeads,pathsPermutation);
-
-  /*  int iworker = mpi->getWorkerID();
-  if (iworker == 0 )
-    {
-      std :: cout << *pathsBeads;
-    }*/  
+  paths.putBeads(iFirstSlice, *pathsBeads1, pathsPermutation);
+  paths.putBeads(iFirstSlice2, *pathsBeads2, pathsPermutation);
+  
   return true;
 }
 
+void DoubleDisplaceMoveSampler::activateSection(const int i) {
+  if (i==1) {
+    pathsBeads = pathsBeads1;
+    movingBeads = movingBeads1;
+  } else {
+    pathsBeads = pathsBeads2;
+    movingBeads = movingBeads2;
+  }
+}
 
-
-void DisplaceMoveSampler::setAction(Action* act, const int level) {action=act;}
+void DoubleDisplaceMoveSampler::setAction(Action* act, const int level) {action=act;}
 
 
 
 AccRejEstimator* 
-DisplaceMoveSampler::getAccRejEstimator(const std::string& name) {
+DoubleDisplaceMoveSampler::getAccRejEstimator(const std::string& name) {
   std::ostringstream longName;
+ 
   longName << name << ": moving " << nmoving
            << " " << particleChooser.getName();
   return accRejEst=new AccRejEstimator(longName.str(),1);

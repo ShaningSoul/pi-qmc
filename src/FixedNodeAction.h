@@ -26,6 +26,7 @@ class SimulationInfo;
 class Paths;
 class Species;
 class DisplaceMoveSampler;
+class DoubleDisplaceMoveSampler;
 /** Action for fixed node approximation.
 This nodal restriction rejects any paths for which
 @f[ \rho_0(R(t),R(t+\beta/2),\beta/2) < 0; \qquad (0\le t < \beta/2). @f]
@@ -88,6 +89,8 @@ public:
   /// Calculate the difference in action.
   virtual double getActionDifference(const DoubleMLSampler&,int level);
  virtual double getActionDifference(const DisplaceMoveSampler&,
+				    const int nMoving){ return 0;};
+ virtual double getActionDifference(const DoubleDisplaceMoveSampler&,
 				    const int nMoving){ return 0;};
   /// Calculate the total action.
   virtual double getTotalAction(const Paths&, const int level) const;
