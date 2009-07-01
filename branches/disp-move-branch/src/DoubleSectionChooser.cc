@@ -59,13 +59,14 @@ void DoubleSectionChooser::run() {
   // Copy coordinates from allBeads to section Beads.
   paths.getBeads(iFirstSlice1,*beads1);
   paths.getBeads(iFirstSlice2,*beads2);
-  permutation1->reset();
-  permutation2->reset();
+  permutation1->reset(); 
+  permutation2->reset(); 
   // Initialize the action.
   action.initialize(*this);
   doubleAction.initialize(*this);
   // Run the sampling algorithm.
   CompositeAlgorithm::run();
+
   // Copy moved coordinates from sectionBeads to allBeads.
   paths.putDoubleBeads(iFirstSlice1,*beads1,*permutation1,
                        iFirstSlice2,*beads2,*permutation2);

@@ -110,7 +110,7 @@ void PathReader::run() {
   delete infile;
   if (workerID==0){
   //if (!mpi || mpi->isMain()) {
-    std::cout << "Permuation read in is " << p << std::endl;
+    std::cout << "Clone ID :: "<<mpi->getCloneID()<<" :: Permuation read in is " << p << std::endl;
   } 
   delete &slice;
 }

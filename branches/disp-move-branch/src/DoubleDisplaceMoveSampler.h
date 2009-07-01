@@ -76,11 +76,12 @@ protected:
   //const Permutation & pathsPermutation;
   //ParticleChooser& particleChooser; 
   //Mover& mover;
-  // Action *action;  DoubleAction *doubleAction;
+  // Action *action;  
+  DoubleAction *doubleAction;
   // Paths& paths;
   AccRejEstimator* accRejEst;
 
-  //IArray *movingIndex;
+  IArray *movingIndex2;////
   //IArray identityIndex; 
   /*  const BeadFactory& beadFactory;
   const SuperCell& cell; 

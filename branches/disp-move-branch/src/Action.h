@@ -17,7 +17,7 @@
 #ifndef __Action_h_
 #define __Action_h_
 class MultiLevelSampler;
-class DisplaceMoveSampler;
+class DisplaceMoveSampler; 
 class SectionChooser;
 class Paths;
 #include <blitz/tinyvec.h>

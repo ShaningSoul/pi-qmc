@@ -25,7 +25,7 @@ class SimulationInfo;
 class Paths;
 class Species;
 class PhaseModel;
-class DisplaceMoveSampler;
+class DoubleDisplaceMoveSampler;
 /**  Class for fixed-phase action.
 In the fixed-phase approximation, the phase of a trial function
 @f$\rho_T@f$ (defined by the PhaseModel) contributes to the hamiltonian,
@@ -95,7 +95,7 @@ public:
   ~FixedPhaseAction();
   /// Calculate the difference in action.
   virtual double getActionDifference(const DoubleMLSampler&,int level);
- virtual double getActionDifference(const DisplaceMoveSampler&,
+ virtual double getActionDifference(const DoubleDisplaceMoveSampler&,
 				    const int nMoving){ return 0;};
   /// Calculate the total action.
   virtual double getTotalAction(const Paths&, const int level) const;
