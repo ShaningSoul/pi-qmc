@@ -41,7 +41,7 @@ public:
   typedef blitz::Array<int,1> IArray;
   DisplaceMoveSampler(const int nmoving, Paths&,  const double dist, const double freq,
 		      ParticleChooser&, Mover&, Action*, const int nrepeat,
-		      const BeadFactory&, const MPIManager* mpi, DoubleAction* doubleAction);
+		      const BeadFactory&, const MPIManager* mpi);
   virtual ~DisplaceMoveSampler();
   virtual void run();
   Beads<NDIM>& getMovingBeads() {return *movingBeads;}
@@ -69,7 +69,7 @@ protected:
   //const Permutation & pathsPermutation;
   ParticleChooser& particleChooser; 
   Mover& mover;
-  Action *action;  DoubleAction *doubleAction;
+  Action *action; // DoubleAction *doubleAction;
   Paths& paths;
   AccRejEstimator* accRejEst;
 

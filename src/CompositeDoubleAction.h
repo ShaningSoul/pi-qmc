@@ -35,7 +35,7 @@ public:
   /// Calculate the difference in action.
   virtual double getActionDifference(const DoubleMLSampler&,
                                      const int level);
-  virtual double getActionDifference(const DisplaceMoveSampler&,
+  virtual double getActionDifference(const DoubleDisplaceMoveSampler&,
 				    const int nMoving){ return 0;};
  /// Calculate the total action.
   virtual double getTotalAction(const Paths&, const int level) const;

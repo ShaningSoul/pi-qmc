@@ -161,16 +161,17 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
     int nrepeat=getIntAttribute(ctxt->node,"nrepeat");
     if (nrepeat==0) nrepeat=1;
     
-    if (mpi && mpi->getNWorker()>1 && doubleAction) {
+    // if (mpi && mpi->getNWorker()>1 && doubleAction) {
+    if (doubleAction) {
       algorithm = new DoubleDisplaceMoveSampler(nmoving, *paths, dist, freq,
 					      *particleChooser, *mover, action,
 					      nrepeat, beadFactory, mpi, doubleAction);
-      std :: cout <<" Requesting DoubleDisplaceMoveSampler"<<std :: endl;
+      std :: cout <<"Requesting DoubleDisplaceMoveSampler."<<std :: endl;
     } else {    
       algorithm = new DisplaceMoveSampler(nmoving, *paths, dist, freq,
 					  *particleChooser, *mover, action,
-					  nrepeat, beadFactory, mpi, doubleAction);
-      std :: cout <<" Requesting DisplaceMoveSampler"<<std :: endl;
+					  nrepeat, beadFactory, mpi);
+      std :: cout <<"Requesting DisplaceMoveSampler."<<std :: endl;
     } 
     std::string accRejName="DisplaceMoveSampler";
     estimators->add(((DisplaceMoveSampler*)algorithm)->

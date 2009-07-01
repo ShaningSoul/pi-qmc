@@ -43,8 +43,8 @@ DoubleDisplaceMoveSampler::DoubleDisplaceMoveSampler(const int nmoving, Paths& p
 						     Mover& mover, Action* action, const int nrepeat, 
 						     const BeadFactory& beadFactory, const MPIManager* mpi, 
 						     DoubleAction* doubleAction)
-  : DisplaceMoveSampler(nmoving, paths, dist, freq, particleChooser, mover, action, nrepeat, beadFactory, mpi, doubleAction){
-  
+  : DisplaceMoveSampler(nmoving, paths, dist, freq, particleChooser, mover, action, nrepeat, beadFactory, mpi),doubleAction(doubleAction){
+  movingIndex2 = new IArray(nmoving);
   nslice = paths.getnprocSlice();
   pathsBeads2 = beadFactory.getNewBeads(paths.getNPart(), nslice); 
   pathsBeads1 = beadFactory.getNewBeads(paths.getNPart(), nslice);
@@ -52,7 +52,7 @@ DoubleDisplaceMoveSampler::DoubleDisplaceMoveSampler(const int nmoving, Paths& p
 
 DoubleDisplaceMoveSampler::~DoubleDisplaceMoveSampler() {
   delete movingBeads;  delete movingBeads2; delete movingBeads1;
-  delete movingIndex;
+  delete movingIndex;  delete movingIndex2;
   delete &particleChooser;
 }
 
@@ -60,7 +60,7 @@ DoubleDisplaceMoveSampler::~DoubleDisplaceMoveSampler() {
 
 void DoubleDisplaceMoveSampler::run() {
 
-  // run with a probability equal to freq 
+  // Run with a probability equal to freq 
 #ifdef ENABLE_MPI
   if ( mpi && (mpi->getNWorker()) > 1) {
     double rd = RandomNumGenerator::getRand() ;
@@ -73,18 +73,16 @@ void DoubleDisplaceMoveSampler::run() {
   if (RandomNumGenerator::getRand()>freq) return ;
 #endif
   const Permutation &pathsPermutation(paths.getPermutation());
-  // if (mpi->getWorkerID()==0)   std :: cout << "*************  ********************"<<pathsPermutation;
   
-    iFirstSlice = paths.getLowestSampleSlice(0,false);
-    paths.getBeads(iFirstSlice,*pathsBeads1);
-    iFirstSlice2 = (iFirstSlice + paths.getNSlice()/2)%paths.getNSlice();// check if there is overlap
-    paths.getBeads(iFirstSlice2,*pathsBeads2);
-    
-    //   action->initialize(*this);
-    //doubleAction->initialize(*this);
-
-  // Select particles that are not permuting to move
-  // and make nrepeat displacemoves
+  iFirstSlice = paths.getLowestSampleSlice(0,false);
+  paths.getBeads(iFirstSlice,*pathsBeads1);
+  iFirstSlice2 = (iFirstSlice + paths.getNSlice()/2)%paths.getNSlice();
+  paths.getBeads(iFirstSlice2,*pathsBeads2);
+  
+  action->initialize(*this);
+  doubleAction->initialize(*this);
+  
+  // Select particles that are not permuting to move and make nrepeat displacemoves
   for (int irepeat=0; irepeat<nrepeat; ++irepeat) {
     movingIndex->resize(nmoving);  
     identityIndex.resize(nmoving);  
@@ -108,6 +106,8 @@ void DoubleDisplaceMoveSampler::run() {
       mpi->getWorkerComm().Bcast(&imovingNonPerm, 1, MPI::INT, 0); 
     }
 #endif
+
+    if (imovingNonPerm ==0 ) return;
     movingIndex->resizeAndPreserve(imovingNonPerm);
     identityIndex.resize(imovingNonPerm);
     
@@ -116,9 +116,12 @@ void DoubleDisplaceMoveSampler::run() {
    
     movingBeads1 = beadFactory.getNewBeads(imovingNonPerm, nslice);
     movingBeads2 = beadFactory.getNewBeads(imovingNonPerm, nslice);
+    ////
+    for (int i=0; i<imovingNonPerm; i++) (*movingIndex2)(i) = (*movingIndex)(i);//////////<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    ////
     for (int islice=0; islice<nslice; ++islice) { 
-         pathsBeads1->copySlice(*movingIndex, islice, *movingBeads1, identityIndex, islice);
-      pathsBeads2->copySlice(*movingIndex, islice, *movingBeads2, identityIndex, islice);
+      pathsBeads1->copySlice(*movingIndex,islice,*movingBeads1,identityIndex,islice);
+      pathsBeads2->copySlice(*movingIndex2,islice,*movingBeads2,identityIndex,islice); /////<<<<<<<<<<<<<<<<<<<<<<<
     }
     
     if (tryMove(imovingNonPerm)) continue;
@@ -160,18 +163,22 @@ bool DoubleDisplaceMoveSampler::tryMove(int imovingNonPerm) {
   accRejEst->moveAccepted(0);
   
   // Move accepted.
-  action->acceptLastMove();
+  action->acceptLastMove();  
+  //doubleAction->acceptLastMove();
 
   // Put moved beads in paths beads.
   for (int islice=0; islice<nslice; ++islice) {
-    
     movingBeads1->copySlice(identityIndex,islice,*pathsBeads1,*movingIndex,islice);
     movingBeads2->copySlice(identityIndex,islice,
-			    *pathsBeads2,*movingIndex,islice);
+			    *pathsBeads2,*movingIndex2,islice);///////////<<<<<<<<<<<<<<<<<<<<<<<<<<,
   } 
- const Permutation &pathsPermutation(paths.getPermutation());
-  paths.putBeads(iFirstSlice, *pathsBeads1, pathsPermutation);
-  paths.putBeads(iFirstSlice2, *pathsBeads2, pathsPermutation);
+
+  // Append the currenrmutation to section permutation.
+  Permutation perm1(paths.getNPart()); 
+  Permutation perm2(paths.getNPart()); 
+
+  paths.putDoubleBeads(iFirstSlice,*pathsBeads1,perm1,
+		       iFirstSlice2,*pathsBeads2,perm2);
   
   return true;
 }

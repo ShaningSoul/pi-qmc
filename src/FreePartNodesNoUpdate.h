@@ -102,7 +102,7 @@ public:
   ~FreePartNodesNoUpdate();
   /// Calculate the difference in action.
   virtual double getActionDifference(const DoubleMLSampler&,int level);
-  virtual double getActionDifference(const DisplaceMoveSampler&,
+  virtual double getActionDifference(const DoubleDisplaceMoveSampler&,
                                      const int nMoving) {std :: cout << "????? return 0"<<std ::endl; return 0;};
   /// Calculate the total action.
   virtual double getTotalAction(const Paths&, const int level) const;

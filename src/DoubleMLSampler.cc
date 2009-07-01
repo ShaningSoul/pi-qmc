@@ -73,7 +73,7 @@ void DoubleMLSampler::run() {
   // Select particles to move and the permuation.
   for (int irepeat=0; irepeat<nrepeat; ++irepeat) {
     bool isNewPerm=permutationChooser.choosePermutation();
-    permutation1=permutationChooser.getPermutation();
+    permutation1=permutationChooser.getPermutation(); 
     particleChooser.chooseParticles();
     double lnTranProb=permutationChooser.getLnTranProb();
     for (int i=0; i<nmoving; ++i) (*movingIndex1)(i)=particleChooser[i];
@@ -91,7 +91,10 @@ void DoubleMLSampler::run() {
         pMovingIndex(imoving)=(*movingIndex1)(permutation1[imoving]);
         pMovingIndex2(imoving)=(*movingIndex2)(permutation2[imoving]);
       }
+      
       sectionBeads1->copySlice(*movingIndex1,0,*movingBeads1,identityIndex,0);
+     
+   
       sectionBeads1->copySlice(pMovingIndex,nsectionSlice-1,
                                *movingBeads1,identityIndex,nsectionSlice-1);
       if (samplingBoth) {
@@ -127,9 +130,8 @@ bool DoubleMLSampler::tryMove(double initialLnTranProb) {
     // Evaluate and add change in DoubleAction. 
     deltaAction+=doubleAction->getActionDifference(*this,ilevel);
     double acceptProb=exp(lnTranProb-deltaAction+oldDeltaAction);
-    //std::cout << acceptProb << ", " << lnTranProb << ",  " << ilevel << ", "
-    //          << -deltaAction  << ", " << oldDeltaAction << std::endl;
-    if (RandomNumGenerator::getRand()>acceptProb) return false;
+   
+ if (RandomNumGenerator::getRand()>acceptProb) return false;
     oldDeltaAction=deltaAction;
     if (accRejEst) accRejEst->moveAccepted(ilevel);
   }
@@ -148,19 +150,20 @@ bool DoubleMLSampler::tryMove(double initialLnTranProb) {
                *sectionBeads2,*movingIndex2,islice);
       }
   }
+ 
   // Append the current permutation to section permutation.
   Permutation temp1(permutation1), temp2(permutation2);
-  if (nmoving>0) {
-  }
+  
   for (int i=0; i<nmoving; ++i) {
     temp1[i]=(*sectionPermutation1)[(*movingIndex1)(i)];
     if (samplingBoth) temp2[i]=(*sectionPermutation2)[(*movingIndex2)(i)];
   }
   for (int i=0; i<nmoving; ++i) {
-    (*sectionPermutation1)[(*movingIndex1)(i)]=temp1[permutation1[i]];
+    (*sectionPermutation1)[(*movingIndex1)(i)]= temp1[permutation1[i]];
     if (samplingBoth)
       (*sectionPermutation2)[(*movingIndex2)(i)]=temp2[permutation2[i]];
   }
+  
   return true;
 }
 
