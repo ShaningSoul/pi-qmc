@@ -21,14 +21,21 @@ You can also build for different numbers of physical dimensions (default is NDIM
 }}}
 
 = Required libraries =
-  * libxml2
-  * blitz++
-  * hdf5
-  * fftw
+We use the following libraries in the *_pi_* code:
+  * [http://xmlsoft.org/ libxml2]
+  * [http://www.oonumerics.org/blitz/ blitz++]
+  * [http://www.hdfgroup.org/ hdf5]
+  * [http://www.fftw.org/ fftw3]
   * BLAS/LAPACK
-  * gsl
+  * [http://www.gnu.org/software/gsl/ gsl]
 
 = Advanced build using multiple directories=
+
+In research, we often want different versions of the executables, for example, versions with and
+without MPI, or versions compiled for two-dimensional systems. To accomplish this, we make 
+a <tt>pibuilds</tt> directory beside our svn checkout directory (<tt>pi</tt> or <tt>pi-qmc</tt>).
+We then make empty subdirectories for each build, for example <tt>ndim2mpi</tt> for a two
+dimensional MPI version. A typical directory structure is:
 
 {{{
 codes/
@@ -45,6 +52,27 @@ codes/
     ndim3mpi/
     debug/
 }}}
+
+To build, go into the empty build directory,
+<code language="sh">
+cd ~/codes/pibuilds/ndim2mpi
+</code>
+Then run the configure script with the desired options
+<code language="sh">
+../../configure --with-ndim=2 --enable-mpi
+</code>
+You will probably want more configure options; see the platform specific instructions
+below for some examples.
+
+Then, make the code in that directory,
+<code language="sh">
+make -j2
+</code>
+
+For conveniance, you can make a soft link to the executable
+<code language="sh">
+ln -sf ~/codes/pibuilds/ndim3mpi ~/bin/pi2Dmpi
+</code>
 
 = Platform specific instructions =
 
