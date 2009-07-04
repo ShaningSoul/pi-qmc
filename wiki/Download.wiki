@@ -1,4 +1,4 @@
-#summary How to obtain the pi-qmc program.
+#summary How to obtain the pi program.
 
 = Introduction =
 
@@ -8,7 +8,7 @@ user questions about the current version. (Please contact john.shumwayjr@gmail.c
 pi-qmc.tar.gz source tarball.) Once you have a subversion checkout, you can always make a tarball using
 “make dist”.
 
-= Obtaining the code through subversions=
+= Obtaining the code through subversion=
 
 Instructions from google for downloading the source code can be found under the 
 [http://code.google.com/p/pi-qmc/source/checkout “Source”] tab, above.
