@@ -4,7 +4,7 @@ overview
 [ProjectWiki Main Page]<br/>
 [WhatIsPIMC What is pi / PIMC?]<br/>
 [news Latest News]<br/>
-[apps Applications]<br/>
+[Applications]<br/>
 [tutorials Tutorials/Demos]<br/>
 [Publications]<br/>
 [funding Funding/Sponsors]<br/>
