@@ -35,7 +35,7 @@ modeling the confinement potentials of self-assembled nanostructures, starting f
 given size, shape, and composition profile.
 
 
-In a project with experimentalist Dr. Sutharsan Ketharanath and Prof. Jeff Drucker, we studied the problem of how many electrons sit in an n-doped Ge/Si quantum dot. The paper, “Electron charging in epitaxial Ge quantum dots on Si(001),” <a href="http://link.aip.org/link/?JAPIAU/105/044312/1">J. Appl Phys. 105, 044312 (2009)</a>, describes Sutha's experiments, where he measured C-V curves while depleting charge from Ge huts and domes in his gated quantum dot sample. Sourabh provided quantum dot modeling that shows that domes have much wider and deeper confinement potentials than smaller pyramidal dots. 
+In a project with experimentalists Dr. Sutharsan Ketharanath and Prof. Jeff Drucker, we studied the problem of how many electrons sit in an n-doped Ge/Si quantum dot. The paper, “Electron charging in epitaxial Ge quantum dots on Si(001),” <a href="http://link.aip.org/link/?JAPIAU/105/044312/1">J. Appl Phys. 105, 044312 (2009)</a>, describes Sutha's experiments, where he measured C-V curves while depleting charge from Ge huts and domes in his gated quantum dot sample. Sourabh provided quantum dot modeling that shows that domes have much wider and deeper confinement potentials than smaller pyramidal dots. 
 
 <ul>
 <li>
@@ -73,7 +73,7 @@ We collect imaginary-time current current correlation functions from our fixed-n
 simulations. The Kubo formula relates the spontaneous quantum and thermal fluctuations
 of current to the linear conductance of a wire or device.
 
-For studying wires, this approach is profoundly important. The phenomena of
+For studying wires, this approach has profound importance. The phenomena of
 one-dimensional wires is usually treated in the Luttinger model, which linearizes
 the dispersion relation and has parameters that often must be fit to experiment.
 In contrast, the path integral Monte Carlo simulations start from a three-dimensional
@@ -130,5 +130,9 @@ H. B. Schütter, (Springer Verlag, Heidelberg, Berlin, 2006)
 
 <img src="http://pi-qmc.googlecode.com/svn/wiki/images/Rb87TwoSite.png" alt="Probability density and typical worldlines for four Rb-87 atoms trapped on a two-site optical lattice." width="243" height="216" align="right"/>
 
-We have been working on problems in ultra-cold atomic gases trapped on optical lattices, 
-in conjunction with the group of Prof. Erich Mueller at Cornell University.
+We have been working on problems in ultra-cold atomic gases trapped on optical
+lattices, in conjunction with the group of Prof. Erich Mueller at Cornell 
+University.
+
+The image to the right shows a simulation of four ^87^Rb atoms in a two-site optical lattice at a temperature of 5 nK. The top panel shows the integrated charge density, and the lower panel shows typical paths. Instantons (quick crossing o f the paths between sites) capture the tunneling of Rubidium atoms between sites.
+
