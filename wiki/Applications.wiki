@@ -64,7 +64,7 @@ Phys. <strong>140</strong>, 211-226
 
 ==Nanoelectronics==
 
-<img src="http://pi-qmc.googlecode.com/svn/wiki/images/Promo-qpc-v040.png" alt="Charge density of 100 interacting electrons around a quantum point contact at 750 mK." width="300" align="right"/>
+<img src="http://pi-qmc.googlecode.com/svn/wiki/images/Promo-qpc-v040.png" alt="Charge density of 100 interacting electrons around a quantum point contact at 750 mK." width="218" height="182" align="right"/>
 
 As part of our work with <a href="http://nri.src.org">NRI-SRC SWAN</a> center, 
 we have developed new techniques for studying quantum conductance with
@@ -134,5 +134,4 @@ We have been working on problems in ultra-cold atomic gases trapped on optical
 lattices, in conjunction with the group of Prof. Erich Mueller at Cornell 
 University.
 
-The image to the right shows a simulation of four ^87^Rb atoms in a two-site optical lattice at a temperature of 5 nK. The top panel shows the integrated charge density, and the lower panel shows typical paths. Instantons (quick crossing o f the paths between sites) capture the tunneling of Rubidium atoms between sites.
-
+The image to the right shows a simulation of four ^87^Rb atoms in a two-site optical lattice at a temperature of 5 nK. The top panel shows the integrated charge density, and the lower panel shows typical paths. Instantons (quick crossing of the paths between sites) capture the tunneling of Rubidium atoms between sites.
