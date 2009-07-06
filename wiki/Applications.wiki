@@ -2,7 +2,7 @@
 
 =Featured Application=
 
-==Coherent exciton state in nilayer graphene==
+==Coherent exciton state in bilayer graphene==
 
 <img src="http://pi-qmc.googlecode.com/svn/wiki/images/GrapheneBilayer.png" alt="Illustration of bilayer graphene device for studying coherent exciton condensates." width="244" height="182" align="right"/>
 
@@ -66,6 +66,24 @@ Phys. <strong>140</strong>, 211-226
 
 <img src="http://pi-qmc.googlecode.com/svn/wiki/images/Promo-qpc-v040.png" alt="Charge density of 100 interacting electrons around a quantum point contact at 750 mK." width="300" align="right"/>
 
+As part of our work with <a href="http://nri.src.org">NRI-SRC SWAN</a> center, 
+we have developed new techniques for studying quantum conductance with
+path integral quantum Monte Carlo.
+We collect imaginary-time current current correlation functions from our fixed-node
+simulations. The Kubo formula relates the spontaneous quantum and thermal fluctuations
+of current to the linear conductance of a wire or device.
+
+For studying wires, this approach is profoundly important. The phenomena of
+one-dimensional wires is usually treated in the Luttinger model, which linearizes
+the dispersion relation and has parameters that often must be fit to experiment.
+In contrast, the path integral Monte Carlo simulations start from a three-dimensional
+effective mass model, and the transport phenomena emerge. This gives the method
+significant predictive power, and allows us to study systems outside the domain
+of the Luttinger model. For systems where the Luttinger model holds, we can
+predict the Luttinger parameters directly from device geometry. Further we can
+simulate systems where temperature or finite size effects invalidate the 
+Luttinger model, and even study the crossover from one dimension to two or three dimensions.
+
 <ul>
 “<em>Current fluctuations and quantized conductance,</em>” Applied Physics Seminar, October 5th, 2009, Department of Physics and Astronomy, University of Kansas, Lawrence, Kansas.
 (<a href="http://physics.asu.edu/shumway/papers/ku_sem08.pdf">pdf download, 10.6 MB</a>).
@@ -76,7 +94,27 @@ Phys. <strong>140</strong>, 211-226
 
 <img src="http://pi-qmc.googlecode.com/svn/wiki/images/HDimer.jpg" alt="Charge density of 100 interacting electrons around a quantum point contact at 750 mK." width="200" height="150" align="right"/>
 
+We have a long-term goal of realizing path integral Monte Carlo as a practical tool for ab initio
+materials simulations and quantum chemistry.
+We currently have collaborations with Lawrence Livermore National Laboratory to study materials
+under extreme conditions.
+
+One issue we have addressed in recent years is to determine the kind of information
+that may be extracted from an ab initio simulation.
+We have been particularly interested in linear-reponse theory.
+We have shown that the vibrational frequency of a molecule may be extracted
+from the autocorrelation of the bond-length in imaginary time. Further,
+the spontaneous fluctuations of the dipole can provide highly accurate estimates
+of the static polarizability, and—using higher order correlations—third and 
+fourth order hyperpolarizabilty.
+
+We have a long-term goal of merging our studies of quantum wires with ab initio
+simulations of electrical transport.
+
 <ul>
+<li>Daejin Shin, Ming-Chak Ho, and J. Shumway, ”<em>Ab inito
+path integral techniques for molecules,</em>” submitted to J. Chem. Phys.
+(<a href="http://arxiv.org/abs/quant-ph/0611105">quant-ph/0611105</a>). </li>
 <li>J. Shumway, “<em>All-Electron Path Integral Monte Carlo
 Simulations of Small Atoms and Molecules</em>,” pp. 181-195 in <em>
 <a href="http://www.springeronline.com/materials/book/978-3-540-26564-1">Computer
@@ -86,6 +124,10 @@ D. P. Landau, S. P. Lewis, and
 H. B. Schütter, (Springer Verlag, Heidelberg, Berlin, 2006) 
 (<a href="http://physics.asu.edu/shumway/papers/csscmp.pdf">pdf download 15 pp. 1.65 MB</a>).</li>
 </ul>
+
 ==Ultracold trapped gases==
 
 <img src="http://pi-qmc.googlecode.com/svn/wiki/images/Rb87TwoSite.png" alt="Probability density and typical worldlines for four Rb-87 atoms trapped on a two-site optical lattice." width="243" height="216" align="right"/>
+
+We have been working on problems in ultra-cold atomic gases trapped on optical lattices, 
+in conjunction with the group of Prof. Erich Mueller at Cornell University.
