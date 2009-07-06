@@ -6,7 +6,7 @@
 
 <ul>
 <li>M. J. Gilbert and J. Shumway,
-&ldquo;<em>Probing quantum coherent states in bilayer graphene,</em>&rdquo;
+“<em>Probing quantum coherent states in bilayer graphene,</em>”
 prepared for a special issue of the Journal of Computational Electronics
 (<a href="http://physics.asu.edu/shumway/papers/graphene-jce.pdf">pdf download, 10 pp. 3.3 MB</a>)
 </li>
@@ -21,22 +21,22 @@ prepared for a special issue of the Journal of Computational Electronics
 <ul>
 <li>
 Sutharsan Ketharanathan, Sourabh Sinha, John Shumway, and Jeff Drucker,
-&ldquo;<em>Electron charging in 
-epitaxial Ge quantum dots on Si(001),</em>&rdquo;
+“<em>Electron charging in 
+epitaxial Ge quantum dots on Si(001),</em>”
 <a href="http://link.aip.org/link/?JAPIAU/105/044312/1">
 J. Appl Phys. <b>105</b>, 044312 (2009)</a>
 </li>
 <li>Lei Zhang, Jesper Pedersen, Matthew J. Gilbert, and J. Shumway,
-<em>&ldquo;Path integral study of the role of correlation in exchange coupling
-of spins in double quantum dots and optical lattices,&rdquo;</em>
-(<a href="http://arxiv.org/abs/0809.0038">arXiv:0809.0038</a>). Note: <a
-href="http://www.nanohub.org/tools/spincoupleddots">the nanoHUB tool
-&ldquo;Spin Coupled Quantum Dots&rdquo;</a> lets you try these simulations
+“<em>Path integral study of the role of correlation in exchange coupling
+of spins in double quantum dots and optical lattices,</em>”
+(<a href="http://arxiv.org/abs/0809.0038">arXiv:0809.0038</a>). 
+Note: <a href="http://www.nanohub.org/tools/spincoupleddots">the nanoHUB tool
+“Spin Coupled Quantum Dots”</a> lets you try these simulations
 yourself.</li>
 <li>
-M. Harowitz, Daejin Shin, and J. Shumway, <em>&quot;Path-Integral 
+M. Harowitz, Daejin Shin, and J. Shumway, “<em>Path-Integral 
 Quantum Monte Carlo Techniques for Self-Assembled Quantum
-Dots,&quot;</em> 
+Dots,</em>”
 <a
 href="http://www.springerlink.com/content/k3233844185l2k55">J. of Low Temp.
 Phys. <strong>140</strong>, 211-226
@@ -49,7 +49,7 @@ Phys. <strong>140</strong>, 211-226
 <img src="http://pi-qmc.googlecode.com/svn/wiki/images/Promo-qpc-v040.png" alt="Charge density of 100 interacting electrons around a quantum point contact at 750 mK." width="300" align="right"/>
 
 <ul>
-&ldqou;Current fluctuations and quantized conductance,&rdquo; Applied Physics Seminar, Oct.5th, 2009, Department of Physics and Astronomy, University of Kansas, Lawrence, Kansas.
+“<em>Current fluctuations and quantized conductance,</em>” Applied Physics Seminar, Oct.5th, 2009, Department of Physics and Astronomy, University of Kansas, Lawrence, Kansas.
 (<a href="http://physics.asu.edu/papers/shumway/ku_sem08.pdf">pdf download, 10.6 MB</a>).
 </ul>
 
@@ -65,8 +65,8 @@ href="http://www.springeronline.com/materials/book/978-3-540-26564-1">Computer
 Simulations
 Studies in Condensed Matter Physics XVII</a></em>, edited by
 D.&nbsp;P.&nbsp;Landau, S.&nbsp;P.&nbsp;Lewis, and
-H.&nbsp;B.&nbsp;Sch&uuml;tter, (Springer Verlag, Heidelberg, Berlin, 2006) (<a
-href="http::/physics.asu.edu/shumway/papers/csscmp.pdf">pdf download 15 pp. 1.65 MB</a>).</li>
+H.&nbsp;B.&nbsp;Sch&uuml;tter, (Springer Verlag, Heidelberg, Berlin, 2006) 
+(<a href="http::/physics.asu.edu/shumway/papers/csscmp.pdf">pdf download 15 pp. 1.65 MB</a>).</li>
 </ul>
 ==Ultracold trapped gases==
 
