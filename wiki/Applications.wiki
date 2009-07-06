@@ -16,7 +16,7 @@ prepared for a special issue of the Journal of Computational Electronics
 
 ==Quantum Dots==
 
-<img src="http://pi-qmc.googlecode.com/svn/wiki/images/SAD.jpg" alt="Charge density around a Si/Ge quantum dot, from a path integral simulation." width="200" height="150" align="right"/>
+<img src="http://pi-qmc.googlecode.com/svn/wiki/images/GeSiDot.jpg" alt="Charge density around a Si/Ge quantum dot, from a path integral simulation." width="200" height="150" align="right"/>
 
 <ul>
 <li>
@@ -37,8 +37,7 @@ yourself.</li>
 M. Harowitz, Daejin Shin, and J. Shumway, “<em>Path-Integral 
 Quantum Monte Carlo Techniques for Self-Assembled Quantum
 Dots,</em>”
-<a
-href="http://www.springerlink.com/content/k3233844185l2k55">J. of Low Temp.
+<a href="http://www.springerlink.com/content/k3233844185l2k55">J. of Low Temp.
 Phys. <strong>140</strong>, 211-226
 (2005)</a>.
 </li>
@@ -60,13 +59,13 @@ Phys. <strong>140</strong>, 211-226
 
 <ul>
 <li>J. Shumway, &quot;<em>All-Electron Path Integral Monte Carlo
-Simulations of Small Atoms and Molecules</em>,&quot; pp. 181-195 in <em><a
-href="http://www.springeronline.com/materials/book/978-3-540-26564-1">Computer
+Simulations of Small Atoms and Molecules</em>,&quot; pp. 181-195 in <em>
+<a href="http://www.springeronline.com/materials/book/978-3-540-26564-1">Computer
 Simulations
 Studies in Condensed Matter Physics XVII</a></em>, edited by
 D.&nbsp;P.&nbsp;Landau, S.&nbsp;P.&nbsp;Lewis, and
 H.&nbsp;B.&nbsp;Sch&uuml;tter, (Springer Verlag, Heidelberg, Berlin, 2006) 
-(<a href="http::/physics.asu.edu/shumway/papers/csscmp.pdf">pdf download 15 pp. 1.65 MB</a>).</li>
+(<a href="http://physics.asu.edu/shumway/papers/csscmp.pdf">pdf download 15 pp. 1.65 MB</a>).</li>
 </ul>
 ==Ultracold trapped gases==
 
