@@ -85,8 +85,9 @@ simulate systems where temperature or finite size effects invalidate the
 Luttinger model, and even study the crossover from one dimension to two or three dimensions.
 
 <ul>
-“<em>Current fluctuations and quantized conductance,</em>” Applied Physics Seminar, October 5th, 2009, Department of Physics and Astronomy, University of Kansas, Lawrence, Kansas.
-(<a href="http://physics.asu.edu/shumway/papers/ku_sem08.pdf">pdf download, 10.6 MB</a>).
+<li>
+“<em>Current fluctuations and quantized conductance,</em>” Applied Physics Seminar,  Department of Physics and Astronomy, University of Kansas, October 5th, 2009,
+(<a href="http://physics.asu.edu/shumway/papers/ku_sem08.pdf">pdf download, 10.6 MB</a>).</li>
 </ul>
 
 
