@@ -133,9 +133,82 @@ CXXFLAGS="-g -O3 -ffast-math -ftree-vectorize -maltivec -mpowerpc-gpopt \
 ==HPC Centers==
 
 ===ASU Fulton: saguaro===
+For a serial build in two dimensions,
+<code languge="sh">
+../../pi/configure --with-ndim=2 --enable-sprng  CXX=icpc CC=icc CXXFLAGS="-O3 -xP -ipo" \
+--with-blas="-L$MKL_LIB -lmkl_lapack -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" \
+F77=ifort AR="xild -lib"
+</code>
+or for a parallel version,
+<code languge="sh">
+../../pi/configure --with-ndim=2 --enable-sprng --enable-mpi MPICC=mpicc MPICXX=mpicxx \
+CXX=icpc CC=icc F77=ifort CXXFLAGS="-O3 -xP -ipo" AR="xild -lib" \
+--with-blas="-L$MKL_LIB -lmkl_lapack -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" 
+</code>
+Omit the <tt>--enable-sprng</tt> option if you do not have the SPRNG library.
 
 ===LONI-LSU: queenbee ===
-
+You need to add some lines to your <tt>.soft</tt> file to include some required libraries,
+<code language="sh">
+#My additions (CPATH mimics -I include directories).
+CPATH += /usr/local/packages/hdf5-1.8.1-intel10.1/include
++gsl-1.9-intel10.1
++sprng4-mvapich-1.1-intel-10.1
++fftw-3.1.2-intel10.1
+CPATH += :/usr/local/packages/fftw-3.1.2-intel10.1/include
++intel-mkl
+CPPFLAGS += -DMPICH_IGNORE_CXX_SEEK
+</code>
+For an MPI build, use,
+<code langauge="sh">
+../../pi/configure --with-ndim=3 --enable-mpi MPICC=mpicc MPICXX=mpicxx \
+CXX=icpc CC=icc F77=ifort AR="xild -lib" CXXFLAGS="-O3 -xP -ipo" \
+--with-blas="-lmkl_lapack -lmkl_intel_lp64 -lmkl_sequential -lmkl_core"
+</code>
 ===NCSA: abe===
 
+You need to add some lines to your <tt>.soft</tt> file to include some required libraries,
+<code language="sh">
+#My additions (CPATH mimics -I include directories).
++intel-mkl
++gsl-intel
++hdf5-1.8.2
+CPATH += :/usr/apps/hdf/hdf5/v182/include
+LD_LIBRARY_PATH += /usr/apps/hdf/szip/lib
++fftw-3.1-intel
+LD_LIBRARY_PATH += /usr/apps/math/fftw/fftw-3.1.2/intel10/lib
+CPATH += :/usr/apps/math/fftw/fftw-3.1.2/intel10/include
++intel-mkl
+CPPFLAGS = "${CPPFLAGS} -DMPICH_IGNORE_CXX_SEEK"
+</code>
+For an MPI build, use,
+<code language="sh">
+../../pi/configure --with-ndim=3 --enable-mpi MPICC=mpicc MPICXX=mpicxx CXX=icpc CC=icc \
+CXXFLAGS="-O3 -xP -ipo" LDFLAGS="-lsz" \
+--with-blas="-lmkl_lapack -lmkl_intel_lp64 -lmkl_sequential -lmkl_core" F77=ifort AR="xild -lib"
+</code>
 ===TACC: Ranger===
+
+===Cornell CNF: nanolab===
+The svn client wasn't working for me, so I built one in my ~/packages/bin directory. You need to specify the most recent C++ and Fortran compilers by including the following in your .bash_profile,
+<code language="sh">
+# Version 10 compilers
+source /opt/intel/cc/10.1.017/bin/iccvars.sh
+source /opt/intel/fc/10.1.017/bin/ifortvars.shsource /opt/intel/idb/10.1.017/bin/idbvars.sh
+source /opt/intel/mkl/10.0.4.023/tools/environment/mklvars32.sh
+</code>
+Also, make sure that <tt>/usr/lam-7.4.1_intelv10/bin</tt> is in your path to get the correct MPI compilers.
+
+You need to build blitz (again, in my ~/packages directory). For a serial *_pi_* build,
+<code language="sh">
+../../pi/configure --with-ndim=3 CXX=icpc CC=icc CXXFLAGS="-O3 -ipo" \
+--with-blas="-Wl,-rpath,$MKLROOT/lib/32 -L/opt$MKLROOT/lib/32 -lmkl_intel \
+-lmkl_sequential -lmkl_core -lpthread -lm" F77=ifort AR="xild -lib"
+</code>
+
+<code language="sh">
+../../pi/configure --with-ndim=3 CXX=icpc CC=icc CXXFLAGS="-O3 -ipo" \
+--with-blas="-Wl,-rpath,$MKLROOT/lib/32 -L$MKLROOT/lib/32 -lmkl_intel \
+-lmkl_sequential -lmkl_core -lpthread -lm" F77=ifort AR="xild -lib" \
+--enable-mpi MPICXX=mpic++ MPICC=mpicc MPIF77=mpif77
+</code>
