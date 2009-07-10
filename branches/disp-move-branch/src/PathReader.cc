@@ -81,11 +81,11 @@ void PathReader::run() {
 //  if (mpi) MPI::COMM_WORLD.Bcast(&slice(0,0),npart*NDIM,MPI::DOUBLE,0);
 #endif
 
-  Beads<NDIM> firstSlice(slice);  Permutation pold(npart); 
+  Beads<NDIM> firstSlice(slice);  Permutation pidentity(npart); 
   for (int islice=0; islice<(nslice/bfactor)-1; ++islice) { 
     for (int ib=0; ib<bfactor; ++ib) { //Put the previous slice.
       int jslice=islice+ib*nfslice;
-      if (paths.isProcessorSlice(jslice)) paths.putBeads(jslice,slice,pold);
+      if (paths.isProcessorSlice(jslice)) paths.putBeads(jslice,slice,pidentity);
     }
     if (workerID==0){
     //if (!mpi || mpi->isMain()) {

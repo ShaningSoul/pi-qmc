@@ -61,20 +61,20 @@ void MainParser::parse(const xmlXPathContextPtr& ctxt) {
     if (nclone==0) nclone=MPI::COMM_WORLD.Get_size()/nworker;
     mpi=new MPIManager(nworker,nclone);
   }
-#endif
-
   //print date
   time_t rawtime;
   time ( &rawtime );
-   if (mpi){ 
+  if (mpi){ 
     if ( mpi->isMain()) {
       std :: cout << "Start Simulation at current local time and date :: "<< ctime (&rawtime)<<std ::endl ;
     } 
   }else {
     std :: cout << "Start Simulation at current local time and date :: "<< ctime (&rawtime)<<std ::endl ;
   }
-
-
+#else
+  std :: cout << "Start Simulation at current local time and date :: "<< ctime (&rawtime)<<std ::endl ;
+#endif
+  
 
   // Find the maximum level for any sampling.
   int maxlevel=1;
@@ -119,6 +119,7 @@ void MainParser::parse(const xmlXPathContextPtr& ctxt) {
   algorithm->run();
 
   //print date
+#ifdef ENABLE_MPI
   time ( &rawtime );
   if (mpi){ 
     if ( mpi->isMain()) {
@@ -127,5 +128,7 @@ void MainParser::parse(const xmlXPathContextPtr& ctxt) {
   }else {
     std :: cout << "\n\n********** Simulation ended successfully :: "<< ctime (&rawtime)<<std ::endl ;
   }
-
+#else
+  std :: cout << "\n\n********** Simulation ended successfully :: "<< ctime (&rawtime)<<std ::endl ;
+#endif
 }
