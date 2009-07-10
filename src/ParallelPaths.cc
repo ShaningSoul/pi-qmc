@@ -39,7 +39,7 @@ ParallelPaths::ParallelPaths(int npart, int nslice, double tau,
     nprocSlice(nslice/nworker+2+((iworker+1==nworker)?(nslice)%nworker:0)),
     beads(*beadFactory.getNewBeads(npart,nprocSlice)),
     buffer(*beadFactory.getNewBeads(npart,nprocSlice)),
-    permutation(*new Permutation(npart)),
+    permutation(*new Permutation(npart)),globalPermutation(*new Permutation(npart)),
     inversePermutation(*new Permutation(npart)),
     mpi(mpi), npSlice(nworker) {
   if (mpi.isMain()) std::cout << "Creating parallel paths" << std::endl;
@@ -152,6 +152,28 @@ void ParallelPaths::putDoubleBeads(
   putBeads(ifirstSlice1,beads1,p1);
   putBeads(ifirstSlice2,beads2,p2);
 }
+
+
+const Permutation& ParallelPaths::getPermutation() const {
+#ifdef ENABLE_MPI
+  Permutation recvp(npart);
+  globalPermutation = permutation;
+  if (iworker ==0) {
+    for (int src =1; src < nworker; ++src){
+  
+      mpi.getWorkerComm().Recv(&recvp[0], npart,MPI::INT,src,1);
+      globalPermutation.append(recvp);
+    }
+  } else {
+    mpi.getWorkerComm().Send(&(globalPermutation[0]), npart,MPI::INT,0,1);
+  }
+
+
+  mpi.getWorkerComm().Bcast(&globalPermutation[0],npart,MPI::INT,0);
+#endif
+  return globalPermutation;
+}
+
 
 void ParallelPaths::shift(const int ishift) {
 #ifdef ENABLE_MPI
