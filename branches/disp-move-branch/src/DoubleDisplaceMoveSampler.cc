@@ -59,7 +59,7 @@ DoubleDisplaceMoveSampler::~DoubleDisplaceMoveSampler() {
 
 
 void DoubleDisplaceMoveSampler::run() {
-
+  mpi->getWorkerComm().Barrier();
   // Run with a probability equal to freq 
 #ifdef ENABLE_MPI
   if ( mpi && (mpi->getNWorker()) > 1) {

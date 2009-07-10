@@ -46,7 +46,7 @@ class BeadFactory;
 class WritePaths : public Algorithm {
 public:
   /// Construct by providing the paths to write.
-  WritePaths(Paths&, const std::string&, MPIManager*, const BeadFactory&);
+  WritePaths(Paths&, const std::string&, const int dumpFreq, MPIManager*, const BeadFactory&);
   /// Virtual destructor.
   virtual ~WritePaths() {}
   /// Write the paths.
@@ -60,5 +60,6 @@ private:
   MPIManager *mpi;
   /// The BeadFactory.
   const BeadFactory& beadFactory;
+  const int dumpFreq;
 };
 #endif

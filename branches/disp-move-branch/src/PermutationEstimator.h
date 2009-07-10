@@ -50,7 +50,7 @@ private:
   ///
   int ifirst, nipart;
   const int npart;
-  bool *visited; // could not make BArray work for me in if (!visited(i)). expression must have bool type (or be convertible to bool)
+  bool *visited; 
   MPIManager *mpi;
 };
 

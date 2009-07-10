@@ -41,8 +41,8 @@ DoubleParallelPaths::DoubleParallelPaths(int npart, int nslice, double tau,
     beads2(*beadFactory.getNewBeads(npart,nprocSlice)),
     buffer1(*beadFactory.getNewBeads(npart,nprocSlice)),
     buffer2(*beadFactory.getNewBeads(npart,nprocSlice)),
-    permutation1(*new Permutation(npart)),
-    permutation2(*new Permutation(npart)),
+    permutation1(*new Permutation(npart)), globalPermutation(*new Permutation(npart)),
+    permutation2(*new Permutation(npart)),  
     inversePermutation1(*new Permutation(npart)),
     inversePermutation2(*new Permutation(npart)),
     mpi(mpi), npSlice(nworker) {
@@ -184,6 +184,45 @@ void DoubleParallelPaths::putDoubleBeads(
   putBeads(ifirstSlice1,beads1,p1);
   putBeads(ifirstSlice2,beads2,p2);
 }
+///////////////////////////////
+
+const Permutation& DoubleParallelPaths::getPermutation() const {
+#ifdef ENABLE_MPI
+  
+  Permutation recvp1(npart); 
+  Permutation recvp2(npart);
+  Permutation perm2(permutation2);
+  globalPermutation = permutation1;
+ 
+  // get globalPerm
+  if (iworker ==0) {
+    for (int src =1; src < nworker; ++src){
+  
+      mpi.getWorkerComm().Recv(&recvp1[0], npart,MPI::INT,src,1);
+      globalPermutation.append(recvp1);
+    }
+  } else {
+    mpi.getWorkerComm().Send(&(permutation1[0]), npart,MPI::INT,0,1);
+  }
+
+  //get perm2
+  if (iworker ==0) {
+    for (int src =1; src < nworker; ++src){
+      
+      mpi.getWorkerComm().Recv(&recvp2[0], npart,MPI::INT,src,2);
+      perm2.append(recvp2);
+    }
+  } else {
+    mpi.getWorkerComm().Send(&(permutation2[0]), npart,MPI::INT,0,2);
+  }   
+  
+  if (iworker ==0) globalPermutation.append(perm2);
+  mpi.getWorkerComm().Bcast(&globalPermutation[0],npart,MPI::INT,0);
+  
+#endif   
+  return globalPermutation;
+}
+
 
 void DoubleParallelPaths::shift(const int ishift) {
 #ifdef ENABLE_MPI

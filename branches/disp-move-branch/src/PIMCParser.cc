@@ -124,7 +124,16 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
     algorithm=composite;
   } else if (name=="Loop") {
     int nrepeat=getIntAttribute(ctxt->node,"nrepeat");
-    Loop *loop=new Loop(nrepeat);
+    //The timer for the main loop is called Main. Sub loops can be named arbitrarily
+    std::string timer = getStringAttribute(ctxt->node,"timer");
+    int hour=getIntAttribute(ctxt->node,"hours");
+    int min=getIntAttribute(ctxt->node,"minutes");
+    int sec=getIntAttribute(ctxt->node,"seconds");
+    int totalSimTime = hour*3600 + min*60 + sec; 
+    if (timer == "Main" && totalSimTime ==0 ) totalSimTime = 12*3600;
+    Loop *loop(0);      
+    loop=new Loop(nrepeat,totalSimTime,timer,mpi);
+    
     parseBody(ctxt,loop);
     algorithm=loop;
   } else if (name=="ChooseSection") {
@@ -166,12 +175,12 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
       algorithm = new DoubleDisplaceMoveSampler(nmoving, *paths, dist, freq,
 					      *particleChooser, *mover, action,
 					      nrepeat, beadFactory, mpi, doubleAction);
-      std :: cout <<"Requesting DoubleDisplaceMoveSampler."<<std :: endl;
+      std :: cout <<"Using DoubleDisplaceMoveSampler."<<std :: endl;
     } else {    
       algorithm = new DisplaceMoveSampler(nmoving, *paths, dist, freq,
 					  *particleChooser, *mover, action,
 					  nrepeat, beadFactory, mpi);
-      std :: cout <<"Requesting DisplaceMoveSampler."<<std :: endl;
+      std :: cout <<"Using DisplaceMoveSampler."<<std :: endl;
     } 
     std::string accRejName="DisplaceMoveSampler";
     estimators->add(((DisplaceMoveSampler*)algorithm)->
@@ -328,7 +337,8 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
     algorithm=new WriteProbDensity(simInfo,condDensityGrid[i],filename);
   } else if (name=="WritePaths") {
     std::string filename=getStringAttribute(ctxt->node,"file");
-    algorithm=new WritePaths(*paths,filename,mpi,beadFactory);
+    int dumpFreq=getIntAttribute(ctxt->node,"freq");
+    algorithm=new WritePaths(*paths,filename,dumpFreq,mpi,beadFactory);
   } else if (name=="SetSpin") {
     algorithm=new SpinSetter(*paths,mpi);
   } else if (name=="SetCubicLattice") {

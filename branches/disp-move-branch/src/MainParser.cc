@@ -32,7 +32,7 @@
 #include "stats/EstimatorManager.h"
 #include "EstimatorParser.h"
 #include "spin/MainSpinParser.h"
-
+#include <time.h>
 MainParser::MainParser(const std::string& filename) 
   : filename(filename), context (0) {
   doc = xmlParseFile((char*)filename.c_str());
@@ -49,6 +49,7 @@ void MainParser::parse() {
 }
 
 void MainParser::parse(const xmlXPathContextPtr& ctxt) {
+
   MPIManager *mpi=0;
 #ifdef ENABLE_MPI
   { xmlXPathObjectPtr obj = xmlXPathEval(BAD_CAST"//PIMC",ctxt);
@@ -61,6 +62,20 @@ void MainParser::parse(const xmlXPathContextPtr& ctxt) {
     mpi=new MPIManager(nworker,nclone);
   }
 #endif
+
+  //print date
+  time_t rawtime;
+  time ( &rawtime );
+   if (mpi){ 
+    if ( mpi->isMain()) {
+      std :: cout << "Start Simulation at current local time and date :: "<< ctime (&rawtime)<<std ::endl ;
+    } 
+  }else {
+    std :: cout << "Start Simulation at current local time and date :: "<< ctime (&rawtime)<<std ::endl ;
+  }
+
+
+
   // Find the maximum level for any sampling.
   int maxlevel=1;
   { xmlXPathObjectPtr obj = xmlXPathEval(BAD_CAST"//ChooseSection",ctxt);
@@ -98,6 +113,19 @@ void MainParser::parse(const xmlXPathContextPtr& ctxt) {
                         simInfo.getBeadFactory(),mpi);
   pimcParser.parse(ctxt);
   Algorithm* algorithm=pimcParser.getAlgorithm();
+
+
   // Run the simulation.
   algorithm->run();
+
+  //print date
+  time ( &rawtime );
+  if (mpi){ 
+    if ( mpi->isMain()) {
+      std :: cout << "\n\n********** Simulation ended successfully :: "<< ctime (&rawtime)<<std ::endl ;
+    } 
+  }else {
+    std :: cout << "\n\n********** Simulation ended successfully :: "<< ctime (&rawtime)<<std ::endl ;
+  }
+
 }

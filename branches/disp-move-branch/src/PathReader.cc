@@ -49,25 +49,43 @@ void PathReader::run() {
   int nslice=paths.getNSlice();
   int nfslice=nslice/bfactor;
   Beads<NDIM> &slice(*beadFactory.getNewBeads(npart,1));
-  Permutation p(npart);
+  Permutation p(npart);   
+  bool permutationsFlag = false;
   if (workerID==0){
-  //if (!mpi || mpi->isMain()) {
-    std::string temp; getline(*infile,temp);
+    std::string temp; 
+    *infile >> temp; 
+    if (temp.compare("#Permutations") == 0) {
+      std :: cout <<"Clone ID :: "<< cloneID<<" :: Found an Permutations array in restart file: " << std::endl;
+      permutationsFlag = true;
+      std :: cout << temp<<"  ";
+      for (int i=0; i < npart; i++){
+	*infile >>p[i];
+      }
+      std :: cout<<p <<std :: endl;   
+      getline(*infile,temp); 
+      getline(*infile,temp); 
+    }
+    else{
+      std :: cout << "WARNING :: Did not find #Permutations in the restart file. Automatically set up Permutations from paths."<<std :: endl; 
+      getline(*infile,temp); 
+    }
     for (int i=0; i<npart; ++i) {
       Beads<NDIM>::Vec v;
       for (int idim=0; idim<NDIM; ++idim) *infile >> v[idim];
       slice(i,0)=v;
     }
   }
+
 #ifdef ENABLE_MPI
   if (mpi) mpi->getWorkerComm().Bcast(&slice(0,0),npart*NDIM,MPI::DOUBLE,0);
 //  if (mpi) MPI::COMM_WORLD.Bcast(&slice(0,0),npart*NDIM,MPI::DOUBLE,0);
 #endif
-  Beads<NDIM> firstSlice(slice);
+
+  Beads<NDIM> firstSlice(slice);  Permutation pold(npart); 
   for (int islice=0; islice<(nslice/bfactor)-1; ++islice) { 
     for (int ib=0; ib<bfactor; ++ib) { //Put the previous slice.
       int jslice=islice+ib*nfslice;
-      if (paths.isProcessorSlice(jslice)) paths.putBeads(jslice,slice,p);
+      if (paths.isProcessorSlice(jslice)) paths.putBeads(jslice,slice,pold);
     }
     if (workerID==0){
     //if (!mpi || mpi->isMain()) {
@@ -82,25 +100,27 @@ void PathReader::run() {
 //  if (mpi) MPI::COMM_WORLD.Bcast(&slice(0,0),npart*NDIM,MPI::DOUBLE,0);
 #endif
   }
-  // Calculate  permuatation for last slice.
-  if (workerID==0){
-  //if (!mpi || mpi->isMain()) {
-    Beads<NDIM> &wrapSlice(*beadFactory.getNewBeads(npart,1));
-    for (int i=0; i<npart; ++i) {
-      Beads<NDIM>::Vec v;
-      for (int idim=0; idim<NDIM; ++idim) *infile >> v[idim];
-      wrapSlice(i,0)=v;
-    }
-    for (int i=0; i<npart; ++i) {
-      for (int j=0; j<npart; ++j) {
-        if (sum(fabs(wrapSlice(i,0)-firstSlice(j,0)))<10e-6) {p[i]=j; }
+
+  if (!permutationsFlag) {
+    // Calculate  permuatation for last slice.
+    if (workerID==0){
+      Beads<NDIM> &wrapSlice(*beadFactory.getNewBeads(npart,1));
+      for (int i=0; i<npart; ++i) {
+	Beads<NDIM>::Vec v;
+	for (int idim=0; idim<NDIM; ++idim) *infile >> v[idim];
+	wrapSlice(i,0)=v;
       }
-    }
-    delete &wrapSlice;
-  }   
+      for (int i=0; i<npart; ++i) {
+	for (int j=0; j<npart; ++j) {
+	  if (sum(fabs(wrapSlice(i,0)-firstSlice(j,0)))<10e-6) {p[i]=j; }
+	}
+      }
+      delete &wrapSlice;
+    }   
+}
+  
 #ifdef ENABLE_MPI
   if (mpi) mpi->getWorkerComm().Bcast(&p[0],npart,MPI::INT,0);
-//  if (mpi) MPI::COMM_WORLD.Bcast(&p[0],npart,MPI::INT,0);
 #endif
   for (int ib=bfactor-1; ib>=0; --ib) {
     int jslice=nfslice-1+ib*nfslice;
@@ -108,10 +128,9 @@ void PathReader::run() {
   }
   paths.setBuffers();
   delete infile;
-  if (workerID==0){
-  //if (!mpi || mpi->isMain()) {
-    std::cout << "Clone ID :: "<<mpi->getCloneID()<<" :: Permuation read in is " << p << std::endl;
-  } 
+  if (workerID==0 && !permutationsFlag){
+    std::cout << "Clone ID :: "<<mpi->getCloneID()<<" :: Permuation read in is " << p << std::endl; 
+  }
   delete &slice;
 }
  

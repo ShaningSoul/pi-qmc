@@ -63,15 +63,13 @@ public:
   /// Put beads.
   virtual void putBeads(int ifirstSlice,
                         const Beads<NDIM>&, const Permutation&) const;
-  ////db
-
-  ////db
   virtual void putDoubleBeads(
                  int ifirstSlice1,Beads<NDIM>&, Permutation&,
                  int ifirstSlice2,Beads<NDIM>&, Permutation&) const;
   /// Get the global permuation.
   /// @bug Placeholder, not correct for MPI.
-  virtual const Permutation& getPermutation() const {return permutation1;}
+   virtual const Permutation& getPermutation() const;
+   //virtual const Permutation& getPermutation() const {return permutation1;}
   virtual int getLowestSampleSlice(const int n, bool d) const {return ifirst;}
   virtual int getHighestSampleSlice(const int n, const bool d) const {
     return ifirst+nprocSlice-n-1;}
@@ -99,6 +97,7 @@ private:
   Beads<NDIM> &buffer1, &buffer2;
   /// Storage for this process's permutation.
   Permutation &permutation1, &permutation2;
+  Permutation &globalPermutation;
   /// Storage for the inverse permutation.
   Permutation &inversePermutation1, &inversePermutation2;
   /// MPIManager;
