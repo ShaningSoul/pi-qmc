@@ -45,6 +45,8 @@ DoubleSectionChooser::~DoubleSectionChooser() {
 }
 
 void DoubleSectionChooser::run() {
+
+
   //double x; gsl_qrng_get(qrng,&x);
   double x=RandomNumGenerator::getRand()*(1-1e-8);
   int ilo=paths.getLowestSampleSlice(beads->getNSlice(),true);

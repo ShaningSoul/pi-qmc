@@ -45,9 +45,9 @@ DoubleDisplaceMoveSampler::DoubleDisplaceMoveSampler(const int nmoving, Paths& p
 						     DoubleAction* doubleAction)
   : DisplaceMoveSampler(nmoving, paths, dist, freq, particleChooser, mover, action, nrepeat, beadFactory, mpi),doubleAction(doubleAction){
   movingIndex2 = new IArray(nmoving);
-  nslice = paths.getnprocSlice();
+  nslice = paths.getnprocSlice();  if (mpi->getNWorker() ==1 && mpi->getNClone()!=0){ nslice/=2;  pathsBeads = beadFactory.getNewBeads(paths.getNPart(), nslice);}
   pathsBeads2 = beadFactory.getNewBeads(paths.getNPart(), nslice); 
-  pathsBeads1 = beadFactory.getNewBeads(paths.getNPart(), nslice);
+  pathsBeads1 = beadFactory.getNewBeads(paths.getNPart(), nslice); //std :: cout <<"In displace move doube sampler"<< nslice;
 }
 
 DoubleDisplaceMoveSampler::~DoubleDisplaceMoveSampler() {
@@ -59,27 +59,31 @@ DoubleDisplaceMoveSampler::~DoubleDisplaceMoveSampler() {
 
 
 void DoubleDisplaceMoveSampler::run() {
-  mpi->getWorkerComm().Barrier();
+ 
   // Run with a probability equal to freq 
 #ifdef ENABLE_MPI
   if ( mpi && (mpi->getNWorker()) > 1) {
     double rd = RandomNumGenerator::getRand() ;
     mpi->getWorkerComm().Bcast(&rd, 1, MPI::DOUBLE, 0); 
-    if (rd > freq) return;
+    if (rd > freq || nrepeat ==0) return;
   } else {
-    if (RandomNumGenerator::getRand()>freq) return ;
+    if (RandomNumGenerator::getRand()>freq || nrepeat ==0) return ;
   }
 #else
-  if (RandomNumGenerator::getRand()>freq) return ;
+  if (RandomNumGenerator::getRand()>freq || nrepeat ==0) return ;
 #endif
-  const Permutation &pathsPermutation(paths.getPermutation());
-  
+
+ 
+  //const Permutation &pathsPermutation(paths.getPermutation());
+   Permutation pathsPermutation(paths.getNPart()); ///////////////////////////////////// hack 
+
   iFirstSlice = paths.getLowestSampleSlice(0,false);
   paths.getBeads(iFirstSlice,*pathsBeads1);
+
   iFirstSlice2 = (iFirstSlice + paths.getNSlice()/2)%paths.getNSlice();
   paths.getBeads(iFirstSlice2,*pathsBeads2);
   
-  action->initialize(*this);
+  //action->initialize(*this);
   doubleAction->initialize(*this);
   
   // Select particles that are not permuting to move and make nrepeat displacemoves
@@ -92,13 +96,12 @@ void DoubleDisplaceMoveSampler::run() {
     for (int i=0; i<nmoving; ++i) {
       int j = particleChooser[i];
       int jperm = pathsPermutation[j];
-     
+      
       if (j==jperm){
 	(*movingIndex)(imovingNonPerm)=j;
 	imovingNonPerm++;
       }
     } 
-   
 
 #ifdef ENABLE_MPI
     if ( mpi && (mpi->getNWorker()) > 1) {
@@ -106,25 +109,26 @@ void DoubleDisplaceMoveSampler::run() {
       mpi->getWorkerComm().Bcast(&imovingNonPerm, 1, MPI::INT, 0); 
     }
 #endif
-
-    if (imovingNonPerm ==0 ) return;
-    movingIndex->resizeAndPreserve(imovingNonPerm);
-    identityIndex.resize(imovingNonPerm);
     
-    // Copy old coordinate to the moving coordinate
-    for (int i=0; i<imovingNonPerm; ++i) identityIndex(i)=i;
-   
-    movingBeads1 = beadFactory.getNewBeads(imovingNonPerm, nslice);
-    movingBeads2 = beadFactory.getNewBeads(imovingNonPerm, nslice);
-    ////
-    for (int i=0; i<imovingNonPerm; i++) (*movingIndex2)(i) = (*movingIndex)(i);//////////<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    ////
-    for (int islice=0; islice<nslice; ++islice) { 
-      pathsBeads1->copySlice(*movingIndex,islice,*movingBeads1,identityIndex,islice);
-      pathsBeads2->copySlice(*movingIndex2,islice,*movingBeads2,identityIndex,islice); /////<<<<<<<<<<<<<<<<<<<<<<<
+    if (imovingNonPerm !=0 ) {
+      movingIndex->resizeAndPreserve(imovingNonPerm);
+      identityIndex.resize(imovingNonPerm);
+      
+      // Copy old coordinate to the moving coordinate
+      for (int i=0; i<imovingNonPerm; ++i) identityIndex(i)=i;
+      
+      movingBeads1 = beadFactory.getNewBeads(imovingNonPerm, nslice);
+      movingBeads2 = beadFactory.getNewBeads(imovingNonPerm, nslice);
+      ////
+      for (int i=0; i<imovingNonPerm; i++) (*movingIndex2)(i) = (*movingIndex)(i);//////////<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      ////
+      for (int islice=0; islice<nslice; ++islice) { 
+	pathsBeads1->copySlice(*movingIndex,islice,*movingBeads1,identityIndex,islice);
+	pathsBeads2->copySlice(*movingIndex2,islice,*movingBeads2,identityIndex,islice); /////<<<<<<<<<<<<<<<<<<<<<<<
+	  }
+      
+      if (tryMove(imovingNonPerm)) continue;
     }
-    
-    if (tryMove(imovingNonPerm)) continue;
   }
 }
 
@@ -132,6 +136,8 @@ void DoubleDisplaceMoveSampler::run() {
 
 
 bool DoubleDisplaceMoveSampler::tryMove(int imovingNonPerm) {
+
+  //suggest a move
   accRejEst->tryingMove(0);
   double l = mover.makeMove(*this);
 
@@ -140,7 +146,7 @@ bool DoubleDisplaceMoveSampler::tryMove(int imovingNonPerm) {
   double deltaAction=(action==0)?0:action->getActionDifference(*this, imovingNonPerm);
   activateSection(2);
   deltaAction+=(action==0)?0:action->getActionDifference(*this, imovingNonPerm);
-  //deltaAction+=(action==0)?0:doubleAction->getActionDifference(*this, imovingNonPerm);
+  deltaAction+=(action==0)?0:doubleAction->getActionDifference(*this, imovingNonPerm);
 
 #ifdef ENABLE_MPI
   if (mpi && (mpi->getNWorker())>1) {
@@ -164,7 +170,7 @@ bool DoubleDisplaceMoveSampler::tryMove(int imovingNonPerm) {
   
   // Move accepted.
   action->acceptLastMove();  
-  //doubleAction->acceptLastMove();
+  doubleAction->acceptLastMove();
 
   // Put moved beads in paths beads.
   for (int islice=0; islice<nslice; ++islice) {

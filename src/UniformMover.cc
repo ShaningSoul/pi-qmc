@@ -78,8 +78,8 @@ double UniformMover::makeMove(DisplaceMoveSampler& sampler) {
 double UniformMover::makeMove(DoubleDisplaceMoveSampler& sampler) {
   // typedef blitz::TinyVector<double,NDIM> Vec;
   // Beads<NDIM>& movingBeads=sampler.getMovingBeads();
- Beads<NDIM>& movingBeads1=sampler.getMovingBeads1();
-  Beads<NDIM>& movingBeads2=sampler.getMovingBeads2(); 
+  Beads<NDIM>& movingBeads1=sampler.getMovingBeads(1);
+  Beads<NDIM>& movingBeads2=sampler.getMovingBeads(2); 
   const SuperCell& cell=sampler.getSuperCell();
   const double dist = sampler.getDist();
   const int nSlice = sampler.getNSlice(); 

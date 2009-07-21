@@ -34,9 +34,9 @@ PairAction::PairAction(const Species& s1, const Species& s2,
   : tau(simInfo.getTau()), species1(s1), species2(s2),
     ifirst1(s1.ifirst), ifirst2(s2.ifirst),
     npart1(s1.count), npart2(s2.count), norder(norder), isDMD(isDMD) {
-std::cout << "constructing PairAction" << std::endl;
-std::cout << "species1= " <<  s1 << "species2= " <<  s2 << std::endl;
-std::cout << "filename=" << filename << std::endl;
+  //std::cout << "constructing PairAction" << std::endl;
+  //std::cout << "species1= " <<  s1 << "species2= " <<  s2 << std::endl;
+  //std::cout << "filename=" << filename << std::endl;
   std::vector<Array> buffer; buffer.reserve(300);
   std::ifstream dmfile((filename+".dmu").c_str()); std::string temp;
   double r;
@@ -98,8 +98,8 @@ PairAction::PairAction(const Species& s1, const Species& s2,
     logrratioinv((ngpts-1)/log(rmax/rmin)), ugrid(ngpts,(norder+1)*2),
     species1(s1), species2(s2), ifirst1(s1.ifirst), ifirst2(s2.ifirst),
     npart1(s1.count), npart2(s2.count), norder(norder) {
-std::cout << "constructing PairAction" << std::endl;
-std::cout << "species1= " <<  s1 << "species2= " <<  s2 << std::endl;
+  //std::cout << "constructing PairAction" << std::endl;
+  //std::cout << "species1= " <<  s1 << "species2= " <<  s2 << std::endl;
   ugrid=0;
 //  std::cout << 1./rgridinv << ", " << logrratioinv << std::endl;
   for (int i=0; i<ngpts; ++i) {

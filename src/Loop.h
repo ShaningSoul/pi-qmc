@@ -38,53 +38,90 @@ class Loop : public CompositeAlgorithm {
 
     virtual void run() {
 
+      // std :: cout << mpi->getCloneID()<<" cid. "<<mpi->getWorkerID()<<" iw. "<<timer<<" "<<totalSimTime<<std :: endl;
 
+      //mpi->getWorkerComm().Barrier();
+      
       // print out timeinfo for Main or sub loops. totalsimtime default value is 12hrs in case it is not set.
       if (timer =="Main" || totalSimTime>0){
 	time_t startSim, elapsedTime;
 	time (&startSim);
 	double dif=0;
-	int oldTime=0;
-	int dt = 0;
+	double oldTime=0;
+	double dt = 0;
 	for(int i=0; (dif+dt) < totalSimTime && i<nrepeat; ++i ){
+
+#ifdef ENABLE_MPI
+	  if (mpi) {
+	    mpi->getWorkerComm().Barrier();
+	    if (mpi->isCloneMain())  {
+	      mpi->getCloneComm().Barrier();
+	    }
+	  }
+#endif
 	  CompositeAlgorithm::run();
 	  time (&elapsedTime);
 	  dif = difftime (elapsedTime,startSim);
 	  dt = dif-oldTime;
 	  oldTime=dif;
+
 #ifdef ENABLE_MPI
 	  if ( mpi->isMain()) {
 	    printElapsedTime(dif);	  
 	    printAlgorithmTime(dt);
 	  }
-	}
+	
 #else
 	printElapsedTime(dif);	  
 	printAlgorithmTime(dt);
 #endif
+
+	std :: cout << mpi->getCloneID()<<" cid. "<<mpi->getWorkerID()<<" iw. "<<dt<<" "<<  dif<<std :: endl<<std::flush;
+	}
       } else if (timer!="" && timer !="Main"){
 	time_t startSim, elapsedTime;
 	time (&startSim);
 	double dif=0;
-	int oldTime=0;
-	int dt = 0;
-
+	double oldTime=0;
+	double dt = 0;
+#ifdef ENABLE_MPI
+	  //db sak
+	  if (mpi) {
+	    mpi->getWorkerComm().Barrier();
+	    if (mpi->isCloneMain())  {
+	      mpi->getCloneComm().Barrier();
+	    }
+	  }
+#endif
 	for(int i=0; i<nrepeat; ++i )  CompositeAlgorithm::run();
 	time (&elapsedTime);
 	dif = difftime (elapsedTime,startSim);
 	dt = dif-oldTime ;
 	oldTime=dif;
+
 #ifdef ENABLE_MPI
+	double netDt;
 	if ( mpi->isMain()) printAlgorithmTime(dt);
 #else
 	printAlgorithmTime(dt);
 #endif
-      }
-      
-      
-      //No timeinfo printed. timer not used. Just use nrepeat
-      if (timer=="" && totalSimTime==0){
-	for(int i=0;  i<nrepeat; ++i )	  CompositeAlgorithm::run();
+      }else {
+ 	//No timeinfo printed. timer not used. Just use nrepeat
+      	if (timer=="" && totalSimTime==0){
+#ifdef ENABLE_MPI
+	    //db sak
+	    if (mpi) {
+	      mpi->getWorkerComm().Barrier();
+	      if (mpi->isCloneMain())  {
+		mpi->getCloneComm().Barrier();
+	      }
+	    }
+#endif
+	  for(int i=0;  i<nrepeat; ++i )	 {
+	    CompositeAlgorithm::run();
+
+	  }
+	}
       }
     }
     
@@ -93,13 +130,14 @@ class Loop : public CompositeAlgorithm {
       int hr = d/3600;
       int mn = ((d)%3600)/60;
       int sc = ((d)%3600)%60;
-      std :: cout << "Time elapsed from start of simulation :: "<<hr<<" hours, "<< mn <<" mins, "<<sc<<" secs, or total time in seconds :: "<<dif<<" sec."<<std :: endl<<std::flush;
+      std :: cout << "Time elapsed from start of simulation :: "<<hr<<" hour(s), "<< mn <<" min(s), "<<sc<<" sec(s), or total time in seconds :: "<<dif<<" secs."<<std :: endl<<std::flush;
     }
     
-    void printAlgorithmTime(int dt){
-      int mn = dt/60;
-      int sc = (dt)%60;
-      std :: cout << "Time spent inside loop ["<<timer<< "] ..... :: "<<mn<<" mins, "<<sc<<" secs, or total time in seconds :: "<<dt<<" sec."<<std :: endl<<std::flush;
+    void printAlgorithmTime(double dt){
+      int d = int(dt);
+      int mn = d/60;
+      int sc = (d)%60;
+      std :: cout << "Time spent inside loop ["<<timer<< "] ..... :: "<<mn<<" min(s), "<<sc<<" sec(s), or total time in seconds :: "<<dt<<" secs."<<std :: endl<<std::flush;
     }
     
  private:

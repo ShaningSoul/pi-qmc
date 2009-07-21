@@ -67,7 +67,8 @@ public:
                  int ifirstSlice2,Beads<NDIM>&, Permutation&) const;
   /// Get the global permuation.
   /// @bug Placeholder, not correct for MPI.
-    virtual const Permutation& getPermutation() const;
+    virtual const Permutation& getGlobalPermutation() const;
+    virtual   const Permutation& getPermutation() const {return permutation;}
   virtual int getLowestSampleSlice(const int n, bool d) const {return ifirst;}
   virtual int getHighestSampleSlice(const int n, const bool d) const {
     return ifirst+nprocSlice-n-1;}

@@ -46,7 +46,7 @@ public:
   virtual void getBeadAction(const Paths&, int ipart, int islice,
           double& u, double& utau, double& ulambda, Vec& fm, Vec& fp) const=0;
   /// Initialize for a sampling section.
-  virtual void initialize(const SectionChooser&) {};
+  virtual void initialize(const SectionChooser&) { };
   virtual void initialize(const DisplaceMoveSampler &) {};
 
   /// Accept last move.

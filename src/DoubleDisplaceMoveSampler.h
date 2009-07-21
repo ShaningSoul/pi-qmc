@@ -24,7 +24,7 @@ class Mover;
 class Paths;
 class PathsChooser;
 class ParticleChooser;
-class PermutationChooser;
+//class PermutationChooser;
 class Permutation;
 class AccRejEstimator;
 class BeadFactory;
@@ -45,17 +45,22 @@ public:
 			    DoubleAction* doubleAction);
   virtual ~DoubleDisplaceMoveSampler();
   virtual void run();
-  Beads<NDIM>& getMovingBeads1() {return *movingBeads1;}
-  Beads<NDIM>& getMovingBeads1() const {return *movingBeads1;}
-  Beads<NDIM>& getMovingBeads2() {return *movingBeads2;}
-  Beads<NDIM>& getMovingBeads2() const {return *movingBeads2;}
-  Beads<NDIM>& getPathsBeads() {return *pathsBeads;}
+  Beads<NDIM>& getMovingBeads(const int i)  {
+    return i==1?*movingBeads1:*movingBeads2;}
+  const Beads<NDIM>& getMovingBeads(const int i) const  {
+    return i==1?*movingBeads1:*movingBeads2;}
+  Beads<NDIM>& getPathsBeads(const int i) {
+    return i==1?*pathsBeads1:*pathsBeads2;}
+  const Beads<NDIM>& getPathsBeads(const int i) const {
+    return i==1?*pathsBeads1:*pathsBeads2;}
+  
+  //////////Beads<NDIM>& getPathsBeads() {return *pathsBeads;}
   // const Beads<NDIM>& getPathsBeads() const {return *pathsBeads;}
   IArray&  getMovingIndex() {return *movingIndex;}
   const IArray&  getMovingIndex() const {return *movingIndex;}
   void setAction(Action*, const int level=0); /// not needed
   const SuperCell& getSuperCell() const {return cell;}
-  const Paths& getPaths() const {return paths;}
+  //const Paths& getPaths() const {return paths;}
   double getDist() {return dist;}
   int getNSlice() {return nslice;}
   int getNSlice() const {return nslice;}
