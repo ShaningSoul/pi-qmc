@@ -168,9 +168,7 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
     }
 
     int nrepeat=getIntAttribute(ctxt->node,"nrepeat");
-    if (nrepeat==0) nrepeat=1;
     
-    // if (mpi && mpi->getNWorker()>1 && doubleAction) {
     if (doubleAction) {
       algorithm = new DoubleDisplaceMoveSampler(nmoving, *paths, dist, freq,
 					      *particleChooser, *mover, action,

@@ -78,6 +78,7 @@ public:
             int ifirstSlice2,Beads<NDIM>&, Permutation&) const=0;
   /// Get the global permuation.
   virtual const Permutation& getPermutation() const=0;
+  virtual const Permutation& getGlobalPermutation() const=0;
   virtual int getLowestSampleSlice(const int n, bool d) const=0;
   virtual int getHighestSampleSlice(const int n, bool d) const=0;
   virtual int getHighestStoredSlice(const int n, bool d) const=0;

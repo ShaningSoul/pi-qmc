@@ -56,6 +56,7 @@ DoubleMLSampler::DoubleMLSampler(int nmoving, Paths& paths,
     permutationChooser2(permutationChooser2),
     nrepeat(nrepeat) {
   for (int i=0; i<nmoving; ++i) (*movingIndex2)(i)=identityIndex(i)=i;
+
 }
 
 DoubleMLSampler::~DoubleMLSampler() {
@@ -84,8 +85,9 @@ void DoubleMLSampler::run() {
       particleChooser2.chooseParticles();
       for (int i=0; i<nmoving; ++i) (*movingIndex2)(i)=particleChooser2[i];
     }
+    
     if (isNewPerm) {
-      // Copy old coordinate endpoint to the moving coordinate endpoints.
+  // Copy old coordinate endpoint to the moving coordinate endpoints.
       const int nsectionSlice=movingBeads->getNSlice();
       for (int imoving=0; imoving<nmoving; ++imoving) {
         pMovingIndex(imoving)=(*movingIndex1)(permutation1[imoving]);
@@ -103,6 +105,7 @@ void DoubleMLSampler::run() {
                                  *movingBeads2,identityIndex,nsectionSlice-1);
       }
       if (tryMove(lnTranProb) && irepeat<nrepeat-1) {
+    
         permutationChooser.init();
         if (samplingBoth) {
           activateSection(2); permutationChooser2.init(); activateSection(1); 
@@ -130,11 +133,13 @@ bool DoubleMLSampler::tryMove(double initialLnTranProb) {
     // Evaluate and add change in DoubleAction. 
     deltaAction+=doubleAction->getActionDifference(*this,ilevel);
     double acceptProb=exp(lnTranProb-deltaAction+oldDeltaAction);
-   
- if (RandomNumGenerator::getRand()>acceptProb) return false;
+      
+    if (RandomNumGenerator::getRand()>acceptProb) return false;
     oldDeltaAction=deltaAction;
-    if (accRejEst) accRejEst->moveAccepted(ilevel);
+    if (accRejEst) accRejEst->moveAccepted(ilevel); 
+  
   }
+
   // Move accepted.
   action->acceptLastMove();
   //if (samplingBoth)  {
@@ -153,7 +158,8 @@ bool DoubleMLSampler::tryMove(double initialLnTranProb) {
  
   // Append the current permutation to section permutation.
   Permutation temp1(permutation1), temp2(permutation2);
-  
+
+
   for (int i=0; i<nmoving; ++i) {
     temp1[i]=(*sectionPermutation1)[(*movingIndex1)(i)];
     if (samplingBoth) temp2[i]=(*sectionPermutation2)[(*movingIndex2)(i)];
@@ -163,7 +169,8 @@ bool DoubleMLSampler::tryMove(double initialLnTranProb) {
     if (samplingBoth)
       (*sectionPermutation2)[(*movingIndex2)(i)]=temp2[permutation2[i]];
   }
-  
+
+
   return true;
 }
 

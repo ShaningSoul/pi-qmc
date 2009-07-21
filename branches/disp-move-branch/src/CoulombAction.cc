@@ -117,7 +117,7 @@ double CoulombAction::getActionDifference(const MultiLevelSampler& sampler,
       for (int i=0; i<nMoving; ++i) rewald(index(i))=movingBeads(i,islice);
       u += ewaldSum->evalLongRange(rewald)*tau/epsilon;
     }
-  }
+  } 
   return u;
 }
 
@@ -126,7 +126,7 @@ double CoulombAction::getActionDifference(const DisplaceMoveSampler& sampler,
                                          const int nMoving) {
   double u=0;
   for (unsigned int i=0; i<pairActionArray.size(); ++i) {
-    u += pairActionArray[i]->getActionDifference(sampler, 0);
+    u += pairActionArray[i]->getActionDifference(sampler, nMoving);
   }
   // Compute long range Ewald action at lowest level.
   if (ewaldSum) {
@@ -171,6 +171,7 @@ void CoulombAction::getBeadAction(const Paths& paths, int ipart, int islice,
     u += longRange*tau;
     utau += longRange;
   }
+ 
 }
 
 double CoulombAction::getAction(const Paths& paths, int islice) const {

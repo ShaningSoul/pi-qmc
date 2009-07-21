@@ -110,6 +110,7 @@ void EwaldSum::setLongRangeArray() {
 #if (NDIM==3) || (NDIM==2)
   for (int ikvec=0; ikvec<totk; ++ikvec) {
     vk(ikvec)=evalFK(sqrt(kvec2(ikvec)));
+    // std :: cout << "totk "<<totk<<". ikvec "<< ikvec<<". kvec2(ikvec) "<<kvec2(ikvec)<<std :: endl;
   }
 #endif
 }
@@ -118,6 +119,7 @@ EwaldSum::~EwaldSum() {
 }
 
 double EwaldSum::evalLongRange(const VArray& r) const {
+
   double sum=0;
   // Set up the exponential tables
 #if NDIM==3 || NDIM==2
@@ -186,11 +188,12 @@ double EwaldSum::evalLongRange(const VArray& r) const {
                  
 #endif
     }
-    sum+=vk(ikvec)*abs(csum)*abs(csum);
+     sum+=vk(ikvec)*abs(csum)*abs(csum);
   }
   } //end of omp parallel section
 #endif
-  return sum*oneOver2V + selfEnergy;
+ 
+   return sum*oneOver2V + selfEnergy;
 }
 
 void EwaldSum::evalSelfEnergy() {

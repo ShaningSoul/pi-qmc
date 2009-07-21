@@ -47,7 +47,7 @@ public:
           double& u, double& utau, double& ulambda, Vec& fm, Vec& fp) const=0;
   /// Initialize for a sampling section.
   virtual void initialize(const DoubleSectionChooser&) {};
-  virtual void initialize(const DoubleDisplaceMoveSampler &) {};
+  virtual void initialize(const DoubleDisplaceMoveSampler &){};
 
   /// Accept last move.
   virtual void acceptLastMove() {};

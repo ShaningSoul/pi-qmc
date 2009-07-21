@@ -154,10 +154,10 @@ void ParallelPaths::putDoubleBeads(
 }
 
 
-const Permutation& ParallelPaths::getPermutation() const {
+const Permutation& ParallelPaths::getGlobalPermutation() const {
+  globalPermutation = permutation;
 #ifdef ENABLE_MPI
   Permutation recvp(npart);
-  globalPermutation = permutation;
   if (iworker ==0) {
     for (int src =1; src < nworker; ++src){
   
@@ -165,7 +165,7 @@ const Permutation& ParallelPaths::getPermutation() const {
       globalPermutation.append(recvp);
     }
   } else {
-    mpi.getWorkerComm().Send(&(globalPermutation[0]), npart,MPI::INT,0,1);
+    mpi.getWorkerComm().Send(&(permutation[0]), npart,MPI::INT,0,1);
   }
 
 

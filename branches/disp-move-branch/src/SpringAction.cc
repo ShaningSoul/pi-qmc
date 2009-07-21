@@ -103,7 +103,7 @@ double SpringAction::getActionDifference(const MultiLevelSampler& sampler,
       }
       deltaAction+=log(temp);
     }
-  }
+  } 
   return deltaAction;
 }
 
@@ -111,47 +111,7 @@ double SpringAction::getActionDifference(const MultiLevelSampler& sampler,
 // displacemove
 double SpringAction::getActionDifference(const DisplaceMoveSampler& sampler,
                                          const int nMoving) {
-  const Beads<NDIM>& pathsBeads=sampler.getPathsBeads();
-  const Beads<NDIM>& movingBeads=sampler.getMovingBeads();
-  const SuperCell& cell=sampler.getSuperCell();
-  const int nStride= 1; // (int)pow(2,level);
-  const int nSlice=sampler.getNSlice();
-  const IArray& index=sampler.getMovingIndex(); 
-  const int level = 0;
-  double deltaAction=0;
-  for (int iMoving=0; iMoving<nMoving; ++iMoving) {
-    const int i=index(iMoving);
-    for (int islice=1; islice<nSlice; islice+=nStride) {
-      
-      if (isStatic(i)) continue;
-      const int ispec=specIndex(i);
-      const double inv2Sigma2 = 0.25/(lambda(i)*tau*nStride);
-      // Add action for moving beads.
-      Vec delta=movingBeads.delta(iMoving,islice,-nStride);
-      cell.pbc(delta);
-      double temp = 1.0;
-      for (int idim=0;idim<NDIM;++idim) {
-        if (pg(level,ispec,idim)) {
-          temp *= (*pg(level,ispec,idim))(fabs(delta[idim]));
-        } else {
-          deltaAction+=delta[idim]*delta[idim]*inv2Sigma2;
-        }
-      }
-      temp = 1.0/temp;
-      // Subtract action for old beads.
-      delta=pathsBeads.delta(i,islice,-nStride);
-      cell.pbc(delta);
-      for (int idim=0;idim<NDIM;++idim) {
-        if (pg(level,ispec,idim)) {
-          temp *= (*pg(level,ispec,idim))(fabs(delta[idim]));
-        } else {
-          deltaAction-=delta[idim]*delta[idim]*inv2Sigma2;
-        }
-      }
-      deltaAction+=log(temp);
-    }
-  }
-  return deltaAction;
+  return 0;
 }
 
 
@@ -168,4 +128,5 @@ void SpringAction::getBeadAction(const Paths& paths, int ipart, int islice,
   utau = NDIM/(2*tau) - dot(delta,delta)/(4.0*lambda(ipart)*tau*tau);
   delta = paths.delta(ipart,islice,1);
   fp-=(delta/(2*lambda(ipart)*tau));
+  
 }

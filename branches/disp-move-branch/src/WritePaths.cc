@@ -35,14 +35,14 @@ WritePaths::WritePaths(Paths& paths, const std::string& filename, const int dump
 }
 
 void WritePaths::run() {
-  mpi->getWorkerComm().Barrier();
+  
   static int dumpCounter=0;
   if (dumpCounter < dumpFreq) {
     dumpCounter++;
     return;
   }
   dumpCounter=0;
-
+  
   int workerID=(mpi)?mpi->getWorkerID():0;
   int nclone=(mpi)?mpi->getNClone():1;
   /// Add cloneID to name if there are clones.
@@ -50,11 +50,10 @@ void WritePaths::run() {
   std::stringstream ext;
   if (nclone>1) ext << cloneID;
   std::ofstream *file=0;
-  Permutation perm(paths.getPermutation());   
+  Permutation perm(paths.getGlobalPermutation());   
   if (workerID==0){
     file = new std::ofstream((filename+ext.str()).c_str());
     *file <<"#Permutations ";
-  
     for (int i=0; i<paths.getNPart(); i++) *file << perm[i]<< " ";
     *file << std::endl;
     *file << "#Path coordinates: " << paths.getNPart()

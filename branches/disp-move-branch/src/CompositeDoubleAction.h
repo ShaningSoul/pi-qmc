@@ -36,7 +36,7 @@ public:
   virtual double getActionDifference(const DoubleMLSampler&,
                                      const int level);
   virtual double getActionDifference(const DoubleDisplaceMoveSampler&,
-				    const int nMoving){ return 0;};
+				    const int nMoving);
  /// Calculate the total action.
   virtual double getTotalAction(const Paths&, const int level) const;
   /// Calculate the action and derivatives at a bead.
@@ -46,6 +46,7 @@ public:
   void addAction(DoubleAction* a) {actions.push_back(a);}
   /// Initialize for a sampling section.
   virtual void initialize(const DoubleSectionChooser&);
+  virtual void initialize(const DoubleDisplaceMoveSampler &);
   /// Accept last move.
   virtual void acceptLastMove();
   /// Get the number of constituent action objects.
