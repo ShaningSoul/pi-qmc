@@ -165,7 +165,7 @@ For the python analysis utilities, you'll want to install ipython and matplotlib
 sudo yum install python-matplotlib
 sudo yum install python-ipython
 </code>
-Pytables and scipy are also required for the analysis scripts, but you'll have to download them and install them yourself.
+The python packages [http://www.pytables.org/ pytables] and [http://www.scipy.org scipy] are also required for the analysis scripts, but they are not available through yum, so you'll have to download them and install them yourself.
 
 ==HPC Centers==
 
