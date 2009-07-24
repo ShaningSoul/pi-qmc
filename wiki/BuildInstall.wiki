@@ -128,7 +128,44 @@ CXXFLAGS="-g -O3 -ffast-math -ftree-vectorize -maltivec -mpowerpc-gpopt \
 
 
 
-==Linux==
+==Linux (CentOS 5.3)==
+
+You can download dependencies using <tt>yum</tt>. First, you may need to add access to the fedora [http://fedoraproject.org/wiki/EPEL Extra Packages for Enterprise Linux (EPEL)].
+<code language="sh">
+sudo rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
+</code>
+
+Then install the required packages for *_pi_*. (You probably want to compile atlas yourself to get automatic performance tuning for your hardware, but the yum install will work if you are impatient.)
+<code language="sh">
+sudo yum install blitz-devel.x86_64
+sudo yum install fftw3-devel.x86_64
+sudo yum install hdf5-devel.x86_64
+sudo yum install atlas-sse3-devel.x86_64
+sudo yum install lapack-devel.x86_64
+sudo yum install gsl-devel.x86_64
+</code>
+
+For openmp support (not currently available in *_pi_*), you may want newer compilers. Also, you will want an MPI implementation if you want to run in parallel.
+<code language="sh">
+sudo yum install gcc43 gcc43-c++ gcc43-gfortran
+sudo yum install openmpi-devel.x86_64
+</code>
+The openmpi package will require that you run mpi-selector and open a new terminal to get the executables. Use the list option to see what is available, then set a system-wide default.
+<code language="sh">
+sudo mpi-selector --system --set openmpi-1.2.7-gcc-x86_64
+</code>
+
+When you configure pi, you will probably need to specify the location of your BLAS and LAPACK routines,
+<code language="sh">
+../../pi/configure --with-blas="-L/usr/lib64/atlas -llapack -lf77blas"
+</code>
+
+For the python analysis utilities, you'll want to install ipython and matplotlib.
+<code language="sh">
+sudo yum install python-matplotlib
+sudo yum install python-ipython
+</code>
+Pytables and scipy are also required for the analysis scripts, but you'll have to download them and install them yourself.
 
 ==HPC Centers==
 
