@@ -135,7 +135,7 @@ You can download dependencies using <tt>yum</tt>. First, you may need to add acc
 sudo rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
 </code>
 
-Then install the required packages for *_pi_*. (You probably want to compile atlas yourself to get automatic performance tuning for your hardware, but the yum install will work if you are impatient.)
+Then install the required packages for *_pi_*. (You probably want to compile atlas yourself to get automatic performance tuning for your hardware, but the yum install will work if you are impatient.) Note: replace <tt>x86_64</tt> with <tt>i386</tt> if you are on a 32 bit machine.
 <code language="sh">
 sudo yum install blitz-devel.x86_64
 sudo yum install fftw3-devel.x86_64
@@ -145,12 +145,11 @@ sudo yum install lapack-devel.x86_64
 sudo yum install gsl-devel.x86_64
 </code>
 
-For openmp support (not currently available in *_pi_*), you may want newer compilers. Also, you will want an MPI implementation if you want to run in parallel.
+You will want an MPI implementation if you want to run in parallel,
 <code language="sh">
-sudo yum install gcc43 gcc43-c++ gcc43-gfortran
 sudo yum install openmpi-devel.x86_64
 </code>
-The openmpi package will require that you run mpi-selector and open a new terminal to get the executables. Use the list option to see what is available, then set a system-wide default.
+The openmpi package will require that you run <tt>mpi-selector</tt> and open a new terminal to get the executables. Use the <tt>mpi-selector --list</tt> option to see what is available, then set a system-wide default.
 <code language="sh">
 sudo mpi-selector --system --set openmpi-1.2.7-gcc-x86_64
 </code>
@@ -163,9 +162,10 @@ When you configure pi, you will probably need to specify the location of your BL
 For the python analysis utilities, you'll want to install ipython and matplotlib.
 <code language="sh">
 sudo yum install python-matplotlib
-sudo yum install python-ipython
+sudo yum install ipython
+sudo yum install scipy
 </code>
-The python packages [http://www.pytables.org/ pytables] and [http://www.scipy.org scipy] are also required for the analysis scripts, but they are not available through yum, so you'll have to download them and install them yourself.
+The python package [http://www.pytables.org/ pytables] for reading HDF5 files is also required for the analysis scripts, but it is not available through yum, so you'll have to download it and install it yourself.
 
 ==HPC Centers==
 
