@@ -121,8 +121,7 @@ return diff;
 }
 
 //displace move
-double EwaldAction::getActionDifference(
-    const DisplaceMoveSampler& sampler, const int nMoving) {
+double EwaldAction::getActionDifference( const DisplaceMoveSampler& sampler, const int nMoving) {
   double diff=0;
 return diff;
   for (ConstSRActIter action=actions.begin(); action<actions.end(); ++action) {

@@ -76,7 +76,7 @@ class Loop : public CompositeAlgorithm {
 	printAlgorithmTime(dt);
 #endif
 
-	std :: cout << mpi->getCloneID()<<" cid. "<<mpi->getWorkerID()<<" iw. "<<dt<<" "<<  dif<<std :: endl<<std::flush;
+	//	std :: cout << mpi->getCloneID()<<" cid. "<<mpi->getWorkerID()<<" iw. "<<dt<<" "<<  dif<<std :: endl<<std::flush;
 	}
       } else if (timer!="" && timer !="Main"){
 	time_t startSim, elapsedTime;

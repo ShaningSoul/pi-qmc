@@ -54,8 +54,6 @@ FixedNodeAction::~FixedNodeAction() {
 
 double FixedNodeAction::getActionDifference(const DoubleMLSampler &sampler,
     int level) {
-  //   std :: cout <<" In actiondifference dmlsampler"<<std :: endl;
-
   // Get ready to move paths.
   double deltaAction=0;
   const Beads<NDIM>& sectionBeads1=sampler.getSectionBeads(1);
@@ -142,8 +140,7 @@ double FixedNodeAction::getActionDifference(const DoubleDisplaceMoveSampler &sam
   const Beads<NDIM>& movingBeads1=sampler.getMovingBeads(1);
   const Beads<NDIM>& movingBeads2=sampler.getMovingBeads(2);
   const IArray& index=sampler.getMovingIndex(); 
-  // const IArray& index2=sampler.getMovingIndex; none of that
-  // const int nMoving=index.size();
+
   if (!nodeModel->dependsOnOtherParticles() ) {
     for (int i=0; i<nMoving; ++i) {
       if ( (index(i)>=ifirst && index(i)<ifirst+nSpeciesPart)) break;
@@ -282,13 +279,12 @@ void FixedNodeAction::getBeadAction(const Paths &paths, int ipart, int islice,
 }
 
 void FixedNodeAction::initialize(const DoubleSectionChooser &chooser) {
-  //// std :: cout <<" In initialize doublesectionchooser"<<std :: endl;
   const Beads<NDIM>& sectionBeads1=chooser.getBeads(1);
   const Beads<NDIM>& sectionBeads2=chooser.getBeads(2);
   nslice=sectionBeads1.getNSlice();
   blitz::Range allPart = blitz::Range::all();
-  blitz::Range both = blitz::Range::all();////std :: cout << allPart <<" "<< both<<"  "<<npart<<"  "<<nslice<<std :: endl;
-  for (int islice=0; islice<nslice; ++islice) {  // std :: cout << islice << std :: endl;
+  blitz::Range both = blitz::Range::all();
+  for (int islice=0; islice<nslice; ++islice) {  
     for (int i=0; i<npart; ++i) r1(i)=sectionBeads1(i,islice);
     for (int i=0; i<npart; ++i) r2(i)=sectionBeads2(i,islice);
     dmValue(islice)=nodeModel->evaluate(r1,r2,islice);
@@ -306,20 +302,17 @@ void FixedNodeAction::initialize(const DoubleSectionChooser &chooser) {
     }
   } 
   newDMValue(0)=dmValue(0); newDist(0,both,allPart)=dist(0,both,allPart);
-  //// std :: cout <<" Out initialize doublesectionchooser"<<std :: endl;
 }
 
 
 // displacemove
 void FixedNodeAction::initialize(const DoubleDisplaceMoveSampler &sampler) {
-  ////std :: cout <<" In initialize displace"<<std :: endl;
   const Beads<NDIM>& pathsBeads1=sampler.getPathsBeads(1);
   const Beads<NDIM>& pathsBeads2=sampler.getPathsBeads(2);
   nslice=pathsBeads1.getNSlice();
   blitz::Range allPart = blitz::Range::all(); 
-  blitz::Range both = blitz::Range::all();////////std :: cout << allPart <<" "<< both<<"  "<<npart<<"  "<<nslice<<std :: endl;
+  blitz::Range both = blitz::Range::all();
   for (int islice=0; islice<nslice; ++islice) {
-    //// std :: cout << islice << std :: endl;
     for (int i=0; i<npart; ++i) r1(i)=pathsBeads1(i,islice);
     for (int i=0; i<npart; ++i) r2(i)=pathsBeads2(i,islice);
     dmValue(islice)=nodeModel->evaluate(r1,r2,islice);
@@ -337,8 +330,6 @@ void FixedNodeAction::initialize(const DoubleDisplaceMoveSampler &sampler) {
     }
   } 
   newDMValue(0)=dmValue(0); newDist(0,both,allPart)=dist(0,both,allPart);
-  ///// std :: cout <<"Out initialize displace"<<std :: endl;
-
 }
 
 void FixedNodeAction::acceptLastMove() {

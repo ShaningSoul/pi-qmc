@@ -83,7 +83,7 @@ void DoubleDisplaceMoveSampler::run() {
   iFirstSlice2 = (iFirstSlice + paths.getNSlice()/2)%paths.getNSlice();
   paths.getBeads(iFirstSlice2,*pathsBeads2);
   
-  //action->initialize(*this);
+  action->initialize(*this);
   doubleAction->initialize(*this);
   
   // Select particles that are not permuting to move and make nrepeat displacemoves
@@ -142,9 +142,9 @@ bool DoubleDisplaceMoveSampler::tryMove(int imovingNonPerm) {
   double l = mover.makeMove(*this);
 
   // Evaluate the change in action. 
-  activateSection(1);
-  double deltaAction=(action==0)?0:action->getActionDifference(*this, imovingNonPerm);
   activateSection(2);
+  double deltaAction=(action==0)?0:action->getActionDifference(*this, imovingNonPerm);
+  activateSection(1);
   deltaAction+=(action==0)?0:action->getActionDifference(*this, imovingNonPerm);
   deltaAction+=(action==0)?0:doubleAction->getActionDifference(*this, imovingNonPerm);
 
