@@ -1,5 +1,5 @@
 // $Id$
-/*  Copyright (C) 2004-2006 John B. Shumway, Jr.
+/*  Copyright (C) 2004-2006, 2009 John B. Shumway, Jr.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ class MultiLevelSampler;class DisplaceMoveSampler;
 class Paths;
 class Species;
 class SimulationInfo;
+class PairIntegrator;
 #include "Action.h"
 #include <blitz/array.h>
 
@@ -30,10 +31,14 @@ class SimulationInfo;
 * @f[ q_{ij} = \frac{r_{ij} + r'_{ij}}{2} @f]
 * and
 * @f[ s^2_{ij} = \frac{|r_{ij}- r'_{ij}|^2}{q^2}. @f]
+* For general potentials (not 1/r), there is an additional coordinate
+* @f[ z_{ij} = \frac{r_{ij}-r'_{ij}}{q}. @f]
 * The action and its tau derivative are stored as radial grids,
-* @f[ u(q,s)=\sum_{k=0}^{N_{order}} u_k(q)s^{2k} @f]
+* @f[ u(q,s)=\sum_{k=0}^{N_{order}}
+*            \sum_{l=0}^k u_{kl}(q)s^{2k}z^{2l}. @f]
 * and
-* @f[ \dot{u}(q,s)=\sum_{k=0}^{N_{order}} \dot{u}_k(q)s^{2k}. @f]
+* @f[ \dot{u}(q,s)=\sum_{k=0}^{N_{order}}
+*                  \sum_{l=0}^k \dot{u}_{kl}(q)s^{2k}z^{2l}. @f]
 * The derivatives of the action (for the VirialEnergyEstimator) are given by
 * @f[ \;-\nabla_i u(r_{ij},r'_{ij}) = -
 * \frac{\partial u}{\partial q} \nabla q -
@@ -50,7 +55,6 @@ class SimulationInfo;
 * @f[ \frac{\partial u}{\partial (s^2)}  
 *     =\sum_{k=1}^{N_{order}} k u_k(q)s^{2(k-1)}. @f]
 * @version $Revision$
-* @todo Make a version for non-coulomb actions.
 * @author John Shumway. */
 class PairAction : public Action {
 public:
@@ -58,6 +62,7 @@ public:
   typedef blitz::Array<int,1> IArray;
   typedef blitz::Array<double,1> Array;
   typedef blitz::Array<double,2> Array2;
+  typedef blitz::Array<double,3> Array3;
   /// Helper class for constructing from emprical action.
   class EmpiricalPairAction{public: 
     virtual double u(double r, int iorder) const=0;
@@ -65,9 +70,15 @@ public:
   };
   /// Construct by providing the species and dmu filename.
   PairAction(const Species&, const Species&, const std::string& filename,
-             const SimulationInfo&, const int norder=0, const bool isDMD=false);
-  /// Construct by providing the species and dmu filename.
+             const SimulationInfo&, const int norder, 
+             const bool hasZ, const bool isDMD);
+  /// Construct by providing the species and EmpiricalPairAction.
   PairAction(const Species&, const Species&, const EmpiricalPairAction&,
+             const SimulationInfo&, const int norder, 
+             const double rmin, const double rmax, const int ngpts,
+             const bool hasZ);
+  /// Construct by providing the species and PairIntegrator.
+  PairAction(const Species&, const Species&, PairIntegrator&,
              const SimulationInfo&, const int norder, 
              const double rmin, const double rmax, const int ngpts);
   /// Virtual destructor.
@@ -95,14 +106,19 @@ protected:
   /// The log of the ratio of consecutive grid points.
   double logrratioinv;
   /// The action grid (radial coord is logrithmic).
-  Array2 ugrid;
+  Array3 ugrid;
   /// Evalute the diagonal action from the grid.
   double u00(double r) const;
   /// Evalute the off-diagonal action from the grid.
   double uk0(double q, double s2) const;
+  /// Evalute the off-diagonal action from the grid.
+  double uk0(double q, double s2, double z2) const;
   /// Evaluate the derivatives of the action from the grid.
   void uk0CalcDerivatives(double q, double s2, double &u,
             double &utau, double &uq, double &us2) const;
+  /// Evaluate the derivatives of the action from the grid.
+  void uk0CalcDerivatives(double q, double s2, double z2, double &u,
+            double &utau, double &uq, double &us2, double &uz2) const;
   /// The species.
   const Species &species1, &species2;
   /// Indicies of first particles of each species.
@@ -112,6 +128,8 @@ protected:
   /// Order of the off-diagonal expansion.
   int norder;
   /// Flag for using the format from DMD downloaded from Ceperley site. 
-  int isDMD;
+  bool isDMD;
+  /// Flag for including sum over z.
+  bool hasZ;
 };
 #endif
