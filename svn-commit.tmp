@@ -1,0 +1,32 @@
+
+--This line, and those below, will be ignored--
+
+M    configure
+M    Makefile.in
+M    src/ParallelPaths.cc
+M    src/DoubleParallelPaths.cc
+M    src/Makefile.am
+M    src/DisplaceMoveSampler.h
+M    src/UniformMover.cc
+M    src/FreePartNodesNoUpdate.h
+M    src/Paths.h
+M    src/DoubleParallelPaths.h
+M    src/Mover.h
+M    src/UniformMover.h
+M    src/DisplaceMoveSampler.cc
+M    src/DoubleAction.h
+A    src/DoubleDisplaceMoveSampler.cc
+M    src/Makefile.in
+A    src/DoubleDisplaceMoveSampler.h
+M    src/ParallelPaths.h
+M    src/FixedNodeAction.h
+M    src/PIMCParser.cc
+M    src/Action.h
+M    doc/Makefile.in
+M    lib/Makefile.in
+M    lib/demo/Makefile.in
+M    lib/spin/Makefile.in
+M    lib/spin/SpinFixedPhaseAction.cc
+M    lib/spin/SpinFixedPhaseAction.h
+M    lib/stats/Makefile.in
+M    aclocal.m4

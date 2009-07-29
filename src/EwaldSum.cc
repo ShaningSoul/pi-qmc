@@ -110,7 +110,6 @@ void EwaldSum::setLongRangeArray() {
 #if (NDIM==3) || (NDIM==2)
   for (int ikvec=0; ikvec<totk; ++ikvec) {
     vk(ikvec)=evalFK(sqrt(kvec2(ikvec)));
-    // std :: cout << "totk "<<totk<<". ikvec "<< ikvec<<". kvec2(ikvec) "<<kvec2(ikvec)<<std :: endl;
   }
 #endif
 }
@@ -182,16 +181,19 @@ double EwaldSum::evalLongRange(const VArray& r) const {
     for (int jpart=0; jpart<npart; ++jpart) {
 #if NDIM==3
       csum+=q(jpart)*eikx(kvec(ikvec)[0],jpart)*eiky(kvec(ikvec)[1],jpart)
-                    *eikz(kvec(ikvec)[2],jpart);
+	*eikz(kvec(ikvec)[2],jpart);  
 #else
       csum+=q(jpart)*eikx(kvec(ikvec)[0],jpart)*eiky(kvec(ikvec)[1],jpart);
                  
 #endif
     }
-     sum+=vk(ikvec)*abs(csum)*abs(csum);
+
+ 
+     sum+=vk(ikvec)*abs(csum)*abs(csum);   
   }
   } //end of omp parallel section
 #endif
+ 
  
    return sum*oneOver2V + selfEnergy;
 }

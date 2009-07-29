@@ -1,0 +1,786 @@
+libspin_la-LatticeSpinPhase.lo: LatticeSpinPhase.cc ../../config.h \
+ /g/g17/saad/packages/include/blitz/tinyvec-et.h \
+ /g/g17/saad/packages/include/blitz/tinyvec.h \
+ /g/g17/saad/packages/include/blitz/blitz.h \
+ /g/g17/saad/packages/include/blitz/compiler.h \
+ /g/g17/saad/packages/include/blitz/bzconfig.h \
+ /g/g17/saad/packages/include/blitz/intel/bzconfig.h \
+ /g/g17/saad/packages/include/blitz/tuning.h \
+ /g/g17/saad/packages/include/blitz/tau.h /usr/include/c++/4.1.2/string \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/c++config.h \
+ /usr/include/bits/wordsize.h \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/os_defines.h \
+ /usr/include/features.h /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
+ /usr/include/gnu/stubs.h /usr/include/bits/wordsize.h \
+ /usr/include/gnu/stubs-64.h \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/cpu_defines.h \
+ /usr/include/c++/4.1.2/bits/stringfwd.h \
+ /usr/include/c++/4.1.2/bits/char_traits.h /usr/include/c++/4.1.2/cstring \
+ /usr/include/c++/4.1.2/cstddef /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /usr/include/string.h /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /usr/include/xlocale.h /usr/include/c++/4.1.2/bits/stl_algobase.h \
+ /usr/include/c++/4.1.2/climits /usr/local/tools/icc-9.1.052/include/limits.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.1.2/include/limits.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.1.2/include/syslimits.h \
+ /usr/local/tools/icc-9.1.052/include/limits.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.1.2/include/limits.h /usr/include/limits.h \
+ /usr/include/bits/posix1_lim.h /usr/include/bits/local_lim.h \
+ /usr/include/linux/limits.h /usr/include/bits/posix2_lim.h \
+ /usr/include/bits/xopen_lim.h /usr/include/bits/stdio_lim.h \
+ /usr/include/c++/4.1.2/cstdlib /usr/include/stdlib.h \
+ /usr/local/tools/icc-9.1.052/include/stddef.h /usr/include/bits/waitflags.h \
+ /usr/include/bits/waitstatus.h /usr/include/endian.h /usr/include/bits/endian.h \
+ /usr/include/sys/types.h /usr/include/bits/types.h /usr/include/bits/wordsize.h \
+ /usr/local/tools/icc-9.1.052/include/stddef.h /usr/include/bits/typesizes.h \
+ /usr/include/time.h /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /usr/include/sys/select.h /usr/include/bits/select.h /usr/include/bits/sigset.h \
+ /usr/include/time.h /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
+ /usr/include/bits/pthreadtypes.h /usr/include/bits/wordsize.h \
+ /usr/include/alloca.h /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /usr/include/c++/4.1.2/iosfwd \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/c++locale.h \
+ /usr/include/c++/4.1.2/cstdio /usr/include/stdio.h \
+ /usr/local/tools/icc-9.1.052/include/stddef.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /usr/include/wchar.h /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /usr/include/bits/wchar.h /usr/include/gconv.h /usr/include/wchar.h \
+ /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.1.2/include/stdarg.h \
+ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+ /usr/include/c++/4.1.2/clocale /usr/include/locale.h \
+ /usr/local/tools/icc-9.1.052/include/stddef.h /usr/include/bits/locale.h \
+ /usr/include/langinfo.h /usr/include/nl_types.h /usr/include/bits/locale.h \
+ /usr/include/iconv.h /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /usr/include/libintl.h /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/c++io.h \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/gthr.h \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/gthr-default.h \
+ /usr/include/pthread.h /usr/include/sched.h /usr/include/time.h \
+ /usr/include/bits/sched.h /usr/include/time.h \
+ /usr/local/tools/icc-9.1.052/include/stddef.h /usr/include/bits/time.h \
+ /usr/include/signal.h /usr/include/bits/sigset.h /usr/include/bits/setjmp.h \
+ /usr/include/bits/wordsize.h /usr/include/bits/wordsize.h /usr/include/unistd.h \
+ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
+ /usr/include/bits/wordsize.h /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /usr/include/bits/confname.h /usr/include/getopt.h /usr/include/c++/4.1.2/cctype \
+ /usr/include/ctype.h /usr/include/c++/4.1.2/bits/postypes.h \
+ /usr/include/c++/4.1.2/cwchar /usr/include/c++/4.1.2/ctime /usr/include/wchar.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.1.2/include/stdarg.h \
+ /usr/local/tools/icc-9.1.052/include/stddef.h /usr/include/stdint.h \
+ /usr/include/bits/wordsize.h /usr/include/c++/4.1.2/bits/functexcept.h \
+ /usr/include/c++/4.1.2/exception_defines.h \
+ /usr/include/c++/4.1.2/bits/stl_pair.h \
+ /usr/include/c++/4.1.2/bits/cpp_type_traits.h \
+ /usr/include/c++/4.1.2/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.1.2/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.1.2/bits/concept_check.h \
+ /usr/include/c++/4.1.2/bits/stl_iterator.h /usr/include/c++/4.1.2/debug/debug.h \
+ /usr/include/c++/4.1.2/memory /usr/include/c++/4.1.2/bits/allocator.h \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/c++allocator.h \
+ /usr/include/c++/4.1.2/ext/new_allocator.h /usr/include/c++/4.1.2/new \
+ /usr/include/c++/4.1.2/exception /usr/include/c++/4.1.2/bits/stl_construct.h \
+ /usr/include/c++/4.1.2/bits/stl_uninitialized.h \
+ /usr/include/c++/4.1.2/bits/stl_raw_storage_iter.h /usr/include/c++/4.1.2/limits \
+ /usr/include/c++/4.1.2/bits/stl_function.h \
+ /usr/include/c++/4.1.2/bits/basic_string.h \
+ /usr/include/c++/4.1.2/bits/atomicity.h \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/atomic_word.h \
+ /usr/include/c++/4.1.2/algorithm /usr/include/c++/4.1.2/bits/stl_algo.h \
+ /usr/include/c++/4.1.2/bits/stl_heap.h /usr/include/c++/4.1.2/bits/stl_tempbuf.h \
+ /usr/include/c++/4.1.2/bits/basic_string.tcc /usr/include/c++/4.1.2/iostream \
+ /usr/include/c++/4.1.2/ostream /usr/include/c++/4.1.2/ios \
+ /usr/include/c++/4.1.2/bits/localefwd.h /usr/include/c++/4.1.2/bits/ios_base.h \
+ /usr/include/c++/4.1.2/bits/locale_classes.h /usr/include/c++/4.1.2/streambuf \
+ /usr/include/c++/4.1.2/bits/streambuf.tcc \
+ /usr/include/c++/4.1.2/bits/basic_ios.h \
+ /usr/include/c++/4.1.2/bits/streambuf_iterator.h \
+ /usr/include/c++/4.1.2/bits/locale_facets.h /usr/include/c++/4.1.2/cwctype \
+ /usr/include/wctype.h /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/ctype_base.h \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/ctype_inline.h \
+ /usr/include/c++/4.1.2/bits/codecvt.h \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/time_members.h \
+ /usr/include/c++/4.1.2/x86_64-redhat-linux/bits/messages_members.h \
+ /usr/include/c++/4.1.2/bits/basic_ios.tcc \
+ /usr/include/c++/4.1.2/bits/ostream.tcc /usr/include/c++/4.1.2/locale \
+ /usr/include/c++/4.1.2/bits/locale_facets.tcc /usr/include/c++/4.1.2/typeinfo \
+ /usr/include/c++/4.1.2/istream /usr/include/c++/4.1.2/bits/istream.tcc \
+ /usr/include/c++/4.1.2/iomanip /usr/include/c++/4.1.2/functional \
+ /usr/include/c++/4.1.2/cmath /usr/local/tools/icc-9.1.052/include/math.h \
+ /usr/include/math.h /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
+ /usr/include/bits/huge_vall.h /usr/include/bits/inf.h /usr/include/bits/nan.h \
+ /usr/include/bits/mathdef.h /usr/include/bits/wordsize.h \
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathcalls.h \
+ /usr/include/bits/mathcalls.h /usr/include/c++/4.1.2/bits/cmath.tcc \
+ /usr/include/c++/4.1.2/complex /usr/include/c++/4.1.2/sstream \
+ /usr/include/c++/4.1.2/bits/sstream.tcc /usr/include/c++/4.1.2/sstream \
+ /g/g17/saad/packages/include/blitz/bzdebug.h /usr/include/assert.h \
+ /g/g17/saad/packages/include/blitz/range.h \
+ /g/g17/saad/packages/include/blitz/vecexprwrap.h \
+ /g/g17/saad/packages/include/blitz/wrap-climits.h \
+ /g/g17/saad/packages/include/blitz/listinit.h \
+ /g/g17/saad/packages/include/blitz/tiny.h \
+ /g/g17/saad/packages/include/blitz/tinyveciter.h \
+ /g/g17/saad/packages/include/blitz/tvecglobs.h \
+ /g/g17/saad/packages/include/blitz/meta/metaprog.h \
+ /g/g17/saad/packages/include/blitz/numtrait.h \
+ /g/g17/saad/packages/include/blitz/tvcross.h \
+ /g/g17/saad/packages/include/blitz/meta/dot.h \
+ /g/g17/saad/packages/include/blitz/promote.h \
+ /g/g17/saad/packages/include/blitz/meta/product.h \
+ /g/g17/saad/packages/include/blitz/meta/sum.h \
+ /g/g17/saad/packages/include/blitz/vector.h \
+ /g/g17/saad/packages/include/blitz/memblock.h \
+ /usr/local/tools/icc-9.1.052/include/stddef.h \
+ /g/g17/saad/packages/include/blitz/memblock.cc \
+ /g/g17/saad/packages/include/blitz/veciter.h \
+ /g/g17/saad/packages/include/blitz/vecpick.h \
+ /g/g17/saad/packages/include/blitz/vector.h \
+ /g/g17/saad/packages/include/blitz/vecpick.cc \
+ /g/g17/saad/packages/include/blitz/vecpick.h \
+ /g/g17/saad/packages/include/blitz/update.h \
+ /g/g17/saad/packages/include/blitz/random.h \
+ /g/g17/saad/packages/include/blitz/randref.h \
+ /g/g17/saad/packages/include/blitz/vecexpr.h \
+ /g/g17/saad/packages/include/blitz/applics.h \
+ /g/g17/saad/packages/include/blitz/mathfunc.h \
+ /g/g17/saad/packages/include/blitz/prettyprint.h \
+ /g/g17/saad/packages/include/blitz/mathf2.h \
+ /g/g17/saad/packages/include/blitz/vecpickio.cc \
+ /g/g17/saad/packages/include/blitz/vecpickiter.h \
+ /g/g17/saad/packages/include/blitz/vecglobs.h \
+ /g/g17/saad/packages/include/blitz/extremum.h \
+ /g/g17/saad/packages/include/blitz/vecglobs.cc \
+ /g/g17/saad/packages/include/blitz/vecaccum.cc \
+ /g/g17/saad/packages/include/blitz/vecdelta.cc \
+ /g/g17/saad/packages/include/blitz/vecmin.cc \
+ /g/g17/saad/packages/include/blitz/vecmax.cc \
+ /g/g17/saad/packages/include/blitz/vecsum.cc \
+ /g/g17/saad/packages/include/blitz/vecdot.cc \
+ /g/g17/saad/packages/include/blitz/vecnorm.cc \
+ /g/g17/saad/packages/include/blitz/vecnorm1.cc \
+ /g/g17/saad/packages/include/blitz/vecany.cc \
+ /g/g17/saad/packages/include/blitz/vecall.cc \
+ /g/g17/saad/packages/include/blitz/veccount.cc \
+ /g/g17/saad/packages/include/blitz/vector.cc \
+ /g/g17/saad/packages/include/blitz/vecio.cc \
+ /g/g17/saad/packages/include/blitz/tinyvec.cc \
+ /g/g17/saad/packages/include/blitz/tinyvec.h \
+ /g/g17/saad/packages/include/blitz/meta/vecassign.h \
+ /g/g17/saad/packages/include/blitz/tinyvecio.cc \
+ /g/g17/saad/packages/include/blitz/vector-et.h \
+ /g/g17/saad/packages/include/blitz/vecbops.cc \
+ /g/g17/saad/packages/include/blitz/vecuops.cc \
+ /g/g17/saad/packages/include/blitz/vecbfn.cc \
+ /g/g17/saad/packages/include/blitz/tinymat.h \
+ /g/g17/saad/packages/include/blitz/tinymatexpr.h \
+ /g/g17/saad/packages/include/blitz/meta/matassign.h \
+ /g/g17/saad/packages/include/blitz/meta/matvec.h \
+ /g/g17/saad/packages/include/blitz/meta/matmat.h \
+ /g/g17/saad/packages/include/blitz/tinymatio.cc LatticeSpinPhase.h \
+ SpinPhaseModel.h /g/g17/saad/packages/include/blitz/array.h \
+ /g/g17/saad/packages/include/blitz/array-impl.h \
+ /g/g17/saad/packages/include/blitz/indexexpr.h \
+ /g/g17/saad/packages/include/blitz/etbase.h \
+ /g/g17/saad/packages/include/blitz/array/slice.h \
+ /g/g17/saad/packages/include/blitz/array/map.h \
+ /g/g17/saad/packages/include/blitz/array/multi.h \
+ /g/g17/saad/packages/include/blitz/array/domain.h \
+ /g/g17/saad/packages/include/blitz/array/storage.h \
+ /g/g17/saad/packages/include/blitz/array/iter.h /usr/include/c++/4.1.2/iterator \
+ /usr/include/c++/4.1.2/bits/stream_iterator.h \
+ /g/g17/saad/packages/include/blitz/array/fastiter.h \
+ /g/g17/saad/packages/include/blitz/array/expr.h \
+ /g/g17/saad/packages/include/blitz/ops.h \
+ /g/g17/saad/packages/include/blitz/shapecheck.h \
+ /g/g17/saad/packages/include/blitz/numinquire.h \
+ /g/g17/saad/packages/include/blitz/array/asexpr.h \
+ /g/g17/saad/packages/include/blitz/array/methods.cc \
+ /g/g17/saad/packages/include/blitz/array/eval.cc \
+ /g/g17/saad/packages/include/blitz/array/ops.cc \
+ /g/g17/saad/packages/include/blitz/array/io.cc \
+ /g/g17/saad/packages/include/blitz/array/et.h \
+ /g/g17/saad/packages/include/blitz/array/newet.h \
+ /g/g17/saad/packages/include/blitz/array/ops.h \
+ /g/g17/saad/packages/include/blitz/array/newet-macros.h \
+ /g/g17/saad/packages/include/blitz/array/funcs.h \
+ /g/g17/saad/packages/include/blitz/funcs.h \
+ /g/g17/saad/packages/include/blitz/array/functorExpr.h \
+ /g/g17/saad/packages/include/blitz/array/reduce.h \
+ /g/g17/saad/packages/include/blitz/reduce.h \
+ /g/g17/saad/packages/include/blitz/array/reduce.cc \
+ /g/g17/saad/packages/include/blitz/array/interlace.cc \
+ /g/g17/saad/packages/include/blitz/array/shape.h \
+ /g/g17/saad/packages/include/blitz/array/resize.cc \
+ /g/g17/saad/packages/include/blitz/minmax.h \
+ /g/g17/saad/packages/include/blitz/array/slicing.cc \
+ /g/g17/saad/packages/include/blitz/array/cycle.cc \
+ /g/g17/saad/packages/include/blitz/array/complex.cc \
+ /g/g17/saad/packages/include/blitz/array/zip.h \
+ /g/g17/saad/packages/include/blitz/array/where.h \
+ /g/g17/saad/packages/include/blitz/array/indirect.h \
+ /g/g17/saad/packages/include/blitz/array/cartesian.h \
+ /g/g17/saad/packages/include/blitz/array/stencils.h \
+ /g/g17/saad/packages/include/blitz/array/stencilops.h \
+ /g/g17/saad/packages/include/blitz/array/geometry.h \
+ /g/g17/saad/packages/include/blitz/array/stencils.cc \
+ /usr/include/c++/4.1.2/vector /usr/include/c++/4.1.2/bits/stl_vector.h \
+ /usr/include/c++/4.1.2/bits/stl_bvector.h /usr/include/c++/4.1.2/bits/vector.tcc \
+ ../../src/PeriodicGaussian.h ../../src/SimulationInfo.h ../../src/Species.h \
+ ../../config.h ../../src/SuperCell.h
+
+../../config.h:
+
+/g/g17/saad/packages/include/blitz/tinyvec-et.h:
+
+/g/g17/saad/packages/include/blitz/tinyvec.h:
+
+/g/g17/saad/packages/include/blitz/blitz.h:
+
+/g/g17/saad/packages/include/blitz/compiler.h:
+
+/g/g17/saad/packages/include/blitz/bzconfig.h:
+
+/g/g17/saad/packages/include/blitz/intel/bzconfig.h:
+
+/g/g17/saad/packages/include/blitz/tuning.h:
+
+/g/g17/saad/packages/include/blitz/tau.h:
+
+/usr/include/c++/4.1.2/string:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/c++config.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/os_defines.h:
+
+/usr/include/features.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/gnu/stubs-64.h:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/cpu_defines.h:
+
+/usr/include/c++/4.1.2/bits/stringfwd.h:
+
+/usr/include/c++/4.1.2/bits/char_traits.h:
+
+/usr/include/c++/4.1.2/cstring:
+
+/usr/include/c++/4.1.2/cstddef:
+
+/usr/local/tools/icc-9.1.052/include/stddef.h:
+
+/usr/include/string.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/c++/4.1.2/bits/stl_algobase.h:
+
+/usr/include/c++/4.1.2/climits:
+
+/usr/local/tools/icc-9.1.052/include/limits.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.1.2/include/limits.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.1.2/include/syslimits.h:
+
+/usr/include/limits.h:
+
+/usr/include/bits/posix1_lim.h:
+
+/usr/include/bits/local_lim.h:
+
+/usr/include/linux/limits.h:
+
+/usr/include/bits/posix2_lim.h:
+
+/usr/include/bits/xopen_lim.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/c++/4.1.2/cstdlib:
+
+/usr/include/stdlib.h:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/endian.h:
+
+/usr/include/bits/endian.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/time.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/bits/select.h:
+
+/usr/include/bits/sigset.h:
+
+/usr/include/bits/time.h:
+
+/usr/include/sys/sysmacros.h:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/alloca.h:
+
+/usr/include/c++/4.1.2/iosfwd:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/c++locale.h:
+
+/usr/include/c++/4.1.2/cstdio:
+
+/usr/include/stdio.h:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/wchar.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/gconv.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.1.2/include/stdarg.h:
+
+/usr/include/bits/sys_errlist.h:
+
+/usr/include/c++/4.1.2/clocale:
+
+/usr/include/locale.h:
+
+/usr/include/bits/locale.h:
+
+/usr/include/langinfo.h:
+
+/usr/include/nl_types.h:
+
+/usr/include/iconv.h:
+
+/usr/include/libintl.h:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/c++io.h:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/gthr.h:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/gthr-default.h:
+
+/usr/include/pthread.h:
+
+/usr/include/sched.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/signal.h:
+
+/usr/include/bits/setjmp.h:
+
+/usr/include/unistd.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/bits/environments.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/getopt.h:
+
+/usr/include/c++/4.1.2/cctype:
+
+/usr/include/ctype.h:
+
+/usr/include/c++/4.1.2/bits/postypes.h:
+
+/usr/include/c++/4.1.2/cwchar:
+
+/usr/include/c++/4.1.2/ctime:
+
+/usr/include/stdint.h:
+
+/usr/include/c++/4.1.2/bits/functexcept.h:
+
+/usr/include/c++/4.1.2/exception_defines.h:
+
+/usr/include/c++/4.1.2/bits/stl_pair.h:
+
+/usr/include/c++/4.1.2/bits/cpp_type_traits.h:
+
+/usr/include/c++/4.1.2/bits/stl_iterator_base_types.h:
+
+/usr/include/c++/4.1.2/bits/stl_iterator_base_funcs.h:
+
+/usr/include/c++/4.1.2/bits/concept_check.h:
+
+/usr/include/c++/4.1.2/bits/stl_iterator.h:
+
+/usr/include/c++/4.1.2/debug/debug.h:
+
+/usr/include/c++/4.1.2/memory:
+
+/usr/include/c++/4.1.2/bits/allocator.h:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/c++allocator.h:
+
+/usr/include/c++/4.1.2/ext/new_allocator.h:
+
+/usr/include/c++/4.1.2/new:
+
+/usr/include/c++/4.1.2/exception:
+
+/usr/include/c++/4.1.2/bits/stl_construct.h:
+
+/usr/include/c++/4.1.2/bits/stl_uninitialized.h:
+
+/usr/include/c++/4.1.2/bits/stl_raw_storage_iter.h:
+
+/usr/include/c++/4.1.2/limits:
+
+/usr/include/c++/4.1.2/bits/stl_function.h:
+
+/usr/include/c++/4.1.2/bits/basic_string.h:
+
+/usr/include/c++/4.1.2/bits/atomicity.h:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/atomic_word.h:
+
+/usr/include/c++/4.1.2/algorithm:
+
+/usr/include/c++/4.1.2/bits/stl_algo.h:
+
+/usr/include/c++/4.1.2/bits/stl_heap.h:
+
+/usr/include/c++/4.1.2/bits/stl_tempbuf.h:
+
+/usr/include/c++/4.1.2/bits/basic_string.tcc:
+
+/usr/include/c++/4.1.2/iostream:
+
+/usr/include/c++/4.1.2/ostream:
+
+/usr/include/c++/4.1.2/ios:
+
+/usr/include/c++/4.1.2/bits/localefwd.h:
+
+/usr/include/c++/4.1.2/bits/ios_base.h:
+
+/usr/include/c++/4.1.2/bits/locale_classes.h:
+
+/usr/include/c++/4.1.2/streambuf:
+
+/usr/include/c++/4.1.2/bits/streambuf.tcc:
+
+/usr/include/c++/4.1.2/bits/basic_ios.h:
+
+/usr/include/c++/4.1.2/bits/streambuf_iterator.h:
+
+/usr/include/c++/4.1.2/bits/locale_facets.h:
+
+/usr/include/c++/4.1.2/cwctype:
+
+/usr/include/wctype.h:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/ctype_base.h:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/ctype_inline.h:
+
+/usr/include/c++/4.1.2/bits/codecvt.h:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/time_members.h:
+
+/usr/include/c++/4.1.2/x86_64-redhat-linux/bits/messages_members.h:
+
+/usr/include/c++/4.1.2/bits/basic_ios.tcc:
+
+/usr/include/c++/4.1.2/bits/ostream.tcc:
+
+/usr/include/c++/4.1.2/locale:
+
+/usr/include/c++/4.1.2/bits/locale_facets.tcc:
+
+/usr/include/c++/4.1.2/typeinfo:
+
+/usr/include/c++/4.1.2/istream:
+
+/usr/include/c++/4.1.2/bits/istream.tcc:
+
+/usr/include/c++/4.1.2/iomanip:
+
+/usr/include/c++/4.1.2/functional:
+
+/usr/include/c++/4.1.2/cmath:
+
+/usr/local/tools/icc-9.1.052/include/math.h:
+
+/usr/include/math.h:
+
+/usr/include/bits/huge_val.h:
+
+/usr/include/bits/huge_valf.h:
+
+/usr/include/bits/huge_vall.h:
+
+/usr/include/bits/inf.h:
+
+/usr/include/bits/nan.h:
+
+/usr/include/bits/mathdef.h:
+
+/usr/include/bits/mathcalls.h:
+
+/usr/include/c++/4.1.2/bits/cmath.tcc:
+
+/usr/include/c++/4.1.2/complex:
+
+/usr/include/c++/4.1.2/sstream:
+
+/usr/include/c++/4.1.2/bits/sstream.tcc:
+
+/g/g17/saad/packages/include/blitz/bzdebug.h:
+
+/usr/include/assert.h:
+
+/g/g17/saad/packages/include/blitz/range.h:
+
+/g/g17/saad/packages/include/blitz/vecexprwrap.h:
+
+/g/g17/saad/packages/include/blitz/wrap-climits.h:
+
+/g/g17/saad/packages/include/blitz/listinit.h:
+
+/g/g17/saad/packages/include/blitz/tiny.h:
+
+/g/g17/saad/packages/include/blitz/tinyveciter.h:
+
+/g/g17/saad/packages/include/blitz/tvecglobs.h:
+
+/g/g17/saad/packages/include/blitz/meta/metaprog.h:
+
+/g/g17/saad/packages/include/blitz/numtrait.h:
+
+/g/g17/saad/packages/include/blitz/tvcross.h:
+
+/g/g17/saad/packages/include/blitz/meta/dot.h:
+
+/g/g17/saad/packages/include/blitz/promote.h:
+
+/g/g17/saad/packages/include/blitz/meta/product.h:
+
+/g/g17/saad/packages/include/blitz/meta/sum.h:
+
+/g/g17/saad/packages/include/blitz/vector.h:
+
+/g/g17/saad/packages/include/blitz/memblock.h:
+
+/g/g17/saad/packages/include/blitz/memblock.cc:
+
+/g/g17/saad/packages/include/blitz/veciter.h:
+
+/g/g17/saad/packages/include/blitz/vecpick.h:
+
+/g/g17/saad/packages/include/blitz/vecpick.cc:
+
+/g/g17/saad/packages/include/blitz/update.h:
+
+/g/g17/saad/packages/include/blitz/random.h:
+
+/g/g17/saad/packages/include/blitz/randref.h:
+
+/g/g17/saad/packages/include/blitz/vecexpr.h:
+
+/g/g17/saad/packages/include/blitz/applics.h:
+
+/g/g17/saad/packages/include/blitz/mathfunc.h:
+
+/g/g17/saad/packages/include/blitz/prettyprint.h:
+
+/g/g17/saad/packages/include/blitz/mathf2.h:
+
+/g/g17/saad/packages/include/blitz/vecpickio.cc:
+
+/g/g17/saad/packages/include/blitz/vecpickiter.h:
+
+/g/g17/saad/packages/include/blitz/vecglobs.h:
+
+/g/g17/saad/packages/include/blitz/extremum.h:
+
+/g/g17/saad/packages/include/blitz/vecglobs.cc:
+
+/g/g17/saad/packages/include/blitz/vecaccum.cc:
+
+/g/g17/saad/packages/include/blitz/vecdelta.cc:
+
+/g/g17/saad/packages/include/blitz/vecmin.cc:
+
+/g/g17/saad/packages/include/blitz/vecmax.cc:
+
+/g/g17/saad/packages/include/blitz/vecsum.cc:
+
+/g/g17/saad/packages/include/blitz/vecdot.cc:
+
+/g/g17/saad/packages/include/blitz/vecnorm.cc:
+
+/g/g17/saad/packages/include/blitz/vecnorm1.cc:
+
+/g/g17/saad/packages/include/blitz/vecany.cc:
+
+/g/g17/saad/packages/include/blitz/vecall.cc:
+
+/g/g17/saad/packages/include/blitz/veccount.cc:
+
+/g/g17/saad/packages/include/blitz/vector.cc:
+
+/g/g17/saad/packages/include/blitz/vecio.cc:
+
+/g/g17/saad/packages/include/blitz/tinyvec.cc:
+
+/g/g17/saad/packages/include/blitz/meta/vecassign.h:
+
+/g/g17/saad/packages/include/blitz/tinyvecio.cc:
+
+/g/g17/saad/packages/include/blitz/vector-et.h:
+
+/g/g17/saad/packages/include/blitz/vecbops.cc:
+
+/g/g17/saad/packages/include/blitz/vecuops.cc:
+
+/g/g17/saad/packages/include/blitz/vecbfn.cc:
+
+/g/g17/saad/packages/include/blitz/tinymat.h:
+
+/g/g17/saad/packages/include/blitz/tinymatexpr.h:
+
+/g/g17/saad/packages/include/blitz/meta/matassign.h:
+
+/g/g17/saad/packages/include/blitz/meta/matvec.h:
+
+/g/g17/saad/packages/include/blitz/meta/matmat.h:
+
+/g/g17/saad/packages/include/blitz/tinymatio.cc:
+
+LatticeSpinPhase.h:
+
+SpinPhaseModel.h:
+
+/g/g17/saad/packages/include/blitz/array.h:
+
+/g/g17/saad/packages/include/blitz/array-impl.h:
+
+/g/g17/saad/packages/include/blitz/indexexpr.h:
+
+/g/g17/saad/packages/include/blitz/etbase.h:
+
+/g/g17/saad/packages/include/blitz/array/slice.h:
+
+/g/g17/saad/packages/include/blitz/array/map.h:
+
+/g/g17/saad/packages/include/blitz/array/multi.h:
+
+/g/g17/saad/packages/include/blitz/array/domain.h:
+
+/g/g17/saad/packages/include/blitz/array/storage.h:
+
+/g/g17/saad/packages/include/blitz/array/iter.h:
+
+/usr/include/c++/4.1.2/iterator:
+
+/usr/include/c++/4.1.2/bits/stream_iterator.h:
+
+/g/g17/saad/packages/include/blitz/array/fastiter.h:
+
+/g/g17/saad/packages/include/blitz/array/expr.h:
+
+/g/g17/saad/packages/include/blitz/ops.h:
+
+/g/g17/saad/packages/include/blitz/shapecheck.h:
+
+/g/g17/saad/packages/include/blitz/numinquire.h:
+
+/g/g17/saad/packages/include/blitz/array/asexpr.h:
+
+/g/g17/saad/packages/include/blitz/array/methods.cc:
+
+/g/g17/saad/packages/include/blitz/array/eval.cc:
+
+/g/g17/saad/packages/include/blitz/array/ops.cc:
+
+/g/g17/saad/packages/include/blitz/array/io.cc:
+
+/g/g17/saad/packages/include/blitz/array/et.h:
+
+/g/g17/saad/packages/include/blitz/array/newet.h:
+
+/g/g17/saad/packages/include/blitz/array/ops.h:
+
+/g/g17/saad/packages/include/blitz/array/newet-macros.h:
+
+/g/g17/saad/packages/include/blitz/array/funcs.h:
+
+/g/g17/saad/packages/include/blitz/funcs.h:
+
+/g/g17/saad/packages/include/blitz/array/functorExpr.h:
+
+/g/g17/saad/packages/include/blitz/array/reduce.h:
+
+/g/g17/saad/packages/include/blitz/reduce.h:
+
+/g/g17/saad/packages/include/blitz/array/reduce.cc:
+
+/g/g17/saad/packages/include/blitz/array/interlace.cc:
+
+/g/g17/saad/packages/include/blitz/array/shape.h:
+
+/g/g17/saad/packages/include/blitz/array/resize.cc:
+
+/g/g17/saad/packages/include/blitz/minmax.h:
+
+/g/g17/saad/packages/include/blitz/array/slicing.cc:
+
+/g/g17/saad/packages/include/blitz/array/cycle.cc:
+
+/g/g17/saad/packages/include/blitz/array/complex.cc:
+
+/g/g17/saad/packages/include/blitz/array/zip.h:
+
+/g/g17/saad/packages/include/blitz/array/where.h:
+
+/g/g17/saad/packages/include/blitz/array/indirect.h:
+
+/g/g17/saad/packages/include/blitz/array/cartesian.h:
+
+/g/g17/saad/packages/include/blitz/array/stencils.h:
+
+/g/g17/saad/packages/include/blitz/array/stencilops.h:
+
+/g/g17/saad/packages/include/blitz/array/geometry.h:
+
+/g/g17/saad/packages/include/blitz/array/stencils.cc:
+
+/usr/include/c++/4.1.2/vector:
+
+/usr/include/c++/4.1.2/bits/stl_vector.h:
+
+/usr/include/c++/4.1.2/bits/stl_bvector.h:
+
+/usr/include/c++/4.1.2/bits/vector.tcc:
+
+../../src/PeriodicGaussian.h:
+
+../../src/SimulationInfo.h:
+
+../../src/Species.h:
+
+../../src/SuperCell.h:

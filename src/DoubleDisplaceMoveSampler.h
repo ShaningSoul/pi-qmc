@@ -54,21 +54,14 @@ public:
   const Beads<NDIM>& getPathsBeads(const int i) const {
     return i==1?*pathsBeads1:*pathsBeads2;}
   
-  //////////Beads<NDIM>& getPathsBeads() {return *pathsBeads;}
-  // const Beads<NDIM>& getPathsBeads() const {return *pathsBeads;}
   IArray&  getMovingIndex() {return *movingIndex;}
   const IArray&  getMovingIndex() const {return *movingIndex;}
   void setAction(Action*, const int level=0); /// not needed
   const SuperCell& getSuperCell() const {return cell;}
-  //const Paths& getPaths() const {return paths;}
   double getDist() {return dist;}
   int getNSlice() {return nslice;}
   int getNSlice() const {return nslice;}
   void activateSection(const int i);
- 
-  // int getFistSlice2() const {return iFirstSlice2;}
-  /// Get a pointer to the accept/reject statistic estimator.
-  /// (You are responsible for deleting this new object.) 
   virtual AccRejEstimator* getAccRejEstimator(const std::string& name);
 
 protected:
@@ -78,27 +71,9 @@ protected:
   Beads<NDIM> *pathsBeads2;
   Beads<NDIM> *movingBeads1;
   Beads<NDIM>  *movingBeads2;
-  //const Permutation & pathsPermutation;
-  //ParticleChooser& particleChooser; 
-  //Mover& mover;
-  // Action *action;  
   DoubleAction *doubleAction;
-  // Paths& paths;
   AccRejEstimator* accRejEst;
-
-  IArray *movingIndex2;////
-  //IArray identityIndex; 
-  /*  const BeadFactory& beadFactory;
-  const SuperCell& cell; 
-  const MPIManager* mpi;
-  const int nrepeat;
-  const double dist;
-  const int nmoving;
-  const double freq;
-  */
-  //int nslice;
+  IArray *movingIndex2;
   int iFirstSlice, iFirstSlice2;
-
-
 };
 #endif
