@@ -60,7 +60,8 @@ am_pi_OBJECTS = pi-ActionParser.$(OBJEXT) \
 	pi-AugmentedNodes.$(OBJEXT) pi-BeadFactory.$(OBJEXT) \
 	pi-BinProbDensity.$(OBJEXT) pi-BondLengthEstimator.$(OBJEXT) \
 	pi-BondLengthTwoEstimator.$(OBJEXT) pi-BoxEstimator.$(OBJEXT) \
-	pi-Collect.$(OBJEXT) pi-CompositeAction.$(OBJEXT) \
+	pi-CaoBerneAction.$(OBJEXT) pi-Collect.$(OBJEXT) \
+	pi-CompositeAction.$(OBJEXT) \
 	pi-CompositeDoubleAction.$(OBJEXT) \
 	pi-ConditionalDensityGrid.$(OBJEXT) \
 	pi-ConductanceEstimator.$(OBJEXT) \
@@ -72,14 +73,15 @@ am_pi_OBJECTS = pi-ActionParser.$(OBJEXT) \
 	pi-CountCountEstimator.$(OBJEXT) \
 	pi-DensCountEstimator.$(OBJEXT) pi-DensityEstimator.$(OBJEXT) \
 	pi-DipoleMomentEstimator.$(OBJEXT) \
+	pi-DisplaceMoveSampler.$(OBJEXT) \
+	pi-DoubleDisplaceMoveSampler.$(OBJEXT) \
 	pi-DoubleMLSampler.$(OBJEXT) pi-DoubleParallelPaths.$(OBJEXT) \
 	pi-DoubleSectionChooser.$(OBJEXT) pi-EFieldAction.$(OBJEXT) \
-	pi-EIndEstimator.$(OBJEXT) pi-EmpiricalInteraction.$(OBJEXT) \
-	pi-EstimatorParser.$(OBJEXT) pi-ExcitonNodes.$(OBJEXT) \
-	pi-EwaldAction.$(OBJEXT) pi-EwaldCoulombEstimator.$(OBJEXT) \
-	pi-EwaldSum.$(OBJEXT) pi-FixedNodeAction.$(OBJEXT) \
-	pi-FixedPhaseAction.$(OBJEXT) pi-FreeMover.$(OBJEXT) \
-	pi-FreeParticleNodes.$(OBJEXT) \
+	pi-EIndEstimator.$(OBJEXT) pi-EstimatorParser.$(OBJEXT) \
+	pi-ExcitonNodes.$(OBJEXT) pi-EwaldAction.$(OBJEXT) \
+	pi-EwaldCoulombEstimator.$(OBJEXT) pi-EwaldSum.$(OBJEXT) \
+	pi-FixedNodeAction.$(OBJEXT) pi-FixedPhaseAction.$(OBJEXT) \
+	pi-FreeMover.$(OBJEXT) pi-FreeParticleNodes.$(OBJEXT) \
 	pi-FreePartNodesNoUpdate.$(OBJEXT) \
 	pi-FreeTensorMover.$(OBJEXT) pi-FrequencyEstimator.$(OBJEXT) \
 	pi-GaussianAction.$(OBJEXT) pi-GaussianDotAction.$(OBJEXT) \
@@ -93,10 +95,12 @@ am_pi_OBJECTS = pi-ActionParser.$(OBJEXT) \
 	pi-MultiLevelSampler.$(OBJEXT) pi-NodeModel.$(OBJEXT) \
 	pi-NodeTester.$(OBJEXT) pi-OptEwaldSum.$(OBJEXT) \
 	pi-OpticalLatticeAction.$(OBJEXT) pi-PairAction.$(OBJEXT) \
-	pi-PairChooser.$(OBJEXT) pi-ParallelPaths.$(OBJEXT) \
-	pi-ParticleChooser.$(OBJEXT) pi-PathReader.$(OBJEXT) \
-	pi-Paths.$(OBJEXT) pi-PeriodicGaussian.$(OBJEXT) \
-	pi-Permutation.$(OBJEXT) pi-PermutationChooser.$(OBJEXT) \
+	pi-PrimativePairAction.$(OBJEXT) pi-PairChooser.$(OBJEXT) \
+	pi-PairIntegrator.$(OBJEXT) pi-PairPotential.$(OBJEXT) \
+	pi-ParallelPaths.$(OBJEXT) pi-ParticleChooser.$(OBJEXT) \
+	pi-PathReader.$(OBJEXT) pi-Paths.$(OBJEXT) \
+	pi-PeriodicGaussian.$(OBJEXT) pi-Permutation.$(OBJEXT) \
+	pi-PermutationChooser.$(OBJEXT) \
 	pi-PermutationEstimator.$(OBJEXT) pi-PIMCParser.$(OBJEXT) \
 	pi-PositionEstimator.$(OBJEXT) pi-PrimSHOAction.$(OBJEXT) \
 	pi-PrimAnisSHOAction.$(OBJEXT) pi-PrimCosineAction.$(OBJEXT) \
@@ -117,17 +121,15 @@ am_pi_OBJECTS = pi-ActionParser.$(OBJEXT) \
 	pi-StillWebAction.$(OBJEXT) pi-StructReader.$(OBJEXT) \
 	pi-SuperCell.$(OBJEXT) pi-TradEwaldSum.$(OBJEXT) \
 	pi-ThermoEnergyEstimator.$(OBJEXT) pi-TimpQPC.$(OBJEXT) \
-	pi-TwoQDAction.$(OBJEXT) pi-VIndEstimator.$(OBJEXT) \
-	pi-VirialEnergyEstimator.$(OBJEXT) \
+	pi-TwoQDAction.$(OBJEXT) pi-UniformMover.$(OBJEXT) \
+	pi-VIndEstimator.$(OBJEXT) pi-VirialEnergyEstimator.$(OBJEXT) \
 	pi-VVCorrelationEstimator.$(OBJEXT) \
 	pi-WalkingChooser.$(OBJEXT) pi-WellImageAction.$(OBJEXT) \
 	pi-WindingEstimator.$(OBJEXT) pi-WireNodes.$(OBJEXT) \
 	pi-WorkerShifter.$(OBJEXT) pi-WritePaths.$(OBJEXT) \
 	pi-WriteProbDensity.$(OBJEXT) pi-XMLParser.$(OBJEXT) \
 	pi-XMLUnitParser.$(OBJEXT) pi-XMLWriter.$(OBJEXT) \
-	assndx.$(OBJEXT) pi-UniformMover.$(OBJEXT) \
-	pi-DisplaceMoveSampler.$(OBJEXT) \
-	pi-DoubleDisplaceMoveSampler.$(OBJEXT)
+	assndx.$(OBJEXT)
 pi_OBJECTS = $(am_pi_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
@@ -295,20 +297,21 @@ pi_CXXFLAGS = -I$(top_srcdir)/lib
 pi_SOURCES = ActionParser.cc AngularMomentumEstimator.cc \
 	AnisotropicNodes.cc AperiodicGaussian.cc AugmentedNodes.cc \
 	BeadFactory.cc BinProbDensity.cc BondLengthEstimator.cc \
-	BondLengthTwoEstimator.cc BoxEstimator.cc Collect.cc \
-	CompositeAction.cc CompositeDoubleAction.cc \
+	BondLengthTwoEstimator.cc BoxEstimator.cc CaoBerneAction.cc \
+	Collect.cc CompositeAction.cc CompositeDoubleAction.cc \
 	ConditionalDensityGrid.cc ConductanceEstimator.cc \
 	ConductivityEstimator.cc CoulombAction.cc \
 	CoulombEnergyEstimator.cc CubicLattice.cc \
 	DampedFreeTensorMover.cc DensDensEstimator.cc \
 	DynamicPCFEstimator.cc CountCountEstimator.cc \
 	DensCountEstimator.cc DensityEstimator.cc \
-	DipoleMomentEstimator.cc DoubleMLSampler.cc \
+	DipoleMomentEstimator.cc DisplaceMoveSampler.cc \
+	DoubleDisplaceMoveSampler.cc DoubleMLSampler.cc \
 	DoubleParallelPaths.cc DoubleSectionChooser.cc EFieldAction.cc \
-	EIndEstimator.cc EmpiricalInteraction.cc EstimatorParser.cc \
-	ExcitonNodes.cc EwaldAction.cc EwaldCoulombEstimator.cc \
-	EwaldSum.cc FixedNodeAction.cc FixedPhaseAction.cc \
-	FreeMover.cc FreeParticleNodes.cc FreePartNodesNoUpdate.cc \
+	EIndEstimator.cc EstimatorParser.cc ExcitonNodes.cc \
+	EwaldAction.cc EwaldCoulombEstimator.cc EwaldSum.cc \
+	FixedNodeAction.cc FixedPhaseAction.cc FreeMover.cc \
+	FreeParticleNodes.cc FreePartNodesNoUpdate.cc \
 	FreeTensorMover.cc FrequencyEstimator.cc GaussianAction.cc \
 	GaussianDotAction.cc GrapheneAction.cc \
 	GreenDipoleMEstimator.cc GridPotential.cc GroundStateSNode.cc \
@@ -316,7 +319,8 @@ pi_SOURCES = ActionParser.cc AngularMomentumEstimator.cc \
 	HyperbolicMover.cc ImagePairAction.cc JelliumSlab.cc \
 	JEstimator.cc main.cc MainParser.cc Measure.cc \
 	MultiLevelSampler.cc NodeModel.cc NodeTester.cc OptEwaldSum.cc \
-	OpticalLatticeAction.cc PairAction.cc PairChooser.cc \
+	OpticalLatticeAction.cc PairAction.cc PrimativePairAction.cc \
+	PairChooser.cc PairIntegrator.cc PairPotential.cc \
 	ParallelPaths.cc ParticleChooser.cc PathReader.cc Paths.cc \
 	PeriodicGaussian.cc Permutation.cc PermutationChooser.cc \
 	PermutationEstimator.cc PIMCParser.cc PositionEstimator.cc \
@@ -332,38 +336,39 @@ pi_SOURCES = ActionParser.cc AngularMomentumEstimator.cc \
 	SpringAction.cc SpringTensorAction.cc StillWebAction.cc \
 	StructReader.cc SuperCell.cc TradEwaldSum.cc \
 	ThermoEnergyEstimator.cc TimpQPC.cc TwoQDAction.cc \
-	VIndEstimator.cc VirialEnergyEstimator.cc \
+	UniformMover.cc VIndEstimator.cc VirialEnergyEstimator.cc \
 	VVCorrelationEstimator.cc WalkingChooser.cc WellImageAction.cc \
 	WindingEstimator.cc WireNodes.cc WorkerShifter.cc \
 	WritePaths.cc WriteProbDensity.cc XMLParser.cc \
-	XMLUnitParser.cc XMLWriter.cc assndx.f UniformMover.cc \
-	DisplaceMoveSampler.cc DoubleDisplaceMoveSampler.cc
+	XMLUnitParser.cc XMLWriter.cc assndx.f
 noinst_HEADERS = Action.h ActionParser.h Algorithm.h \
 	AngularMomentumEstimator.h AnisotropicNodes.h \
 	AperiodicGaussian.h AugmentedNodes.h BeadFactory.h Beads.h \
 	BinProbDensity.h BondLengthEstimator.h \
-	BondLengthTwoEstimator.h BoxEstimator.h Collect.h \
-	CompositeAction.h CompositeAlgorithm.h CompositeDoubleAction.h \
-	ConditionalDensityGrid.h ConductanceEstimator.h \
-	ConductivityEstimator.h CoulombAction.h \
+	BondLengthTwoEstimator.h BoxEstimator.h CaoBerneAction.h \
+	Collect.h CompositeAction.h CompositeAlgorithm.h \
+	CompositeDoubleAction.h ConditionalDensityGrid.h \
+	ConductanceEstimator.h ConductivityEstimator.h CoulombAction.h \
 	CoulombEnergyEstimator.h CubicLattice.h \
 	DampedFreeTensorMover.h DensDensEstimator.h \
-	DensCountEstimator.h DynamicPCFEstimator.h \
+	DensCountEstimator.h DisplaceMoveSampler.h \
+	DoubleDisplaceMoveSampler.h DynamicPCFEstimator.h \
 	CountCountEstimator.h DensityEstimator.h \
 	DipoleMomentEstimator.h Distance.h DoubleAction.h \
 	DoubleMLSampler.h DoubleParallelPaths.h DoubleSectionChooser.h \
-	EFieldAction.h EIndEstimator.h EmpiricalInteraction.h \
-	EstimatorParser.h ExcitonNodes.h EwaldCoulombEstimator.h \
-	EwaldAction.h EwaldSum.h FixedNodeAction.h FixedPhaseAction.h \
-	FreeMover.h FreeParticleNodes.h FreePartNodesNoUpdate.h \
-	FreeTensorMover.h FrequencyEstimator.h GaussianAction.h \
-	GaussianDotAction.h GrapheneAction.h GreenDipoleMEstimator.h \
-	GridPotential.h GroundStateSNode.h GroundStateWFNodes.h \
-	HyperbolicAction.h HyperbolicMover.h ImagePairAction.h \
-	JelliumSlab.h JEstimator.h LinkSummable.h Loop.h MainParser.h \
-	Measure.h Mover.h MultiLevelSampler.h NodeModel.h NodeTester.h \
-	OptEwaldSum.h OpticalLatticeAction.h PairAction.h \
-	PairChooser.h PairCFEstimator.h PairDistance.h ParallelPaths.h \
+	EFieldAction.h EIndEstimator.h EstimatorParser.h \
+	ExcitonNodes.h EwaldCoulombEstimator.h EwaldAction.h \
+	EwaldSum.h FixedNodeAction.h FixedPhaseAction.h FreeMover.h \
+	FreeParticleNodes.h FreePartNodesNoUpdate.h FreeTensorMover.h \
+	FrequencyEstimator.h GaussianAction.h GaussianDotAction.h \
+	GrapheneAction.h GreenDipoleMEstimator.h GridPotential.h \
+	GroundStateSNode.h GroundStateWFNodes.h HyperbolicAction.h \
+	HyperbolicMover.h ImagePairAction.h JelliumSlab.h JEstimator.h \
+	LinkSummable.h Loop.h MainParser.h Measure.h Mover.h \
+	MultiLevelSampler.h NodeModel.h NodeTester.h OptEwaldSum.h \
+	OpticalLatticeAction.h PairAction.h PrimativePairAction.h \
+	PairChooser.h PairIntegrator.h PairPotential.h \
+	PairCFEstimator.h PairDistance.h ParallelPaths.h \
 	ParticleChooser.h PathReader.h Paths.h PeriodicGaussian.h \
 	PermutationChooser.h Permutation.h PhaseModel.h \
 	PermutationEstimator.h PIMCParser.h Positioner.h \
@@ -378,13 +383,11 @@ noinst_HEADERS = Action.h ActionParser.h Algorithm.h \
 	SphereAction.h Spin4DPhase.h SpinChargeEstimator.h \
 	SpringAction.h SpringTensorAction.h StillWebAction.h \
 	StructReader.h SuperCell.h TradEwaldSum.h \
-	ThermoEnergyEstimator.h TimpQPC.h TwoQDAction.h \
+	ThermoEnergyEstimator.h TimpQPC.h TwoQDAction.h UniformMover.h \
 	VIndEstimator.h VirialEnergyEstimator.h \
 	VVCorrelationEstimator.h WalkingChooser.h WellImageAction.h \
 	WindingEstimator.h WireNodes.h WorkerShifter.h WritePaths.h \
-	WriteProbDensity.h XMLParser.h XMLUnitParser.h XMLWriter.h \
-	UniformMover.h DisplaceMoveSampler.h \
-	DoubleDisplaceMoveSampler.h
+	WriteProbDensity.h XMLParser.h XMLUnitParser.h XMLWriter.h
 all: all-am
 
 .SUFFIXES:
@@ -466,6 +469,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-BondLengthEstimator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-BondLengthTwoEstimator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-BoxEstimator.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-CaoBerneAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-Collect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-CompositeAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-CompositeDoubleAction.Po@am__quote@
@@ -489,7 +493,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-DynamicPCFEstimator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-EFieldAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-EIndEstimator.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-EmpiricalInteraction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-EstimatorParser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-EwaldAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-EwaldCoulombEstimator.Po@am__quote@
@@ -525,6 +528,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-PIMCParser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-PairAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-PairChooser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-PairIntegrator.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-PairPotential.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-ParallelPaths.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-ParticleChooser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-PathReader.Po@am__quote@
@@ -538,6 +543,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-PrimCosineAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-PrimSHOAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-PrimTorusAction.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-PrimativePairAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-ProbDensityGrid.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-QPCAction.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pi-QuadrupoleMomentEstimator.Po@am__quote@
@@ -746,6 +752,20 @@ pi-BoxEstimator.obj: BoxEstimator.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='BoxEstimator.cc' object='pi-BoxEstimator.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-BoxEstimator.obj `if test -f 'BoxEstimator.cc'; then $(CYGPATH_W) 'BoxEstimator.cc'; else $(CYGPATH_W) '$(srcdir)/BoxEstimator.cc'; fi`
+
+pi-CaoBerneAction.o: CaoBerneAction.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-CaoBerneAction.o -MD -MP -MF "$(DEPDIR)/pi-CaoBerneAction.Tpo" -c -o pi-CaoBerneAction.o `test -f 'CaoBerneAction.cc' || echo '$(srcdir)/'`CaoBerneAction.cc; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-CaoBerneAction.Tpo" "$(DEPDIR)/pi-CaoBerneAction.Po"; else rm -f "$(DEPDIR)/pi-CaoBerneAction.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CaoBerneAction.cc' object='pi-CaoBerneAction.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-CaoBerneAction.o `test -f 'CaoBerneAction.cc' || echo '$(srcdir)/'`CaoBerneAction.cc
+
+pi-CaoBerneAction.obj: CaoBerneAction.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-CaoBerneAction.obj -MD -MP -MF "$(DEPDIR)/pi-CaoBerneAction.Tpo" -c -o pi-CaoBerneAction.obj `if test -f 'CaoBerneAction.cc'; then $(CYGPATH_W) 'CaoBerneAction.cc'; else $(CYGPATH_W) '$(srcdir)/CaoBerneAction.cc'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-CaoBerneAction.Tpo" "$(DEPDIR)/pi-CaoBerneAction.Po"; else rm -f "$(DEPDIR)/pi-CaoBerneAction.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='CaoBerneAction.cc' object='pi-CaoBerneAction.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-CaoBerneAction.obj `if test -f 'CaoBerneAction.cc'; then $(CYGPATH_W) 'CaoBerneAction.cc'; else $(CYGPATH_W) '$(srcdir)/CaoBerneAction.cc'; fi`
 
 pi-Collect.o: Collect.cc
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-Collect.o -MD -MP -MF "$(DEPDIR)/pi-Collect.Tpo" -c -o pi-Collect.o `test -f 'Collect.cc' || echo '$(srcdir)/'`Collect.cc; \
@@ -971,6 +991,34 @@ pi-DipoleMomentEstimator.obj: DipoleMomentEstimator.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-DipoleMomentEstimator.obj `if test -f 'DipoleMomentEstimator.cc'; then $(CYGPATH_W) 'DipoleMomentEstimator.cc'; else $(CYGPATH_W) '$(srcdir)/DipoleMomentEstimator.cc'; fi`
 
+pi-DisplaceMoveSampler.o: DisplaceMoveSampler.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-DisplaceMoveSampler.o -MD -MP -MF "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo" -c -o pi-DisplaceMoveSampler.o `test -f 'DisplaceMoveSampler.cc' || echo '$(srcdir)/'`DisplaceMoveSampler.cc; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo" "$(DEPDIR)/pi-DisplaceMoveSampler.Po"; else rm -f "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DisplaceMoveSampler.cc' object='pi-DisplaceMoveSampler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-DisplaceMoveSampler.o `test -f 'DisplaceMoveSampler.cc' || echo '$(srcdir)/'`DisplaceMoveSampler.cc
+
+pi-DisplaceMoveSampler.obj: DisplaceMoveSampler.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-DisplaceMoveSampler.obj -MD -MP -MF "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo" -c -o pi-DisplaceMoveSampler.obj `if test -f 'DisplaceMoveSampler.cc'; then $(CYGPATH_W) 'DisplaceMoveSampler.cc'; else $(CYGPATH_W) '$(srcdir)/DisplaceMoveSampler.cc'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo" "$(DEPDIR)/pi-DisplaceMoveSampler.Po"; else rm -f "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DisplaceMoveSampler.cc' object='pi-DisplaceMoveSampler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-DisplaceMoveSampler.obj `if test -f 'DisplaceMoveSampler.cc'; then $(CYGPATH_W) 'DisplaceMoveSampler.cc'; else $(CYGPATH_W) '$(srcdir)/DisplaceMoveSampler.cc'; fi`
+
+pi-DoubleDisplaceMoveSampler.o: DoubleDisplaceMoveSampler.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-DoubleDisplaceMoveSampler.o -MD -MP -MF "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo" -c -o pi-DoubleDisplaceMoveSampler.o `test -f 'DoubleDisplaceMoveSampler.cc' || echo '$(srcdir)/'`DoubleDisplaceMoveSampler.cc; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo" "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Po"; else rm -f "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DoubleDisplaceMoveSampler.cc' object='pi-DoubleDisplaceMoveSampler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-DoubleDisplaceMoveSampler.o `test -f 'DoubleDisplaceMoveSampler.cc' || echo '$(srcdir)/'`DoubleDisplaceMoveSampler.cc
+
+pi-DoubleDisplaceMoveSampler.obj: DoubleDisplaceMoveSampler.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-DoubleDisplaceMoveSampler.obj -MD -MP -MF "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo" -c -o pi-DoubleDisplaceMoveSampler.obj `if test -f 'DoubleDisplaceMoveSampler.cc'; then $(CYGPATH_W) 'DoubleDisplaceMoveSampler.cc'; else $(CYGPATH_W) '$(srcdir)/DoubleDisplaceMoveSampler.cc'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo" "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Po"; else rm -f "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DoubleDisplaceMoveSampler.cc' object='pi-DoubleDisplaceMoveSampler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-DoubleDisplaceMoveSampler.obj `if test -f 'DoubleDisplaceMoveSampler.cc'; then $(CYGPATH_W) 'DoubleDisplaceMoveSampler.cc'; else $(CYGPATH_W) '$(srcdir)/DoubleDisplaceMoveSampler.cc'; fi`
+
 pi-DoubleMLSampler.o: DoubleMLSampler.cc
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-DoubleMLSampler.o -MD -MP -MF "$(DEPDIR)/pi-DoubleMLSampler.Tpo" -c -o pi-DoubleMLSampler.o `test -f 'DoubleMLSampler.cc' || echo '$(srcdir)/'`DoubleMLSampler.cc; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-DoubleMLSampler.Tpo" "$(DEPDIR)/pi-DoubleMLSampler.Po"; else rm -f "$(DEPDIR)/pi-DoubleMLSampler.Tpo"; exit 1; fi
@@ -1040,20 +1088,6 @@ pi-EIndEstimator.obj: EIndEstimator.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='EIndEstimator.cc' object='pi-EIndEstimator.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-EIndEstimator.obj `if test -f 'EIndEstimator.cc'; then $(CYGPATH_W) 'EIndEstimator.cc'; else $(CYGPATH_W) '$(srcdir)/EIndEstimator.cc'; fi`
-
-pi-EmpiricalInteraction.o: EmpiricalInteraction.cc
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-EmpiricalInteraction.o -MD -MP -MF "$(DEPDIR)/pi-EmpiricalInteraction.Tpo" -c -o pi-EmpiricalInteraction.o `test -f 'EmpiricalInteraction.cc' || echo '$(srcdir)/'`EmpiricalInteraction.cc; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-EmpiricalInteraction.Tpo" "$(DEPDIR)/pi-EmpiricalInteraction.Po"; else rm -f "$(DEPDIR)/pi-EmpiricalInteraction.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='EmpiricalInteraction.cc' object='pi-EmpiricalInteraction.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-EmpiricalInteraction.o `test -f 'EmpiricalInteraction.cc' || echo '$(srcdir)/'`EmpiricalInteraction.cc
-
-pi-EmpiricalInteraction.obj: EmpiricalInteraction.cc
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-EmpiricalInteraction.obj -MD -MP -MF "$(DEPDIR)/pi-EmpiricalInteraction.Tpo" -c -o pi-EmpiricalInteraction.obj `if test -f 'EmpiricalInteraction.cc'; then $(CYGPATH_W) 'EmpiricalInteraction.cc'; else $(CYGPATH_W) '$(srcdir)/EmpiricalInteraction.cc'; fi`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-EmpiricalInteraction.Tpo" "$(DEPDIR)/pi-EmpiricalInteraction.Po"; else rm -f "$(DEPDIR)/pi-EmpiricalInteraction.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='EmpiricalInteraction.cc' object='pi-EmpiricalInteraction.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-EmpiricalInteraction.obj `if test -f 'EmpiricalInteraction.cc'; then $(CYGPATH_W) 'EmpiricalInteraction.cc'; else $(CYGPATH_W) '$(srcdir)/EmpiricalInteraction.cc'; fi`
 
 pi-EstimatorParser.o: EstimatorParser.cc
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-EstimatorParser.o -MD -MP -MF "$(DEPDIR)/pi-EstimatorParser.Tpo" -c -o pi-EstimatorParser.o `test -f 'EstimatorParser.cc' || echo '$(srcdir)/'`EstimatorParser.cc; \
@@ -1531,6 +1565,20 @@ pi-PairAction.obj: PairAction.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-PairAction.obj `if test -f 'PairAction.cc'; then $(CYGPATH_W) 'PairAction.cc'; else $(CYGPATH_W) '$(srcdir)/PairAction.cc'; fi`
 
+pi-PrimativePairAction.o: PrimativePairAction.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-PrimativePairAction.o -MD -MP -MF "$(DEPDIR)/pi-PrimativePairAction.Tpo" -c -o pi-PrimativePairAction.o `test -f 'PrimativePairAction.cc' || echo '$(srcdir)/'`PrimativePairAction.cc; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-PrimativePairAction.Tpo" "$(DEPDIR)/pi-PrimativePairAction.Po"; else rm -f "$(DEPDIR)/pi-PrimativePairAction.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PrimativePairAction.cc' object='pi-PrimativePairAction.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-PrimativePairAction.o `test -f 'PrimativePairAction.cc' || echo '$(srcdir)/'`PrimativePairAction.cc
+
+pi-PrimativePairAction.obj: PrimativePairAction.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-PrimativePairAction.obj -MD -MP -MF "$(DEPDIR)/pi-PrimativePairAction.Tpo" -c -o pi-PrimativePairAction.obj `if test -f 'PrimativePairAction.cc'; then $(CYGPATH_W) 'PrimativePairAction.cc'; else $(CYGPATH_W) '$(srcdir)/PrimativePairAction.cc'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-PrimativePairAction.Tpo" "$(DEPDIR)/pi-PrimativePairAction.Po"; else rm -f "$(DEPDIR)/pi-PrimativePairAction.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PrimativePairAction.cc' object='pi-PrimativePairAction.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-PrimativePairAction.obj `if test -f 'PrimativePairAction.cc'; then $(CYGPATH_W) 'PrimativePairAction.cc'; else $(CYGPATH_W) '$(srcdir)/PrimativePairAction.cc'; fi`
+
 pi-PairChooser.o: PairChooser.cc
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-PairChooser.o -MD -MP -MF "$(DEPDIR)/pi-PairChooser.Tpo" -c -o pi-PairChooser.o `test -f 'PairChooser.cc' || echo '$(srcdir)/'`PairChooser.cc; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-PairChooser.Tpo" "$(DEPDIR)/pi-PairChooser.Po"; else rm -f "$(DEPDIR)/pi-PairChooser.Tpo"; exit 1; fi
@@ -1544,6 +1592,34 @@ pi-PairChooser.obj: PairChooser.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PairChooser.cc' object='pi-PairChooser.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-PairChooser.obj `if test -f 'PairChooser.cc'; then $(CYGPATH_W) 'PairChooser.cc'; else $(CYGPATH_W) '$(srcdir)/PairChooser.cc'; fi`
+
+pi-PairIntegrator.o: PairIntegrator.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-PairIntegrator.o -MD -MP -MF "$(DEPDIR)/pi-PairIntegrator.Tpo" -c -o pi-PairIntegrator.o `test -f 'PairIntegrator.cc' || echo '$(srcdir)/'`PairIntegrator.cc; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-PairIntegrator.Tpo" "$(DEPDIR)/pi-PairIntegrator.Po"; else rm -f "$(DEPDIR)/pi-PairIntegrator.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PairIntegrator.cc' object='pi-PairIntegrator.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-PairIntegrator.o `test -f 'PairIntegrator.cc' || echo '$(srcdir)/'`PairIntegrator.cc
+
+pi-PairIntegrator.obj: PairIntegrator.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-PairIntegrator.obj -MD -MP -MF "$(DEPDIR)/pi-PairIntegrator.Tpo" -c -o pi-PairIntegrator.obj `if test -f 'PairIntegrator.cc'; then $(CYGPATH_W) 'PairIntegrator.cc'; else $(CYGPATH_W) '$(srcdir)/PairIntegrator.cc'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-PairIntegrator.Tpo" "$(DEPDIR)/pi-PairIntegrator.Po"; else rm -f "$(DEPDIR)/pi-PairIntegrator.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PairIntegrator.cc' object='pi-PairIntegrator.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-PairIntegrator.obj `if test -f 'PairIntegrator.cc'; then $(CYGPATH_W) 'PairIntegrator.cc'; else $(CYGPATH_W) '$(srcdir)/PairIntegrator.cc'; fi`
+
+pi-PairPotential.o: PairPotential.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-PairPotential.o -MD -MP -MF "$(DEPDIR)/pi-PairPotential.Tpo" -c -o pi-PairPotential.o `test -f 'PairPotential.cc' || echo '$(srcdir)/'`PairPotential.cc; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-PairPotential.Tpo" "$(DEPDIR)/pi-PairPotential.Po"; else rm -f "$(DEPDIR)/pi-PairPotential.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PairPotential.cc' object='pi-PairPotential.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-PairPotential.o `test -f 'PairPotential.cc' || echo '$(srcdir)/'`PairPotential.cc
+
+pi-PairPotential.obj: PairPotential.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-PairPotential.obj -MD -MP -MF "$(DEPDIR)/pi-PairPotential.Tpo" -c -o pi-PairPotential.obj `if test -f 'PairPotential.cc'; then $(CYGPATH_W) 'PairPotential.cc'; else $(CYGPATH_W) '$(srcdir)/PairPotential.cc'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-PairPotential.Tpo" "$(DEPDIR)/pi-PairPotential.Po"; else rm -f "$(DEPDIR)/pi-PairPotential.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='PairPotential.cc' object='pi-PairPotential.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-PairPotential.obj `if test -f 'PairPotential.cc'; then $(CYGPATH_W) 'PairPotential.cc'; else $(CYGPATH_W) '$(srcdir)/PairPotential.cc'; fi`
 
 pi-ParallelPaths.o: ParallelPaths.cc
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-ParallelPaths.o -MD -MP -MF "$(DEPDIR)/pi-ParallelPaths.Tpo" -c -o pi-ParallelPaths.o `test -f 'ParallelPaths.cc' || echo '$(srcdir)/'`ParallelPaths.cc; \
@@ -2189,6 +2265,20 @@ pi-TwoQDAction.obj: TwoQDAction.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-TwoQDAction.obj `if test -f 'TwoQDAction.cc'; then $(CYGPATH_W) 'TwoQDAction.cc'; else $(CYGPATH_W) '$(srcdir)/TwoQDAction.cc'; fi`
 
+pi-UniformMover.o: UniformMover.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-UniformMover.o -MD -MP -MF "$(DEPDIR)/pi-UniformMover.Tpo" -c -o pi-UniformMover.o `test -f 'UniformMover.cc' || echo '$(srcdir)/'`UniformMover.cc; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-UniformMover.Tpo" "$(DEPDIR)/pi-UniformMover.Po"; else rm -f "$(DEPDIR)/pi-UniformMover.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UniformMover.cc' object='pi-UniformMover.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-UniformMover.o `test -f 'UniformMover.cc' || echo '$(srcdir)/'`UniformMover.cc
+
+pi-UniformMover.obj: UniformMover.cc
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-UniformMover.obj -MD -MP -MF "$(DEPDIR)/pi-UniformMover.Tpo" -c -o pi-UniformMover.obj `if test -f 'UniformMover.cc'; then $(CYGPATH_W) 'UniformMover.cc'; else $(CYGPATH_W) '$(srcdir)/UniformMover.cc'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-UniformMover.Tpo" "$(DEPDIR)/pi-UniformMover.Po"; else rm -f "$(DEPDIR)/pi-UniformMover.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UniformMover.cc' object='pi-UniformMover.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-UniformMover.obj `if test -f 'UniformMover.cc'; then $(CYGPATH_W) 'UniformMover.cc'; else $(CYGPATH_W) '$(srcdir)/UniformMover.cc'; fi`
+
 pi-VIndEstimator.o: VIndEstimator.cc
 @am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-VIndEstimator.o -MD -MP -MF "$(DEPDIR)/pi-VIndEstimator.Tpo" -c -o pi-VIndEstimator.o `test -f 'VIndEstimator.cc' || echo '$(srcdir)/'`VIndEstimator.cc; \
 @am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-VIndEstimator.Tpo" "$(DEPDIR)/pi-VIndEstimator.Po"; else rm -f "$(DEPDIR)/pi-VIndEstimator.Tpo"; exit 1; fi
@@ -2370,48 +2460,6 @@ pi-XMLWriter.obj: XMLWriter.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='XMLWriter.cc' object='pi-XMLWriter.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-XMLWriter.obj `if test -f 'XMLWriter.cc'; then $(CYGPATH_W) 'XMLWriter.cc'; else $(CYGPATH_W) '$(srcdir)/XMLWriter.cc'; fi`
-
-pi-UniformMover.o: UniformMover.cc
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-UniformMover.o -MD -MP -MF "$(DEPDIR)/pi-UniformMover.Tpo" -c -o pi-UniformMover.o `test -f 'UniformMover.cc' || echo '$(srcdir)/'`UniformMover.cc; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-UniformMover.Tpo" "$(DEPDIR)/pi-UniformMover.Po"; else rm -f "$(DEPDIR)/pi-UniformMover.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UniformMover.cc' object='pi-UniformMover.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-UniformMover.o `test -f 'UniformMover.cc' || echo '$(srcdir)/'`UniformMover.cc
-
-pi-UniformMover.obj: UniformMover.cc
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-UniformMover.obj -MD -MP -MF "$(DEPDIR)/pi-UniformMover.Tpo" -c -o pi-UniformMover.obj `if test -f 'UniformMover.cc'; then $(CYGPATH_W) 'UniformMover.cc'; else $(CYGPATH_W) '$(srcdir)/UniformMover.cc'; fi`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-UniformMover.Tpo" "$(DEPDIR)/pi-UniformMover.Po"; else rm -f "$(DEPDIR)/pi-UniformMover.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UniformMover.cc' object='pi-UniformMover.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-UniformMover.obj `if test -f 'UniformMover.cc'; then $(CYGPATH_W) 'UniformMover.cc'; else $(CYGPATH_W) '$(srcdir)/UniformMover.cc'; fi`
-
-pi-DisplaceMoveSampler.o: DisplaceMoveSampler.cc
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-DisplaceMoveSampler.o -MD -MP -MF "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo" -c -o pi-DisplaceMoveSampler.o `test -f 'DisplaceMoveSampler.cc' || echo '$(srcdir)/'`DisplaceMoveSampler.cc; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo" "$(DEPDIR)/pi-DisplaceMoveSampler.Po"; else rm -f "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DisplaceMoveSampler.cc' object='pi-DisplaceMoveSampler.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-DisplaceMoveSampler.o `test -f 'DisplaceMoveSampler.cc' || echo '$(srcdir)/'`DisplaceMoveSampler.cc
-
-pi-DisplaceMoveSampler.obj: DisplaceMoveSampler.cc
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-DisplaceMoveSampler.obj -MD -MP -MF "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo" -c -o pi-DisplaceMoveSampler.obj `if test -f 'DisplaceMoveSampler.cc'; then $(CYGPATH_W) 'DisplaceMoveSampler.cc'; else $(CYGPATH_W) '$(srcdir)/DisplaceMoveSampler.cc'; fi`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo" "$(DEPDIR)/pi-DisplaceMoveSampler.Po"; else rm -f "$(DEPDIR)/pi-DisplaceMoveSampler.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DisplaceMoveSampler.cc' object='pi-DisplaceMoveSampler.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-DisplaceMoveSampler.obj `if test -f 'DisplaceMoveSampler.cc'; then $(CYGPATH_W) 'DisplaceMoveSampler.cc'; else $(CYGPATH_W) '$(srcdir)/DisplaceMoveSampler.cc'; fi`
-
-pi-DoubleDisplaceMoveSampler.o: DoubleDisplaceMoveSampler.cc
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-DoubleDisplaceMoveSampler.o -MD -MP -MF "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo" -c -o pi-DoubleDisplaceMoveSampler.o `test -f 'DoubleDisplaceMoveSampler.cc' || echo '$(srcdir)/'`DoubleDisplaceMoveSampler.cc; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo" "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Po"; else rm -f "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DoubleDisplaceMoveSampler.cc' object='pi-DoubleDisplaceMoveSampler.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-DoubleDisplaceMoveSampler.o `test -f 'DoubleDisplaceMoveSampler.cc' || echo '$(srcdir)/'`DoubleDisplaceMoveSampler.cc
-
-pi-DoubleDisplaceMoveSampler.obj: DoubleDisplaceMoveSampler.cc
-@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -MT pi-DoubleDisplaceMoveSampler.obj -MD -MP -MF "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo" -c -o pi-DoubleDisplaceMoveSampler.obj `if test -f 'DoubleDisplaceMoveSampler.cc'; then $(CYGPATH_W) 'DoubleDisplaceMoveSampler.cc'; else $(CYGPATH_W) '$(srcdir)/DoubleDisplaceMoveSampler.cc'; fi`; \
-@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo" "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Po"; else rm -f "$(DEPDIR)/pi-DoubleDisplaceMoveSampler.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='DoubleDisplaceMoveSampler.cc' object='pi-DoubleDisplaceMoveSampler.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(pi_CXXFLAGS) $(CXXFLAGS) -c -o pi-DoubleDisplaceMoveSampler.obj `if test -f 'DoubleDisplaceMoveSampler.cc'; then $(CYGPATH_W) 'DoubleDisplaceMoveSampler.cc'; else $(CYGPATH_W) '$(srcdir)/DoubleDisplaceMoveSampler.cc'; fi`
 
 .f.o:
 	$(F77COMPILE) -c -o $@ $<

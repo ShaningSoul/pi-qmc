@@ -24,6 +24,7 @@
 #include "ActionParser.h"
 #include "Action.h"
 #include "AugmentedNodes.h"
+#include "CaoBerneAction.h"
 #include "SimulationInfo.h"
 #include "SphereAction.h"
 #include "CompositeAction.h"
@@ -45,7 +46,8 @@
 #include "FreePartNodesNoUpdate.h"
 #include "AnisotropicNodes.h"
 #include "PairAction.h"
-#include "EmpiricalInteraction.h"
+#include "PrimativePairAction.h"
+#include "PairPotential.h"
 #include "GridPotential.h"
 #include "GroundStateSNode.h"
 #include "GroundStateWFNodes.h"
@@ -66,6 +68,7 @@
 #include "EwaldAction.h"
 #include "StillWebAction.h"
 #include "stats/MPIManager.h"
+#include "PairIntegrator.h"
 //#include "GrapheneAction.h"
 #include "WellImageAction.h"
 #include <iostream>
@@ -354,8 +357,9 @@ void ActionParser::parse(const xmlXPathContextPtr& ctxt) {
       std::string filename=getStringAttribute(ctxt->node,"file");
       int norder=getIntAttribute(actNode,"norder");
       bool isDMD=getBoolAttribute(actNode,"isDMD");
+      bool hasZ=getBoolAttribute(actNode,"hasZ");
       composite->addAction(new PairAction(species1,species2,filename,
-                                          simInfo,norder,isDMD));
+                                          simInfo,norder,hasZ,isDMD));
       continue;
     } else if (name=="EmpiricalInteraction") {
       ctxt->node=actNode;
@@ -364,7 +368,7 @@ void ActionParser::parse(const xmlXPathContextPtr& ctxt) {
       specName=getStringAttribute(ctxt->node,"species2");
       const Species& species2(simInfo.getSpecies(specName));
       std::string modelName=getStringAttribute(ctxt->node,"model");
-      EmpiricalInteraction::Potential* pot=0;
+      PairPotential* pot=0;
       int norder=getIntAttribute(actNode,"norder");
       double rmin=getLengthAttribute(actNode,"rmin");
       double rmax=getLengthAttribute(actNode,"rmax");
@@ -372,14 +376,53 @@ void ActionParser::parse(const xmlXPathContextPtr& ctxt) {
       if (modelName=="cosh2") {
         double v0=getEnergyAttribute(actNode,"v0");
         double kappa=getInvLengthAttribute(actNode,"kappa");
-        pot = new EmpiricalInteraction::Cosh2Potential(v0,kappa); 
+        pot = new PairPotential::InvCosh2(v0,kappa); 
+      } else if (modelName=="LJ") {
+        double epsilon=getEnergyAttribute(actNode,"epsilon");
+        double sigma=getLengthAttribute(actNode,"sigma");
+        pot = new PairPotential::LennardJones(epsilon,sigma); 
+      } else if (modelName=="Aziz") {
+        pot = new PairPotential::Aziz(); 
+      } else if (modelName=="CaoBerne") {
+        double mu=1./(1./species1.mass+1./species2.mass);
+        double radius = getLengthAttribute(actNode,"radius");
+        bool dumpFiles=getBoolAttribute(actNode,"dumpFiles");
+        PairAction* action = new PairAction(species1,species2,
+                             CaoBerneAction(mu,radius,tau,norder),
+                             simInfo,norder,rmin,rmax,ngpts,true);
+        if (dumpFiles) action -> write("");
+        composite->addAction(action);
+        continue; 
       }
-      EmpiricalInteraction empAction(*pot,simInfo.getTau());
-      std::cout << "Scattering length = " 
-                << empAction.getScatteringLength(species1,species2,
-                   rmax,rmax/(100*ngpts)) << std::endl;
-      composite->addAction(new PairAction(species1,species2,empAction,
-                                          simInfo,norder,rmin,rmax,ngpts));
+      bool useIntegrator=getBoolAttribute(actNode,"useIntegrator");
+      if (useIntegrator) {
+        int norder=getIntAttribute(actNode,"norder");
+        double deltar=getLengthAttribute(actNode,"deltaR");
+        double tol=getDoubleAttribute(actNode,"tol");
+        double intRange=getDoubleAttribute(actNode,"intRange");
+        if (intRange<1.0) intRange = 2.5;
+        int maxIter=getIntAttribute(actNode,"maxIter");
+        int nsegment=getIntAttribute(actNode,"nsegment");
+        if (nsegment==0) nsegment=1;
+        bool dumpFiles=getBoolAttribute(actNode,"dumpFiles");
+        double mu=1./(1./species1.mass+1./species2.mass);
+        PairIntegrator integrator(simInfo.getTau(),mu,deltar,
+                                  norder,maxIter,*pot,tol,nsegment,intRange);
+        double ascat = pot->getScatteringLength(mu,rmax,0.01*deltar); 
+        std::cout << "Scattering length = " << ascat << "a0, or " 
+                  << ascat*0.0529177 << " nm." << std::endl;
+        PairAction *action = new PairAction(species1,species2,integrator,
+                                            simInfo,norder,rmin,rmax,ngpts);
+        if (dumpFiles) action -> write("");
+        composite->addAction(action);
+      } else {
+        PrimativePairAction empAction(*pot,simInfo.getTau());
+        std::cout << "Scattering length = " 
+                  << empAction.getScatteringLength(species1,species2,
+                     rmax,rmax/(100*ngpts)) << std::endl;
+        composite->addAction(new PairAction(species1,species2,empAction,
+                                      simInfo,norder,rmin,rmax,ngpts,false));
+      }
       delete pot;
       continue;
     } else if (name=="GroundStateWFNodes") {
@@ -434,7 +477,8 @@ Action* ActionParser::parseEwaldActions(const xmlXPathContextPtr& ctxt) {
     const Species& species2(simInfo.getSpecies(specName));
     std::string filename=getStringAttribute(actNode,"file");
     int norder=getIntAttribute(actNode,"norder");
-    ewald->addAction(new PairAction(species1,species2,filename,simInfo,norder));
+    ewald->addAction(new PairAction(species1,species2,filename,
+                                    simInfo,norder,false,false));
   }
   xmlXPathFreeObject(obj);
   ewald->setup();
