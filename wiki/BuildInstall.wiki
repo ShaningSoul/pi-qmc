@@ -86,6 +86,7 @@ $ port installed
   blitz @0.9_0 (active)
   hdf5-18 @1.8.3_0 (active)
   gsl @1.12_0 (active)
+  fftw-3 @3.2.2_0 (active)
 
   gcc44 @4.4.0_0 (active)
 
@@ -100,7 +101,7 @@ The following configure works well on an intel mac:
 <code language="sh">
 ../../pi/configure CXX=g++-mp-4.4 CC=gcc-mp-4.4 \
 CXXFLAGS="-O3 -g -Wall -ffast-math -ftree-vectorize \
--march=prescott -fomit-frame-pointer -pipe" \ 
+-march=native -fomit-frame-pointer -pipe" \ 
 F77=gfortran-mp-4.4
 </code>
 or, for an MPI enabled build,
@@ -108,7 +109,7 @@ or, for an MPI enabled build,
 ../../pi/configure --enable-mpi CXX=g++-mp-4.4 CC=gcc-mp-4.4 F77=gfortran-mp-4.4 \
 MPICC=openmpicc MPICXX=openmpicxx MPIF77=openmpif77 \
 CXXFLAGS="-O3 -g -Wall -ffast-math -ftree-vectorize \
--march=prescott -fomit-frame-pointer -pipe"
+-march=native -fomit-frame-pointer -pipe"
 </code>
 
 On a G5 mac, try:
