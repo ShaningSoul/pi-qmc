@@ -47,7 +47,7 @@ DoubleDisplaceMoveSampler::DoubleDisplaceMoveSampler(const int nmoving, Paths& p
   movingIndex2 = new IArray(nmoving);
   nslice = paths.getnprocSlice();  if (mpi->getNWorker() ==1 && mpi->getNClone()!=0){ nslice/=2;  pathsBeads = beadFactory.getNewBeads(paths.getNPart(), nslice);}
   pathsBeads2 = beadFactory.getNewBeads(paths.getNPart(), nslice); 
-  pathsBeads1 = beadFactory.getNewBeads(paths.getNPart(), nslice); //std :: cout <<"In displace move doube sampler"<< nslice;
+  pathsBeads1 = beadFactory.getNewBeads(paths.getNPart(), nslice);
 }
 
 DoubleDisplaceMoveSampler::~DoubleDisplaceMoveSampler() {
@@ -74,8 +74,7 @@ void DoubleDisplaceMoveSampler::run() {
 #endif
 
  
-  //const Permutation &pathsPermutation(paths.getPermutation());
-   Permutation pathsPermutation(paths.getNPart()); ///////////////////////////////////// hack 
+  const Permutation &pathsPermutation(paths.getPermutation());
 
   iFirstSlice = paths.getLowestSampleSlice(0,false);
   paths.getBeads(iFirstSlice,*pathsBeads1);
@@ -86,7 +85,7 @@ void DoubleDisplaceMoveSampler::run() {
   action->initialize(*this);
   doubleAction->initialize(*this);
   
-  // Select particles that are not permuting to move and make nrepeat displacemoves
+  // Select particles that are not permuting to move and make nrepeat displace moves
   for (int irepeat=0; irepeat<nrepeat; ++irepeat) {
     movingIndex->resize(nmoving);  
     identityIndex.resize(nmoving);  
@@ -102,7 +101,7 @@ void DoubleDisplaceMoveSampler::run() {
 	imovingNonPerm++;
       }
     } 
-
+    
 #ifdef ENABLE_MPI
     if ( mpi && (mpi->getNWorker()) > 1) {
       mpi->getWorkerComm().Bcast(&(*movingIndex)(0), nmoving, MPI::INT, 0); 
@@ -119,17 +118,22 @@ void DoubleDisplaceMoveSampler::run() {
       
       movingBeads1 = beadFactory.getNewBeads(imovingNonPerm, nslice);
       movingBeads2 = beadFactory.getNewBeads(imovingNonPerm, nslice);
+
       ////
       for (int i=0; i<imovingNonPerm; i++) (*movingIndex2)(i) = (*movingIndex)(i);//////////<<<<<<<<<<<<<<<<<<<<<<<<<<<
       ////
       for (int islice=0; islice<nslice; ++islice) { 
 	pathsBeads1->copySlice(*movingIndex,islice,*movingBeads1,identityIndex,islice);
 	pathsBeads2->copySlice(*movingIndex2,islice,*movingBeads2,identityIndex,islice); /////<<<<<<<<<<<<<<<<<<<<<<<
-	  }
+      }
       
       if (tryMove(imovingNonPerm)) continue;
+   
+      delete movingBeads2; 
+      delete movingBeads1;
     }
   }
+
 }
 
 

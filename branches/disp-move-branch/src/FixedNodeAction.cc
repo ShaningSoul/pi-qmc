@@ -125,7 +125,7 @@ double FixedNodeAction::getActionDifference(const DoubleMLSampler &sampler,
       }
     }
   }
-  //   std :: cout <<" Out actiondifference dmlsampler"<<std :: endl;
+ 
   return deltaAction;
 }
 
@@ -272,10 +272,12 @@ void FixedNodeAction::getBeadAction(const Paths &paths, int ipart, int islice,
       // Calculate the nodal action.
       u += -log(1-exp(-xim1));
       utau += xim1*exp(-xim1)/(tau*(1-exp(-xim1)));
-      utau += -dotxim1*exp(-xim1)/(1-exp(-xim1));
+      utau += -dotxim1*exp(-xim1)/(1-exp(-xim1)); 
+//std :: cout << "FNA :: "<<jpart<<". xim1 "<<xim1<<". dotxim1   "<<dotxim1<<". utau  "<<utau<<". u  "<<u<<". tau  "<<tau<<std ::endl;
     }
   }
-  fm=force(ipart);
+  fm=force(ipart); 
+  //std :: cout << "FNA :: "<<ipart<<" "<<islice<<"  "<<utau<<"  "<<u<<std ::endl;
 }
 
 void FixedNodeAction::initialize(const DoubleSectionChooser &chooser) {

@@ -86,7 +86,7 @@ void MainParser::parse(const xmlXPathContextPtr& ctxt) {
       if (nlevel>maxlevel) maxlevel=nlevel;
     }
     // in case you have displace moves and fixed node action. Bug. need to fix for no double action case
-     int nslices;
+        int nslices;
     obj = xmlXPathEval(BAD_CAST"//Temperature",ctxt);
     nsample=obj->nodesetval->nodeNr;
     for (int i=0; i<nsample; ++i) {

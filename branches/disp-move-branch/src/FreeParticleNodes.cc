@@ -405,7 +405,7 @@ void FreeParticleNodes::evaluateGradLogDist(const VArray &r1, const VArray &r2,
   return 0;
 }*/
 
-const double FreeParticleNodes::EPSILON=1e-6;
+const double FreeParticleNodes::EPSILON=1e-6;//6
 
 FreeParticleNodes::MatrixUpdate::MatrixUpdate(int maxMovers, int maxlevel, 
     int npart, std::vector<Matrix*> &matrix, const FreeParticleNodes &fpNodes)
