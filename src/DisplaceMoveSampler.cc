@@ -109,19 +109,22 @@ void DisplaceMoveSampler::run() {
     }
 #endif
     
-    if (imovingNonPerm ==0 ) return;
-    movingIndex->resizeAndPreserve(imovingNonPerm);
-    identityIndex.resize(imovingNonPerm);
-    
-    // Copy old coordinate to the moving coordinate
-    movingBeads = beadFactory.getNewBeads(imovingNonPerm, nslice);
-    for (int i=0; i<imovingNonPerm; ++i) identityIndex(i)=i;
-    for (int islice=0; islice<nslice; ++islice) { 
-      pathsBeads->copySlice(*movingIndex,islice,*movingBeads,identityIndex,islice);
+    if (imovingNonPerm !=0 ) {
+      movingIndex->resizeAndPreserve(imovingNonPerm);
+      identityIndex.resize(imovingNonPerm);
+      
+      // Copy old coordinate to the moving coordinate
+      movingBeads = beadFactory.getNewBeads(imovingNonPerm, nslice);
+      for (int i=0; i<imovingNonPerm; ++i) identityIndex(i)=i;
+      for (int islice=0; islice<nslice; ++islice) { 
+	pathsBeads->copySlice(*movingIndex,islice,*movingBeads,identityIndex,islice);
+      }
+      
+      if (tryMove(imovingNonPerm)) continue;
+      delete movingBeads;
     }
-   
-    if (tryMove(imovingNonPerm)) continue;
   }
+  
 }
 
 

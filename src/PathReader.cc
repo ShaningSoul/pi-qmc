@@ -48,7 +48,7 @@ void PathReader::run() {
   int nslice=paths.getNSlice();
   int nfslice=nslice/bfactor;
   Beads<NDIM> &slice(*beadFactory.getNewBeads(npart,1));
-  Permutation p(npart);     Permutation perm(npart);   /////////// replace perm by p
+  Permutation p(npart);   
   bool permutationsFlag = false;
   if (workerID==0){
     std::string temp; 
@@ -58,9 +58,9 @@ void PathReader::run() {
       permutationsFlag = true;
       std :: cout << temp<<"  ";
       for (int i=0; i < npart; i++){
-	*infile >>perm[i];   /////////// replace perm by p
+	*infile >>p[i];  
       }
-      std :: cout<<perm <<std :: endl;      /////////// replace perm by p
+      std :: cout<<p <<std :: endl;      
       getline(*infile,temp); 
       getline(*infile,temp); 
     }
@@ -100,8 +100,8 @@ void PathReader::run() {
 #endif
   }
 
-  // db commented out temp for comparison between p and perm//////////////////////
-  //if (!permutationsFlag) {
+  
+  if (!permutationsFlag) {
     // Calculate  permuatation for last slice.
     if (workerID==0){
       Beads<NDIM> &wrapSlice(*beadFactory.getNewBeads(npart,1));
@@ -117,29 +117,28 @@ void PathReader::run() {
       }
       delete &wrapSlice;
     }   
-    //}
+   }
 
 
 #ifdef ENABLE_MPI
   if (mpi) mpi->getWorkerComm().Bcast(&p[0],npart,MPI::INT,0);
-   if (mpi) mpi->getWorkerComm().Bcast(&perm[0],npart,MPI::INT,0);////////
-
 #endif
   for (int ib=bfactor-1; ib>=0; --ib) {
     int jslice=nfslice-1+ib*nfslice;
-    if (paths.isProcessorSlice(jslice)) paths.putBeads(jslice,slice,p);///////////////
+    if (paths.isProcessorSlice(jslice)) paths.putBeads(jslice,slice,p);
   }
   paths.setBuffers();
   delete infile;
   if (workerID==0 && !permutationsFlag){
-    std::cout << "Clone ID :: "<<mpi->getCloneID()<<" :: Permuation read in is " << p << std::endl; //////////////
+    std::cout << "Clone ID :: "<<mpi->getCloneID()<<" :: Permuation read in is " << p << std::endl; 
   }
   delete &slice;
 
 
-    //compare p amd perm
+  /*compare p amd perm
     for (int i=0; i<npart; ++i) {
       if(p[i] != perm[i] && permutationsFlag) std :: cout <<"ERROR :: clone "<<cloneID<<",  worker "<<workerID<<", discrepancy found for permutation pickup at part "<<i <<": p[i]="<<p[i]<<"perm[i]="<<perm[i]<<std :: endl<<std::flush;
     }
+*/
 }
  

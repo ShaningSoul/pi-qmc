@@ -43,7 +43,7 @@ CoulombAction::CoulombAction(const double epsilon,
     if (ewaldRcut==0.) ewaldRcut = cell.a[0]/2.;
     std::cout << "EwaldRcut = " << ewaldRcut << std::endl;
     ewaldSum = new TradEwaldSum(cell,npart,ewaldRcut,ewaldKcut);
-    //    ewaldSum = new OptEwaldSum(cell,npart,ewaldRcut,ewaldKcut,4*ewaldKcut,8);
+    //ewaldSum = new OptEwaldSum(cell,npart,ewaldRcut,ewaldKcut,4*ewaldKcut,8);
     rewald.resize(npart);
     EwaldSum::Array &q=ewaldSum->getQArray();  
     for (int i=0; i<npart; ++i) q(i)=simInfo.getPartSpecies(i).charge;
@@ -171,7 +171,7 @@ void CoulombAction::getBeadAction(const Paths& paths, int ipart, int islice,
     u += longRange*tau;
     utau += longRange;
   }
- 
+  //std :: cout << "CA :: "<<ipart<<" "<<islice<<"  "<<utau<<"  "<<u<<std ::endl;
 }
 
 double CoulombAction::getAction(const Paths& paths, int islice) const {
@@ -348,6 +348,7 @@ double CoulombAction::u(double r, int order) const {
     u = u3_1;
   }
 #endif
+ 
   return u;
 }
 
