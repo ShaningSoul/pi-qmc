@@ -295,6 +295,7 @@ double PairAction::getTotalAction(const Paths& paths, int level) const {
 
 void PairAction::getBeadAction(const Paths& paths, int ipart, int islice,
     double& u, double& utau, double& ulambda, Vec& fm, Vec& fp) const {
+
   u=utau=ulambda=0; fm=0.; fp=0.;
   int jbegin,jend;
   if (ipart>=ifirst1 && ipart<ifirst1+npart1) {
@@ -345,6 +346,7 @@ void PairAction::getBeadAction(const Paths& paths, int ipart, int islice,
     fp -= vq*delta/(2*r) + vs2*(2*svec/(q*q) - s2*delta/(q*r))
          +vz2*z*delta*(2-z)/(q*r);
   }
+ 
 }
 
 double PairAction::u00(double r) const {

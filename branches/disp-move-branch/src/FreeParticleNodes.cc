@@ -91,7 +91,7 @@ double FreeParticleNodes::evaluate(const VArray &r1, const VArray &r2,
       cell.pbc(delta);
       double ear2=1;
       for (int i=0; i<NDIM; ++i) ear2*=(*pg[i])(fabs(delta[i]));
-      mat(ipart,jpart)=ear2;
+      mat(ipart,jpart)=ear2; //std :: cout << mat(ipart,jpart) <<std :: endl;
       uarray(ipart,jpart)=-log(fabs(mat(ipart,jpart))+1e-100);
     }
   }
