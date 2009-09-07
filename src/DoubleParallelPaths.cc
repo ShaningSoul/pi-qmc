@@ -184,14 +184,11 @@ void DoubleParallelPaths::putDoubleBeads(
   putBeads(ifirstSlice1,beads1,p1);
   putBeads(ifirstSlice2,beads2,p2);
 }
-///////////////////////////////
 
 const Permutation& DoubleParallelPaths::getGlobalPermutation() const {
   globalPermutation = permutation1;
   //return permutation1;
 #ifdef ENABLE_MPI
-  //  std :: cout << "GETMEEEEEEEEEEEE"<<mpi.getCloneID()<<" cloneid. "<<mpi.getWorkerID()<<" iworker"<<std :: endl;
-  // MPI :: COMM_WORLD.Barrier();
   Permutation recvp1(npart); 
   Permutation recvp2(npart);
   Permutation perm2(permutation2);

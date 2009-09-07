@@ -56,6 +56,7 @@
 #include "BinProbDensity.h"
 #include "SimpleParticleChooser.h"
 #include "SpeciesParticleChooser.h"
+#include "MultiSpeciesParticleChooser.h"
 #include "PathReader.h"
 #include "StructReader.h"
 #include "WorkerShifter.h"
@@ -67,6 +68,7 @@
 #include "PairChooser.h"
 #include "NodeTester.h"
 #include "FreeParticleNodes.h"
+
 
 PIMCParser::PIMCParser(const SimulationInfo& simInfo, Action* action,
   DoubleAction* doubleAction, EstimatorManager* estimators,
@@ -149,24 +151,40 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
       parseBody(ctxt,doubleSectionChooser);
       algorithm=doubleSectionChooser;
     }
-  }  else if (name=="SampleDisplaceMove") {
+  } else if (name=="SampleDisplaceMove") {
     Mover* mover(0);
     std::string moverName=getStringAttribute(ctxt->node,"mover");
-    //if (moverName=="Gauss") mover = new GaussMover(simInfo);
     if (moverName=="Uniform") mover = new UniformMover(mpi);
 
     double freq = getDoubleAttribute(ctxt->node,"freq");
     double dist = getDoubleAttribute(ctxt->node,"dist");
     int nmoving=getIntAttribute(ctxt->node,"npart");
-    std::string speciesName=getStringAttribute(ctxt->node,"species");
-    
-    ParticleChooser* particleChooser=0;      
-    if (speciesName=="" || speciesName=="all") {
-      particleChooser = new SimpleParticleChooser(simInfo.getNPart(),nmoving);
-    }else{ 
-      particleChooser = new SpeciesParticleChooser(simInfo.getSpecies(speciesName),nmoving);
-    }
 
+ 
+    int nspecies = getIntAttribute(ctxt->node,"nspecies");
+
+    ParticleChooser* particleChooser=0;
+    if (nspecies<=1) {                                               
+      std::string speciesName=getStringAttribute(ctxt->node,"species");
+      std :: cout<<"Picked species "<< speciesName <<" for displacement."<<std :: endl;
+      if (speciesName=="" || speciesName=="all") {
+	particleChooser = new SimpleParticleChooser(simInfo.getNPart(),nmoving);
+      }else{ 
+	particleChooser = new SpeciesParticleChooser(simInfo.getSpecies(speciesName),nmoving);
+      }
+    } else {
+      Species *speciesList = new Species [nspecies];
+      for (int ispec=0; ispec<nspecies; ispec++){
+	std::stringstream sispec;
+	sispec << "species"<<(ispec+1);
+	std::string speciesName=getStringAttribute(ctxt->node,sispec.str());
+	std :: cout<<"Picked species "<< speciesName <<" for displacement."<<std :: endl;
+	speciesList[ispec]=simInfo.getSpecies(speciesName);
+      }
+      particleChooser = new MultiSpeciesParticleChooser(speciesList, nspecies, nmoving);
+      delete [] speciesList;
+    }
+    
     int nrepeat=getIntAttribute(ctxt->node,"nrepeat");
     
     if (doubleAction) {
@@ -336,7 +354,15 @@ Algorithm* PIMCParser::parseAlgorithm(const xmlXPathContextPtr& ctxt) {
   } else if (name=="WritePaths") {
     std::string filename=getStringAttribute(ctxt->node,"file");
     int dumpFreq=getIntAttribute(ctxt->node,"freq");
-    algorithm=new WritePaths(*paths,filename,dumpFreq,mpi,beadFactory);
+    int maxConfigs=getIntAttribute(ctxt->node,"configs");
+    maxConfigs = (maxConfigs==0)?500:maxConfigs;
+    bool writeMovie=0;
+    if (mpi){
+      if (mpi->isMain()) writeMovie=getBoolAttribute(ctxt->node,"movie");     
+    } else {
+      writeMovie=getBoolAttribute(ctxt->node,"movie");
+    }
+    algorithm=new WritePaths(*paths,filename,dumpFreq,maxConfigs,writeMovie,simInfo,mpi,beadFactory);
   } else if (name=="SetSpin") {
     algorithm=new SpinSetter(*paths,mpi);
   } else if (name=="SetCubicLattice") {
