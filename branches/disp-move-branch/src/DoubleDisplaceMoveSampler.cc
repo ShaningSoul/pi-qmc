@@ -84,10 +84,11 @@ void DoubleDisplaceMoveSampler::run() {
   
   action->initialize(*this);
   doubleAction->initialize(*this);
-  
+
   // Select particles that are not permuting to move and make nrepeat displace moves
   for (int irepeat=0; irepeat<nrepeat; ++irepeat) {
-    movingIndex->resize(nmoving);  
+    movingIndex->resize(nmoving); 
+    movingIndex2->resize(nmoving); 
     identityIndex.resize(nmoving);  
     
     particleChooser.chooseParticles();
@@ -102,6 +103,7 @@ void DoubleDisplaceMoveSampler::run() {
       }
     } 
     
+ 
 #ifdef ENABLE_MPI
     if ( mpi && (mpi->getNWorker()) > 1) {
       mpi->getWorkerComm().Bcast(&(*movingIndex)(0), nmoving, MPI::INT, 0); 
@@ -110,7 +112,8 @@ void DoubleDisplaceMoveSampler::run() {
 #endif
     
     if (imovingNonPerm !=0 ) {
-      movingIndex->resizeAndPreserve(imovingNonPerm);
+      movingIndex->resizeAndPreserve(imovingNonPerm);      
+      movingIndex2->resizeAndPreserve(imovingNonPerm);
       identityIndex.resize(imovingNonPerm);
       
       // Copy old coordinate to the moving coordinate

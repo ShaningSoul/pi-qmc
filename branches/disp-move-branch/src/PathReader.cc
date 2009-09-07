@@ -77,7 +77,6 @@ void PathReader::run() {
 
 #ifdef ENABLE_MPI
   if (mpi) mpi->getWorkerComm().Bcast(&slice(0,0),npart*NDIM,MPI::DOUBLE,0);
-//  if (mpi) MPI::COMM_WORLD.Bcast(&slice(0,0),npart*NDIM,MPI::DOUBLE,0);
 #endif
 
   Beads<NDIM> firstSlice(slice);  Permutation pidentity(npart); 
@@ -96,7 +95,6 @@ void PathReader::run() {
     }
 #ifdef ENABLE_MPI
   if (mpi) mpi->getWorkerComm().Bcast(&slice(0,0),npart*NDIM,MPI::DOUBLE,0);
-//  if (mpi) MPI::COMM_WORLD.Bcast(&slice(0,0),npart*NDIM,MPI::DOUBLE,0);
 #endif
   }
 
@@ -117,11 +115,11 @@ void PathReader::run() {
       }
       delete &wrapSlice;
     }   
-   }
+  }
 
 
 #ifdef ENABLE_MPI
-  if (mpi) mpi->getWorkerComm().Bcast(&p[0],npart,MPI::INT,0);
+    if (mpi) mpi->getWorkerComm().Bcast(&p[0],npart,MPI::INT,0);
 #endif
   for (int ib=bfactor-1; ib>=0; --ib) {
     int jslice=nfslice-1+ib*nfslice;
