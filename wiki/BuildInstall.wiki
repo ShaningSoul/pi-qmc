@@ -146,6 +146,13 @@ sudo yum install lapack-devel.x86_64
 sudo yum install gsl-devel.x86_64
 </code>
 
+It is useful to install the gcc 4.3 compilers.
+<code language="sh">
+sudo yum install gcc43.x86_64
+sudo yum install gcc43-c++.x86_64
+sudo yum install gcc43-gfortran.x86_64
+</code>
+
 You will want an MPI implementation if you want to run in parallel,
 <code language="sh">
 sudo yum install openmpi-devel.x86_64
@@ -157,8 +164,12 @@ sudo mpi-selector --system --set openmpi-1.2.7-gcc-x86_64
 
 When you configure pi, you will probably need to specify the location of your BLAS and LAPACK routines,
 <code language="sh">
-../../pi/configure --with-blas="-L/usr/lib64/atlas -llapack -lf77blas"
+../../pi/configure CXX=g++43 CC=gcc43 F77=gfortran43 CXXFLAGS=\
+"-g -O3 -ffast-math -ftree-vectorize -march=native -fomit-frame-pointer -pipe"\
+ --with-blas="-L/usr/lib64/atlas -llapack -lf77blas"
 </code>
+For mpi, just add --enable-mpi. 
+
 
 For the python analysis utilities, you'll want to install ipython and matplotlib.
 <code language="sh">
