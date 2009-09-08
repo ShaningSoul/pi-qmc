@@ -26,15 +26,13 @@ class MultiSpeciesParticleChooser : public ParticleChooser {
   typedef blitz::Array<int,1> IArray;
 public:
   /// Construct by giving Species and number of moving particles.
-  MultiSpeciesParticleChooser( Species * speciesList, const int nspecies, const int nmoving);
+  MultiSpeciesParticleChooser( const Species * speciesList, const int nspecies, const int nmoving);
   /// Virtual destructor.
   virtual ~MultiSpeciesParticleChooser();
   /// Choose a new set of particles.
   virtual void chooseParticles();
 
  protected:
-  const int nspecies;
-  Species *speciesList;
   IArray speciesContainer;
   int count;
 };

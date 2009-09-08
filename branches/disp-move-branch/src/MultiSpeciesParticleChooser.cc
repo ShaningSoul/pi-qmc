@@ -24,14 +24,11 @@
 #include "SimulationInfo.h"
 #include <iostream>
 
-MultiSpeciesParticleChooser::MultiSpeciesParticleChooser( Species *species, const int nspecies,
-  const int nmoving) 
-  : nspecies(nspecies), ParticleChooser(nmoving) {
-
-  speciesList = new Species [nspecies];
+MultiSpeciesParticleChooser::MultiSpeciesParticleChooser( const Species *speciesList, const int nspecies,
+  const int nmoving) : ParticleChooser(nmoving) {
+  
   count = 0;
   for (int ispec=0; ispec<nspecies; ispec++){
-    speciesList[ispec] = species[ispec];
     count +=  speciesList[ispec].count;
   }
  
@@ -41,24 +38,14 @@ MultiSpeciesParticleChooser::MultiSpeciesParticleChooser( Species *species, cons
       speciesContainer(k++) = speciesList[ispec].ifirst + i;
     }
   }
- 
 }
 
 MultiSpeciesParticleChooser::~MultiSpeciesParticleChooser() {
-  delete [] speciesList;
- 
 }
 
 void MultiSpeciesParticleChooser::chooseParticles() {
-
   for (int imoving=0; imoving<index.size();imoving++) {
     int i = (int)(count*RandomNumGenerator::getRand());
     index(imoving) = speciesContainer(i) ;
-      std :: cout <<i<<"  "<< imoving<< "  "<< speciesContainer(i)<<std ::endl;
-    
   }
-
-
-
-
 }
