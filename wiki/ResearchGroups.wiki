@@ -1,4 +1,4 @@
-#summary Research groups using the *_pi_* application.
+#summary Research groups using the pi application.
 
 = Introduction =
 
