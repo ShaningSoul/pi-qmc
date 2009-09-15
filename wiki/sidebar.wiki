@@ -26,5 +26,5 @@ overview
 community
 
 [http://www.qmcwiki.org QMC Wiki]<br/>
-[http://physics.asu.edu/shumway Shumway Group]<br/>
+[http://shumway.physics.asu.edu Shumway Group]<br/>
 [ResearchGroups Research Groups]<br/>
