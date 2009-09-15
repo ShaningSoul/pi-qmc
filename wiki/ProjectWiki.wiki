@@ -1,11 +1,11 @@
 *_pi_* — open-source path integral Monte Carlo program
 
 This is a quantum simulation program from the 
-[http://physics.asu.edu/shumway Shumway Research Group], which focuses on applications to nanoscience and technology.
+[http://shumway.physics.asu.edu/ Shumway Research Group], which focuses on applications to nanoscience and technology.
 A live version of the code is available as the application [http://www.nanohub.org/tools/pimc/ “pimc” on the NCN Purdue nanoHUB].
 The current source code is available from  
 [http://code.google.com/p/pi-qmc  project pi-qmc on Google code].
-The program is object-oriented with [http://physics.asu.edu/shumway/codes/doc/pi/index.html Doxygen markup] and features flexible XML input format, as described in the [[pimc.xml Reference Guide]].
+The program is object-oriented with [http://shumway.physics.asu.edu/codes/doc/pi/index.html Doxygen markup] and features flexible XML input format, as described in the [[pimc.xml Reference Guide]].
 <br style="clear:both" />
 <img src="http://pi-qmc.googlecode.com/svn/wiki/images/Promo-qpc-v040.png" alt="Charge density of 100 interacting electrons around a quantum point contact at 750 mK." width="300" align="right"/>
 
