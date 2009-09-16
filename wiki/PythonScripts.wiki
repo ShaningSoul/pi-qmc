@@ -80,3 +80,34 @@ A ResponseFunction object has the following fields,
   * nfreq
   * omega1
   * omega
+
+=Hints for useful python scripts=
+
+Start your script with the lines
+<code language="py">
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+</code>
+The first line is standard to tell the shell to execute the script with the python program in your path.
+The second line lets you use UTF-8 characters (such as α,β,γ or ℏ or math symbols like ±) in output strings 
+in your code.
+
+To make publication quality figures, set the frame size to 3 3/8 inches (or whatever size your journal uses),
+use TeX to render labels, and set the font point size to appropriate values (usually 6 to 10 points).
+
+<code language="py>
+pylab.gcf().set_size_inches(3.375,2.5)
+pylab.rc('text', usetex=True)
+pylab.rc('font', family='serif', serif='Palitino', size=9)
+</code>
+
+To make subplots, use <tt>pylab.axes</tt> to specify the region in the unit square to lay out your plot. 
+You can use xticks with empty label names to plot the ticks
+without the numbers.
+<code language="py">
+pylab.axes([0.17,0.67,0.82,0.31])
+pylab.errorbar(npart,en,den)
+pylab.axis(ymin=0,xmin=0.5,xmax=5.5)
+pylab.xticks([1,2,3,4,5],[""]`*`5)
+pylab.ylabel(r"$E$ [$E_R$]")
+</code>
