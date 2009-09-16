@@ -1,0 +1,82 @@
+#summary Guide to using python scripts to analyze output data.
+
+= Introduction =
+
+We often use python to analyze the output from *_pi_*.
+
+
+= pitools Package =
+
+The source distribution has a subdirectory <tt>python</tt> that contains some utilities for reading and analyzing the <tt>pimc.h5</tt> files. To use pitools in your scripts, it is helpful to include pitools in your <tt>PYTHON_PATH</tt>,
+<code language="sh">
+export PYTHON_PATH = $HOME/codes/pi/python/pitools/pitools
+</code>
+where you should replace <tt>$HOME/codes/pi</tt> with location of the *_pi_* source directory on your computer.
+Then you can include pitools in python with the following commands,
+<code language="py">
+import pitools
+from pitools import Unit
+</code>
+The second line is convenient so you can just refer to the static <tt>Unit</tt> object by name.
+
+== File Object ==
+
+Constructed with the function 
+<code language="py">
+pitools.openFile(file="pimc.h5")
+</code>
+The filename defaults to <tt>pimc.h5</tt>, so you can omit that argument if you are running the script on
+a <tt>pimc.h5</tt> file in the current working directory.
+
+A File object has the following methods,
+  * getNSlice()
+  * getNPart()
+  * getTemperature(unit=Unit.Ha)
+  * getSuperCell(unit=Unit.a0)
+  * getScalar(name,unit=None)
+  * getResponseFunction(name)
+  * getDensity(name,unit=Unit.a0)
+  * getPairCF(name)
+
+== FileGroup Object ==
+
+To analyze multiple <tt>pimc.h5</tt> files, you can use a FileGroup.
+You can create a FileGroup using an explicit list of files or by giving a wildcard pattern.
+<code language="py">
+# Open three files by giving explicit filenames.
+filegroup = openFileGroup(["pimc.h5","newdir/pimc.h5","oldpimc.h5"])
+# Open all files matching the pattern (here, all pimc.h5 files in immediate subdirectories).
+filegroup = openFileGroup(pattern="`*`/pimc.h5")
+</code>
+
+A FileGroup object has the following methods, which return arrays of values,
+  * getNSlices()
+  * getNPart()
+  * getTemperature(unit=Unit.Ha)
+  * getScalar(name,unit=None)
+
+==Scalar Object==
+A Scalar object has the following method,
+  * getAverage()
+More methods for Scalar objects are planned, to reproduce the features of the java dataspork utility.
+
+==Density Object==
+A Density object has the following fields,
+  * data
+  * error
+  * origin
+  * scale
+  * extent
+
+==PairCF Object==
+A PairCF object has the following fields,
+  * data
+  * error
+
+==ResponseFunction Object==
+A ResponseFunction object has the following fields,
+  * data
+  * error
+  * nfreq
+  * omega1
+  * omega
