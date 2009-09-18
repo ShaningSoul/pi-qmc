@@ -138,6 +138,7 @@ sudo rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3
 
 Then install the required packages for *_pi_*. (You probably want to compile atlas yourself to get automatic performance tuning for your hardware, but the yum install will work if you are impatient.) Note: replace <tt>x86_64</tt> with <tt>i386</tt> if you are on a 32 bit machine.
 <code language="sh">
+sudo yum install libxml2-devel-versionXXX.x86_64 (here I don't know the correct version)
 sudo yum install blitz-devel.x86_64
 sudo yum install fftw3-devel.x86_64
 sudo yum install hdf5-devel.x86_64
