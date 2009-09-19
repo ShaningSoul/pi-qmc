@@ -9,7 +9,7 @@ We often use python to analyze the output from *_pi_*.
 
 The source distribution has a subdirectory <tt>python</tt> that contains some utilities for reading and analyzing the <tt>pimc.h5</tt> files. To use pitools in your scripts, it is helpful to include pitools in your <tt>PYTHON_PATH</tt>,
 <code language="sh">
-export PYTHON_PATH = $HOME/codes/pi/python/pitools/pitools
+export PYTHONPATH = $HOME/codes/pi/python/pitools
 </code>
 where you should replace <tt>$HOME/codes/pi</tt> with location of the *_pi_* source directory on your computer.
 Then you can include pitools in python with the following commands,
@@ -23,9 +23,9 @@ The second line is convenient so you can just refer to the static <tt>Unit</tt> 
 
 Constructed with the function 
 <code language="py">
-pitools.openFile(file="pimc.h5")
+filemount=pitools.openFile("pimc.h5")
 </code>
-The filename defaults to <tt>pimc.h5</tt>, so you can omit that argument if you are running the script on
+filemountis the file where data are mounted in. The filename defaults to <tt>pimc.h5</tt>, so you can omit that argument if you are running the script on
 a <tt>pimc.h5</tt> file in the current working directory.
 
 A File object has the following methods,
