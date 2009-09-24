@@ -10,7 +10,7 @@ In this work, we use path integral quantum Monte Carlo to study condensation of 
 
 Essentially, this problem involves the simulation of an excitonic condensate with fixed-node
 path integral Monte Carlo. Simulation of an idealized exicitonic condensate in three-dimensions
-was the topic of John Shumway's 1999 Ph. D. dissertation (<a href="http://physics.asu.edu/shumway/papers/shumwaydis.pdf">Quantum Monte 
+was the topic of John Shumway's 1999 Ph. D. dissertation (<a href="http://shumway.physics.asu.edu/papers/shumwaydis.pdf">Quantum Monte 
 Carlo Simulations of Electrons and Holes, pdf download, 792 KB</a>).
 
 This research is part of the <a href="http://nri.src.org">SRC-NRI South West Academy of Nanoelectronics (SWAN)</a>.
@@ -19,7 +19,7 @@ This research is part of the <a href="http://nri.src.org">SRC-NRI South West Aca
 <li>M. J. Gilbert and J. Shumway,
 “<em>Probing quantum coherent states in bilayer graphene,</em>”
 prepared for a special issue of the Journal of Computational Electronics
-(<a href="http://physics.asu.edu/shumway/papers/graphene-jce.pdf">pdf download, 10 pp. 3.3 MB</a>).
+(<a href="http://shumway.physics.asu.edu/papers/graphene-jce.pdf">pdf download, 10 pp. 3.3 MB</a>).
 </li>
 </ul>
 
@@ -87,7 +87,7 @@ Luttinger model, and even study the crossover from one dimension to two or three
 <ul>
 <li>
 “<em>Current fluctuations and quantized conductance,</em>” Applied Physics Seminar,  Department of Physics and Astronomy, University of Kansas, October 5th, 2009,
-(<a href="http://physics.asu.edu/shumway/papers/ku_sem08.pdf">pdf download, 10.6 MB</a>).</li>
+(<a href="http://shumway.physics.asu.edu/papers/ku_sem08.pdf">pdf download, 10.6 MB</a>).</li>
 </ul>
 
 
@@ -123,7 +123,7 @@ Simulations
 Studies in Condensed Matter Physics XVII</a></em>, edited by
 D. P. Landau, S. P. Lewis, and
 H. B. Schütter, (Springer Verlag, Heidelberg, Berlin, 2006) 
-(<a href="http://physics.asu.edu/shumway/papers/csscmp.pdf">pdf download 15 pp. 1.65 MB</a>).</li>
+(<a href="http://shumway.physics.asu.edu/papers/csscmp.pdf">pdf download 15 pp. 1.65 MB</a>).</li>
 </ul>
 
 ==Ultracold trapped gases==

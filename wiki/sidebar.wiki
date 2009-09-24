@@ -17,7 +17,7 @@ overview
 [Download]<br/>
 [BuildInstall Build/Install]<br/>
 [ReferenceGuide Reference Guide]<br/>
-[http://physics.asu.edu/shumway/codes/doc/pi/index.html Doxygen Pages]<br/>
+[http://shumway.physics.asu.edu/codes/doc/pi/index.html Doxygen Pages]<br/>
 [tutorials Tutorials/Demos]<br/>
 [PythonScripts Python Scripts]<br/>
 [Benchmarks Benchmarks]<br/>
