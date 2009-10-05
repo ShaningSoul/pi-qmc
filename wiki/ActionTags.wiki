@@ -46,6 +46,7 @@ Action for a Simple Harmonic Oscillator (SHO) potential, using the exact density
 
 Attributes:
 *omega - sets hbar*omega of the SHO Action.
-*ndim - defines the number of dimensions for the action, if left out the action will default to no. dimensions in the simulation.
-*species - Sets action to work on a species.
 
+*ndim - defines the number of dimensions for the action, if left out the action will default to no. dimensions in the simulation.
+
+*species - Sets action to work on a species.
