@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary A list and explanation of the various Actions available.
 
 = Introduction =
 
@@ -34,3 +34,18 @@ Attributes:
 <code>
 <TwoQDAction omega="12 meV" d="50 nm" alpha="1.0"/>
 </code>
+
+
+==SHOAction==
+
+Action for a Simple Harmonic Oscillator (SHO) potential, using the exact density matrix (For a derivation, see Feynman, <em>Statistical Mecahnics</em> (1972).)
+
+<code>
+<SHOAction omega="30 meV" ndim="3" species="hole"/>
+</code>
+
+Attributes:
+*omega - sets hbar*omega of the SHO Action.
+*ndim - defines the number of dimensions for the action, if left out the action will default to no. dimensions in the simulation.
+*species - Sets action to work on a species.
+
