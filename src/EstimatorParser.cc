@@ -52,6 +52,7 @@
 #include "BoxEstimator.h"
 #include "PairCFEstimator.h"
 #include "PermutationEstimator.h"
+#include "DiffusionEstimator.h"
 #include "JEstimator.h"
 #include "stats/MPIManager.h"
 #include "SuperCell.h"
@@ -388,9 +389,15 @@ void EstimatorParser::parse(const xmlXPathContextPtr& ctxt) {
     if (name=="PermutationEstimator") {
       std::string name=getStringAttribute(estNode,"name");
       std::string species1=getStringAttribute(estNode,"species1");
-      //      std::string species1=getStringAttribute(estNode,"species");
       const Species &s1(simInfo.getSpecies(species1));
       manager->add(new PermutationEstimator(simInfo, name, s1, mpi));
+    }
+    if (name=="DiffusionEstimator") {
+      std::string name=getStringAttribute(estNode,"name");
+      std::string species1=getStringAttribute(estNode,"species1");
+      bool classicalPoint=getBoolAttribute(estNode,"classicalPoint");
+      const Species &s1(simInfo.getSpecies(species1));
+      manager->add(new DiffusionEstimator(simInfo, name, s1, classicalPoint, mpi));
     }
     if (name=="JEstimator") {
       int nBField=getIntAttribute(estNode,"nBField");

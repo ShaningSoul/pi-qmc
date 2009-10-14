@@ -130,8 +130,9 @@ void DoubleDisplaceMoveSampler::run() {
 	pathsBeads2->copySlice(*movingIndex2,islice,*movingBeads2,identityIndex,islice); /////<<<<<<<<<<<<<<<<<<<<<<<
       }
       
-      if (tryMove(imovingNonPerm)) continue;
-   
+     
+      bool g = tryMove(imovingNonPerm);
+
       delete movingBeads2; 
       delete movingBeads1;
     }
@@ -143,7 +144,8 @@ void DoubleDisplaceMoveSampler::run() {
 
 
 bool DoubleDisplaceMoveSampler::tryMove(int imovingNonPerm) {
-
+ 
+  // return true;
   //suggest a move
   accRejEst->tryingMove(0);
   double l = mover.makeMove(*this);
@@ -186,7 +188,7 @@ bool DoubleDisplaceMoveSampler::tryMove(int imovingNonPerm) {
 			    *pathsBeads2,*movingIndex2,islice);///////////<<<<<<<<<<<<<<<<<<<<<<<<<<,
   } 
 
-  // Append the currenrmutation to section permutation.
+  // Append the current permutation to section permutation.
   Permutation perm1(paths.getNPart()); 
   Permutation perm2(paths.getNPart()); 
 
