@@ -220,6 +220,8 @@ CXX=icpc CC=icc F77=ifort AR="xild -lib" CXXFLAGS="-O3 -xP -ipo" \
 You need to add some lines to your <tt>.soft</tt> file to include some required libraries,
 <code language="sh">
 #My additions (CPATH mimics -I include directories).
++libxml2-2.6.29
++libxml2
 +intel-mkl
 +gsl-intel
 +hdf5-1.8.2
@@ -230,6 +232,8 @@ LD_LIBRARY_PATH += /usr/apps/math/fftw/fftw-3.1.2/intel10/lib
 CPATH += :/usr/apps/math/fftw/fftw-3.1.2/intel10/include
 +intel-mkl
 CPPFLAGS = "${CPPFLAGS} -DMPICH_IGNORE_CXX_SEEK"
+Also have blitz installed locally with --prefix=(your dir choice)
+
 </code>
 For an MPI build, use,
 <code language="sh">
