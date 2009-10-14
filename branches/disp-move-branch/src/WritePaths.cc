@@ -73,12 +73,15 @@ void WritePaths::run() {
       (*movieFile).open("pathMovie", std::ios::trunc);
       dumpMovieCounter=0;
     }
-    *movieFile <<"#Permutations ";
-    for (int i=0; i<paths.getNPart(); i++) *movieFile << perm[i]<< " ";
-    *movieFile << std::endl;
-    *movieFile << "# " << paths.getNPart()<<"   ";
-      for (int ispec=0;ispec<simInfo.getNSpecies(); ispec++) *movieFile <<simInfo.getSpecies(ispec).count<<"  ";
-      *movieFile <<std::endl;
+    /*
+      recently commented out
+     *movieFile <<"#Permutations ";
+     for (int i=0; i<paths.getNPart(); i++) *movieFile << perm[i]<< " ";
+     *movieFile << std::endl;
+     *movieFile << "# " << paths.getNPart()<<"   ";
+     for (int ispec=0;ispec<simInfo.getNSpecies(); ispec++) *movieFile <<simInfo.getSpecies(ispec).count<<"  ";
+     *movieFile <<std::endl;
+     */
   }
 
   /// Now determine how many chunked steps we need to write out all slices.

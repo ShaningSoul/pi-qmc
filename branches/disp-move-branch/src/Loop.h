@@ -38,10 +38,6 @@ class Loop : public CompositeAlgorithm {
 
     virtual void run() {
 
-      // std :: cout << mpi->getCloneID()<<" cid. "<<mpi->getWorkerID()<<" iw. "<<timer<<" "<<totalSimTime<<std :: endl;
-
-      //mpi->getWorkerComm().Barrier();
-      
       // print out timeinfo for Main or sub loops. totalsimtime default value is 12hrs in case it is not set.
       if (timer =="Main" || totalSimTime>0){
 	time_t startSim, elapsedTime;
@@ -49,7 +45,7 @@ class Loop : public CompositeAlgorithm {
 	double dif=0;
 	double oldTime=0;
 	double dt = 0;
-	for(int i=0; (dif+dt) < totalSimTime && i<nrepeat; ++i ){
+	for(int i=0; (dif+2*dt) < totalSimTime && i<nrepeat; ++i ){
 
 #ifdef ENABLE_MPI
 	  if (mpi) {
@@ -75,8 +71,6 @@ class Loop : public CompositeAlgorithm {
 	printElapsedTime(dif);	  
 	printAlgorithmTime(dt);
 #endif
-
-	//	std :: cout << mpi->getCloneID()<<" cid. "<<mpi->getWorkerID()<<" iw. "<<dt<<" "<<  dif<<std :: endl<<std::flush;
 	}
       } else if (timer!="" && timer !="Main"){
 	time_t startSim, elapsedTime;

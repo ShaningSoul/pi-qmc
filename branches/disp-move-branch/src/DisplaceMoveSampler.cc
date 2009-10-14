@@ -120,7 +120,8 @@ void DisplaceMoveSampler::run() {
 	pathsBeads->copySlice(*movingIndex,islice,*movingBeads,identityIndex,islice);
       }
       
-      if (tryMove(imovingNonPerm)) continue;
+    
+      bool g = tryMove(imovingNonPerm);
       delete movingBeads;
     }
   }
