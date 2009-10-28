@@ -10,7 +10,7 @@ Here are brief descriptions and links to groups collaborating with the *_pi_* pr
 <ul>
 <li><a href="http://shumway.physics.asu.edu">Shumway Research Group at Arizona State University</a><br/>
 Research in path integral Monte Carlo methods, nanoelectronics, and semiconductor quantum dots.</li>
-<li><a href="http://www.ece.illinois.edu/people/profile.asp?matthewg">Gilbert Research Group at University of Illinois</a><br/>
+<li><a href="http://transport.ece.illinois.edu/">Quantum Transport Theory Group at University of Illinois</a><br/>
 Research in nanoelectronics and electronic materials.
 </li>
 <li><a href="http://qsg.llnl.gov">Quantum Simulation Group at Lawrence Livermore National Laboratory</a><br/>
