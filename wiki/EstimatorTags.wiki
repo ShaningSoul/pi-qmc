@@ -60,6 +60,26 @@ Flags control the behavior:
 <ConductivityEstimator nbin="100" ndbin="25" nfreq="50" nstride="10" calcInduced="false"/>
 </code>
 
+==Density==
+
+<code>
+  <DensityEstimator nx="20" ny="20" nz="20" a="1 nm"/>
+</code>
+
+<code lang="xml">
+ <DensityEstimator name="rhoe" species="eup">
+   <Radial min="0" max="10 nm" nbin="100"/>
+ </DensityEstimator>
+</code>
+
+Up to NDIM distances can be combined to make multidimensional correlation functions. Options are
+  * `Cartesian`
+  ** `dir = x,y,z`
+  ** `int min, max, nbin`
+  * `Radial`
+  ** `dir=x,y,z`, or `none` (for cylidrical or spherical metric)
+  ** `int min, max, nbin`
+
 ==Pair Correlation functions==
 
 <code>
