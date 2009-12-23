@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <Simulation>
-  <!-- ZnS unit cell, Madelung Constant is -3.78293 -->
+  <!-- CsCl unit cell, Madelung Constant is -2.03535 -->
   <SuperCell a="1" x="1" y="1" z="1"/>
-  <Species name="Zn" count="4" mass="1" charge="+1"/>
-  <Species name="S" count="4" mass="1" charge="-1"/>
+  <Species name="Cs" count="1" mass="1" charge="+1"/>
+  <Species name="Cl" count="1" mass="1" charge="-1"/>
   <Temperature value="1" nslice="2"/>
   <Action/>
   <Estimators>
-    <!--CoulombEnergyEstimator perN="4"
+    <!--CoulombEnergyEstimator perN="1"
      useEwald="true" rcut="0.4" kcut="12.0" ewaldType="tradEwald"/-->
-    <CoulombEnergyEstimator perN="4" 
+    <CoulombEnergyEstimator perN="1" 
        useEwald="true" rcut="0.4" kcut="25.0" ewaldType="optEwald"/>
   </Estimators>
   <PIMC>
-    <ReadPaths file="ZnS.in"/>
+    <ReadPaths file="CsCl.in"/>
     <Measure estimator="all"/>
     <Collect estimator="all"/>
   </PIMC>

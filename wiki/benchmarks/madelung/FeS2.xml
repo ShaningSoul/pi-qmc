@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <Simulation>
-  <!-- ZnS unit cell, Madelung Constant is -3.78293 -->
+  <!-- FeS2 unit cell, Madelung Constant is -2.38465 -->
   <SuperCell a="1" x="1" y="1" z="1"/>
-  <Species name="Zn" count="4" mass="1" charge="+1"/>
-  <Species name="S" count="4" mass="1" charge="-1"/>
+  <Species name="Fe" count="4" mass="1" charge="+2"/>
+  <Species name="S" count="8" mass="1" charge="-1"/>
   <Temperature value="1" nslice="2"/>
   <Action/>
   <Estimators>
@@ -13,7 +13,7 @@
        useEwald="true" rcut="0.4" kcut="25.0" ewaldType="optEwald"/>
   </Estimators>
   <PIMC>
-    <ReadPaths file="ZnS.in"/>
+    <ReadPaths file="FeS2.in"/>
     <Measure estimator="all"/>
     <Collect estimator="all"/>
   </PIMC>

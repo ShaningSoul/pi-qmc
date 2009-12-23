@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Simulation>
-  <!-- NaCl unit cell, Madelung Constant is 3.49513 -->
+  <!-- NaCl unit cell, Madelung Constant is -3.49513 -->
   <SuperCell a="1" x="1" y="1" z="1"/>
   <Species name="Na" count="4" mass="1" charge="+1"/>
   <Species name="Cl" count="4" mass="1" charge="-1"/>
