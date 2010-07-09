@@ -35,9 +35,9 @@ Currently available demos include:
 <dl>
 <dt>SHO</dt><dd>A simple harmonic oscillator</dd>
 <dt>H_atom</dt><dd>A hydrogen atom</dd>
-<dt>[He_atom Helium Atom Demo]</dt><dd>A helium atom</dd>
+<dt>HeliumAtomDemo</dt><dd>A helium atom</dd>
 <dt>spin</dt><dd>A single spin in a magnetic field</dd>
-<dt>[wire Quantum Wire Demo]</dt><dd>10 electrons in a quasi-1D GaAs (2D) wire</dd>
+<dt>QuantumWireDemo</dt><dd>10 electrons in a quasi-1D GaAs (2D) wire</dd>
 </dl>
 
 ===*_pi_* on nanoHUB===
