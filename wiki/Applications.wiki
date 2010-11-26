@@ -39,16 +39,28 @@ In a project with experimentalists Dr. Sutharsan Ketharanath and Prof. Jeff Druc
 
 <ul>
 <li>
+P. G. McDonald, J. Shumway, and I. Galbraith,
+“<em>Lateral spatial switching of excitons using vertical electric 
+fields in semiconductor quantum rings,</em>”
+<a href="http://apl.aip.org/resource/1/applab/v97/i17/p173101_s1">Appl. 
+Phys. Lett., <b>97</b>, 173101 (2010)</a> 
+(<a href="http://apl.aip.org/resource/1/applab/v97/i17">cover image</a>).
+(<a href="http://arxiv.org/abs/1007.3975">arXiv:1007.3975</a>)
+</li>
+<li>
 Sutharsan Ketharanathan, Sourabh Sinha, John Shumway, and Jeff Drucker,
 “<em>Electron charging in 
 epitaxial Ge quantum dots on Si(001),</em>”
 <a href="http://link.aip.org/link/?JAPIAU/105/044312/1">
 J. Appl Phys. <b>105</b>, 044312 (2009)</a>
 </li>
-<li>Lei Zhang, Jesper Pedersen, Matthew J. Gilbert, and J. Shumway,
-“<em>Path integral study of the role of correlation in exchange coupling
-of spins in double quantum dots and optical lattices,</em>”
-(<a href="http://arxiv.org/abs/0809.0038">arXiv:0809.0038</a>). 
+<li>Jesper Pedersen, Lei Zhang, 
+Matthew J. Gilbert, and J. Shumway,
+<em>“Path integral study of the role of correlation in exchange coupling
+of spins in double quantum dots and optical lattices,”</em>
+<a href="http://stacks.iop.org/0953-8984/22/145301">J. Phys.: Condens. Matter
+<b>22</b>, 145301 (2010)</a>.
+(<a href="http://arxiv.org/abs/0809.0038">arXiv:0809.0038</a>).
 Note: <a href="http://www.nanohub.org/tools/spincoupleddots">the nanoHUB tool
 “Spin Coupled Quantum Dots”</a> lets you try these simulations
 yourself.</li>
