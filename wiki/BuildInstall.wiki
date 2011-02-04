@@ -129,14 +129,18 @@ CXXFLAGS="-g -O3 -ffast-math -ftree-vectorize -maltivec -mpowerpc-gpopt \
 ==Ubuntu==
 
 <code language="sh">
-sudo apt-get g++
-sudo apt-get gfortran
-sudo apt-get blitz++
-sudo apt-get hdf5-tools
-sudo apt-get libgsl0-dev
-sudo apt-get fftw3-dev
-sudo apt-get liblapack-dev
-sudo apt-get libhdf5-serial-dev
+sudo apt-get install g++
+sudo apt-get install gfortran
+sudo apt-get install blitz++
+sudo apt-get install hdf5-tools
+sudo apt-get install libgsl0-dev
+sudo apt-get install fftw3-dev
+sudo apt-get install liblapack-dev
+sudo apt-get install libhdf5-serial-dev
+</code>
+Or:
+<code language="sh">
+sudo apt-get install g++ gfortran blitz++ hdf5-tools libgsl0-dev fftw3-dev liblapack-dev libhdf5-serial-dev
 </code>
 
 
