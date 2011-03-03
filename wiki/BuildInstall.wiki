@@ -142,8 +142,18 @@ Or:
 <code language="sh">
 sudo apt-get install g++ gfortran blitz++ hdf5-tools libgsl0-dev fftw3-dev liblapack-dev libhdf5-serial-dev
 </code>
-
-
+=== Ubuntu launchpad ppa (experimental) ===
+There is an ubuntu repository with binary packages here:
+https://launchpad.net/~jarondl/+archive/pi-qmc
+To install all you have to do is:
+{{{
+sudo add-apt-repository ppa:jarondl/pi-qmc
+sudo apt-get update
+sudo apt-get install pi-qmc python-pitools
+}}}
+The pi-qmc package will install three binary versions, "pi1D","pi2D" and "pi3D".
+The python-pitools package will install the python "pitools" module, which can later be imported in a python script using "import pitools".
+The building and packaging is done automatically by launchpad several hours after a change is detected in the svn source. Please note that this is the first version of the debian packaging, so feedback is encouraged. 
 
 ==Linux (CentOS 5.3)==
 
