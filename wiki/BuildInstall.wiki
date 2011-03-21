@@ -126,6 +126,11 @@ CXXFLAGS="-g -O3 -ffast-math -ftree-vectorize -maltivec -mpowerpc-gpopt \
  F77=gfortran-mp-4.4 CC=gcc-mp-4.4 CXX=g++-mp-4.4  MPICC=openmpicc MPICXX=openmpicxx MPIF77=openmpif77
 </code>
 
+To run piworld you will also need pyqt4:
+<code language="sh">
+sudo port install py26-pyqt4
+</code>
+
 ==Ubuntu==
 
 <code language="sh">
