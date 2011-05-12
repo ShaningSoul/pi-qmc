@@ -98,7 +98,7 @@ use TeX to render labels, and set the font point size to appropriate values (usu
 {{{
 pylab.gcf().set_size_inches(3.375,2.5)
 pylab.rc('text', usetex=True)
-pylab.rc('font', family='serif', serif='Palitino', size=9)
+pylab.rc('font', family='serif', size=9)
 }}}
 
 To make subplots, use <tt>pylab.axes</tt> to specify the region in the unit square to lay out your plot. 
