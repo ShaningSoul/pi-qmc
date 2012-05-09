@@ -2,11 +2,14 @@
 
 = Introduction =
 
+==EFieldAction==
+
 <code>
-<EFieldAction v0="1.0" e0="1.0" component="z" a="0.25"/>
+    <EFieldAction strength="50000 V/cm" dir="z"  width="10 nm" /> 
 </code>
 
-Either provide <tt>v0</tt> or <tt>e0</tt>. If <tt>v0</tt> is not provided, then <tt>v0=-e0*Lz</tt>.
+dir = "x" "y" or "z" , width is region centred at 0 where finite field is generated. 
+
 
 ==FixedNodeAction==
 <code>
