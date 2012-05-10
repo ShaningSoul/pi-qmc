@@ -82,12 +82,12 @@ Up to NDIM distances can be combined to make multidimensional correlation functi
 
 ==Pair Correlation functions==
 
-<code>
+{{
  <PairCFEstimator name="g(r)" species1="eup" species2="H">
    <Radial min="0" max="10 nm" nbin="100"/>
  </PairCFEstimator>
 </code>
-
+}}}
 or 
 
 <code>
