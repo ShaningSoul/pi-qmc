@@ -92,9 +92,9 @@ or
 
 <code>
 <PairCFEstimator species1="eup" species2="edn" name="cf_ee">
-       <Cartesian dir="x"  min="0. nm" max="5 nm" nbin="100"/>
-       <Cartesian dir="z"  min="0. nm" max="3 nm" nbin="100"/>
-    </PairCFEstimator> 
+  <Cartesian dir="x"  min="0. nm" max="5 nm" nbin="100"/>
+  <Cartesian dir="z"  min="0. nm" max="3 nm" nbin="100"/>
+ </PairCFEstimator> 
 </code>
 Any number of distances can be combined to make multidimensional correlation functions. Options are
   * `Cartesian`, `Cartesian1`, `Cartesian2` (relative separation or absolute position of species 1 or 2 respectively).
