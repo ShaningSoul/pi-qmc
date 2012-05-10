@@ -104,5 +104,3 @@ Any number of distances can be combined to make multidimensional correlation fun
   * `Radial`
   ** `dir=x,y,z`, or `none` (for cylidrical or spherical metric)
   ** `int min, max, nbin`
-
-e.g. 
