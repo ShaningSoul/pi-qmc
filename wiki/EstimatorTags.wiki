@@ -66,11 +66,11 @@ Flags control the behavior:
   <DensityEstimator nx="20" ny="20" nz="20" a="1 nm"/>
 </code>
 
-<code lang="xml">
+{{{
  <DensityEstimator name="rhoe" species="eup">
    <Radial min="0" max="10 nm" nbin="100"/>
  </DensityEstimator>
-</code>
+}}}
 
 Up to NDIM distances can be combined to make multidimensional correlation functions. Options are
   * `Cartesian`
@@ -90,12 +90,13 @@ Up to NDIM distances can be combined to make multidimensional correlation functi
 
 or 
 
-<code>
+{{{
 <PairCFEstimator species1="eup" species2="edn" name="cf_ee">
   <Cartesian dir="x"  min="0. nm" max="5 nm" nbin="100"/>
   <Cartesian dir="z"  min="0. nm" max="3 nm" nbin="100"/>
  </PairCFEstimator> 
-</code>
+}}}
+
 Any number of distances can be combined to make multidimensional correlation functions. Options are
   * `Cartesian`, `Cartesian1`, `Cartesian2` (relative separation or absolute position of species 1 or 2 respectively).
   ** `dir = x,y,z`
