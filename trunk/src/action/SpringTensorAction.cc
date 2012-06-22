@@ -26,10 +26,18 @@
 #include "Species.h"
 
 SpringTensorAction::SpringTensorAction(const SimulationInfo& simInfo)
-  : lambda(simInfo.getNPart()), tau(simInfo.getTau()) {
+  : lambda(simInfo.getNPart()), tau(simInfo.getTau()),
+    isStatic(simInfo.getNPart()) {
   for (int i=0; i<simInfo.getNPart(); ++i) {
     lambda(i)=0.5;
-    lambda(i)/=(*simInfo.getPartSpecies(i).anMass);
+	Vec *anMass=  simInfo.getPartSpecies(i).anMass;
+	  if (anMass != 0 ) {
+		  lambda(i) /= (*anMass);
+	  }
+	  else {
+		  lambda(i) /= simInfo.getPartSpecies(i).mass; 	  
+	  }
+	isStatic(i)=simInfo.getPartSpecies(i).isStatic;
   }
 }
 
@@ -46,6 +54,8 @@ double SpringTensorAction::getActionDifference(
   for (int islice=nStride; islice<nSlice; islice+=nStride) {
     for (int iMoving=0; iMoving<nMoving; ++iMoving) {
       const int i=index(iMoving);
+	  if (isStatic(i)) continue;
+
       double inv2Sigma2x = 0.25/(lambda(i)[0]*tau*nStride);
       double inv2Sigma2y = 0.25/(lambda(i)[1]*tau*nStride);
       double inv2Sigma2z = 0.25/(lambda(i)[2]*tau*nStride);
@@ -75,7 +85,8 @@ double SpringTensorAction::getTotalAction(const Paths& paths, int level) const {
 void SpringTensorAction::getBeadAction(const Paths& paths, const int ipart,
     const int islice, double &u, double &utau, double &ulambda, 
     Vec &fm, Vec &fp) const {
-  u=utau=ulambda=0; fm=0.; fp=0.; 
+    u=utau=ulambda=0; fm=0.; fp=0.; 
+	if (isStatic(ipart)) return; 
   Vec delta = paths.delta(ipart,islice,-1);
   for (int i=0; i<NDIM; ++i) {
     utau += 0.5/tau - delta[i]*delta[i]/(4.0*lambda(ipart)[i]*tau*tau);

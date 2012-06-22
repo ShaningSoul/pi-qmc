@@ -28,7 +28,8 @@ libaction_la_SOURCES = \
 	PrimColloidalAction.cc \
 	PrimCosineAction.cc \
 	PrimSHOAction.cc \
-	PrimShellAction.cc \
+	PrimImageAction.cc \
+        PrimShellAction.cc \
 	PrimTorusAction.cc \
 	PrimativePairAction.cc \
 	QPCAction.cc \
@@ -73,6 +74,7 @@ noinst_HEADERS = \
 	PrimColloidalAction.h \
 	PrimCosineAction.h \
 	PrimSHOAction.h \
+	PrimImageAction.h \
 	PrimShellAction.h \
 	PrimTorusAction.h \
 	PrimativePairAction.h \
