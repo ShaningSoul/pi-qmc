@@ -1,4 +1,4 @@
-// $Id$
+// $Id: PrimImageAction.h 509 2012-04-04 12:40:28Z john.shumwayjr $
 /*  Copyright (C) 2004-2006 John B. Shumway, Jr.
 
     This program is free software; you can redistribute it and/or modify
@@ -14,49 +14,48 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
-#ifndef __SpringTensorAction_h_
-#define __SpringTensorAction_h_
+#ifndef __PrimImageAction_h_
+#define __PrimImageAction_h_
 class SectionSamplerInterface;class DisplaceMoveSampler;
-class Paths;
-class SimulationInfo;
+class Species;
+template <int TDIM> class Beads;
 #include "Action.h"
 #include <cstdlib>
 #include <blitz/array.h>
+class SimulationInfo;
 
-/** Class for calculating the free particle ``spring''  for an anisotropic
-  * mass action.
-  * @f[ u(r,r';\tau) = \frac{(x-x')^2+(y-y')^2}{4\lambda_{xy}\tau}
-  *                  + \frac{(z-z')^2}{4\lambda_{z}\tau}  @f]
-  * @bug May need to include multiple images.  This isn't implemented
-  *      now, and probably isn't a concern in practical simulations.
-  * @version $Revision$
-  * @author John Shumway. */
-class SpringTensorAction : public Action {
+/** Class for calculating the primitive action for an image charge at a plane 
+ * @author John Shumway & Ian Galbraith. 
+ */
+
+class PrimImageAction : public Action {
 public:
   /// Typedefs.
   typedef blitz::Array<int,1> IArray;
-  typedef blitz::Array<bool,1> BArray;
-  typedef blitz::Array<Vec,1> VArray;
-  /// Construct by providing simulation info.
-  SpringTensorAction(const SimulationInfo& simInfo);
+  /// Construct by providing the timestep tau.
+  PrimImageAction(const double d , const double del, const double epsilon, const double epsilonrel, const double vbarr, const SimulationInfo &simInfo,
+					const int ndim, const Species&);
   /// Virtual destructor.
-  virtual ~SpringTensorAction() {}
+  virtual ~PrimImageAction() {}
   /// Calculate the difference in action.
   virtual double getActionDifference(const SectionSamplerInterface&,
                                      int level);
   /// Calculate the total action.
   virtual double getTotalAction(const Paths&, const int level) const;
-  /// Calculate action and derivatives at a bead (defaults to no
-  /// contribution).
-  virtual void getBeadAction(const Paths&, const int ipart, const int islice,
-    double& u, double& utau, double& ulambda, Vec& fm, Vec& fp) const;
+  /// Calculate the action and derivatives at a bead.
+  virtual void getBeadAction(const Paths&, int ipart, int islice,
+    double& u, double& utau, double& ulambda, Vec &fm, Vec &fp) const;
 private:
-  /// The inverse particle mass, @f$\lambda=1/2m@f$.
-  VArray lambda;
   /// The timestep.
   const double tau;
-  /// Flag for static particles.
-	BArray isStatic;
-
+  /// The interaction parameters.
+  const double d, del, epsilon, epsilonrel ,vbarr;
+  /// The number of dimensions (can be less than NDIM, i.e., to make a wire).
+  const int ndim;
+  /// The first particle in this interaction.
+  const int ifirst;
+  /// The number of particles with this interaction.
+  const int npart;
+	
 };
 #endif
