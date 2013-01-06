@@ -1,30 +1,4 @@
 #summary Navigation sidebar for this wiki.
-overview
+moved to github...
 
-[ProjectWiki Main Page]<br/>
-[WhatIsPIMC What is pi / PIMC?]<br/>
-[news Latest News]<br/>
-[Applications]<br/>
-[tutorials Tutorials/Demos]<br/>
-[Publications]<br/>
-[ResearchGroups Research Groups]<br/>
-[funding Funding/Sponsors]<br/>
-[FAQ]<br/>
-<br/>
-
-<b><i>pi</i></b> application
-
-[Download]<br/>
-[BuildInstall Build/Install]<br/>
-[ReferenceGuide Reference Guide]<br/>
-[http://shumway.physics.asu.edu/codes/doc/pi/index.html Doxygen Pages]<br/>
-[tutorials Tutorials/Demos]<br/>
-[PythonScripts Python Scripts]<br/>
-[Benchmarks Benchmarks]<br/>
-[http://code.google.com/p/qdot-tools Quantum Dot Tools]<br/>
-
-community
-
-[http://www.qmcwiki.org QMC Wiki]<br/>
-[http://shumway.physics.asu.edu Shumway Group]<br/>
-[ResearchGroups Research Groups]<br/>
+[http://phys-tools.github.com/pi-qmc  Main Page]<br/>
